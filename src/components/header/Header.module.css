@@ -1,7 +1,11 @@
 .header {
     grid-area: h;
-    background-color: #a7a8fc;
+    height: 85px;
+    border-radius: 33px 33px 0px 0px;
+    background: #7FBDE7;
+    box-shadow: 0px 3px 11px 0px rgba(173, 166, 166, 0.25);
 }
-.header img {
-    width: 60px;
+
+.header svg {
+    margin: 20px 65px;
 }

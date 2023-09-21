@@ -1,8 +1,8 @@
 .item a {
-    color: white;
+    color: #353535;
     text-decoration: none;
 }
 
 .item a:global.active {
-    color: rgba(48, 8, 246, 0.79);
+    color: #368AC1;
 }

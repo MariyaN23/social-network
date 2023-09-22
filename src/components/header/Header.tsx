@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Header.module.css';
-import {Icon} from '../images/Icon';
+import {Icon} from '../../assets/images/Icon';
 
 export const Header = () => {
     return (

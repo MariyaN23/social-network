@@ -1,14 +1,23 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
+import wallpaper from '../../../../assets/images/wallpaper.jpg'
+import avatar from '../../../../assets/images/avatar.jpg'
 
 export const ProfileInfo = () => {
     return (
-        <div>
+        <div className={s.info}>
             <div>
-                <img src={'https://media.cnn.com/api/v1/images/stellar/prod/200924183413-dubai-9-1.jpg?q=x_0,y_0,h_900,w_1599,c_fill/h_720,w_1280'}/>
+                <img src={wallpaper} alt={'Dubai'}/>
             </div>
             <div className={s.descriptionBlock}>
-                ava + description
+                <img src={avatar} alt={'avatar'}/>
+                <div>
+                    <h2>Cat Dollar</h2>
+                    <h3>Date of birth: 2 january</h3>
+                    <h3>City: Dubai</h3>
+                    <h3>Education: BSU '22</h3>
+                    <h3>Web Site: samurai.by</h3>
+                </div>
             </div>
         </div>
     );

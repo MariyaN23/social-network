@@ -1,10 +1,14 @@
 .item {
     color: #515ff1;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .item img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+}
+
+.item button {
+    background: rgb(0, 222, 255);
 }

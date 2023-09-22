@@ -15,8 +15,8 @@ export const MyPosts = () => {
         <div className={s.postsBlock}>
             <h3>My Posts</h3>
             <div>
-                <div><textarea></textarea></div>
-                <div><button>Add post</button></div>
+                <div className={s.textarea}><textarea placeholder={'Your news...'}></textarea></div>
+                <div className={s.button}><button>Add post</button></div>
             </div>
             <div>
                 {postsElements}

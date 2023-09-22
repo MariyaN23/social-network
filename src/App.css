@@ -16,9 +16,8 @@
     margin-left: 20px;
 
     width: 954px;
-    border-radius: 9px;
+    border-radius: 0 0 9px 9px;
     border: 1px solid #C5C5C5;
     background: rgba(244, 246, 248, 0.60);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-
 }

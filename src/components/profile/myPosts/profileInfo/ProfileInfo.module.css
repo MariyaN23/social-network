@@ -1,3 +1,17 @@
+.info img {
+    width: 954px;
+    height: 290px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
 .descriptionBlock {
-    padding: 10px;
+    display: flex;
+    gap: 60px;
+}
+
+.descriptionBlock img {
+    margin: 20px 0 0 70px;
+    width: 160px;
+    height: 160px;
+    border-radius: 82px;
 }

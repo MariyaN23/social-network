@@ -23,12 +23,11 @@ function App(props: AppPropsType) {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/'} element={<Profile posts={props.state.profilePage.posts}
+                        <Route path={'/'} element={<Profile state={props.state.profilePage}
                                                             addPost={props.addPost}/>}/>
-                        <Route path={'/profile'} element={<Profile posts={props.state.profilePage.posts}
+                        <Route path={'/profile'} element={<Profile state={props.state.profilePage}
                                                                    addPost={props.addPost}/>}/>
-                        <Route path={'/dialogs/*'} element={<Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                                                     messages={props.state.dialogsPage.messages}/>}/>
+                        <Route path={'/dialogs/*'} element={<Dialogs state={props.state.dialogsPage}/>}/>
                         <Route path={'/news'} element={<News />}/>
                         <Route path={'/music'} element={<Music />}/>
                         <Route path={'/settings'} element={<Settings />}/>

@@ -58,3 +58,12 @@ export const state: RootStatePropsType = {
     },
     sidebar: {}
 }
+
+export const addPost =(postMessage: string)=> {
+    const newPost: PostPropsType = {
+        id: 5,
+        message: postMessage,
+        likeCounts: 0
+    }
+    state.profilePage.posts.push(newPost)
+}

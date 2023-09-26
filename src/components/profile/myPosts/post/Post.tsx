@@ -13,7 +13,7 @@ export const Post = (props: PostPropsType) => {
             <img src={avatar} alt={'avatar'}/>
             {props.message}
             <div>
-                <button>Like</button>{props.likeCounts}
+                <button>💙Like</button>{props.likeCounts}
             </div>
         </div>
     );

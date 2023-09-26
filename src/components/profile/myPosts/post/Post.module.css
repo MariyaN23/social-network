@@ -10,5 +10,9 @@
 }
 
 .item button {
-    background: rgb(0, 222, 255);
+    background: #368AC1;
+    border: 1px solid #368AC1;
+    width: 60px;
+    height: 30px;
+    color: #FFF;
 }

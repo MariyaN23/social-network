@@ -1,23 +1,25 @@
 import {rerenderEntireTree} from '../render';
+import {v1} from 'uuid';
 
 export type PostPropsType = {
-    id: number
+    id: string
     message: string
     likeCounts: number
 }
 
 export type DialogPropsType = {
-    id: number
+    id: string
     name: string
 }
 
 export type MessagesPropsType = {
-    id: number
+    id: string
     message: string
 }
 
 export type profilePagePropsType = {
-    posts: PostPropsType[]
+    posts: PostPropsType[],
+    newPostText: string
 }
 
 export type dialogPropsType = {
@@ -36,37 +38,44 @@ export type RootStatePropsType = {
 export const state: RootStatePropsType = {
     profilePage: {
         posts: [
-            {id: 1, message: 'Hi, how are you?', likeCounts: 15},
-            {id: 2, message: 'It\'s my first post', likeCounts: 20}
-        ]
+            {id: v1(), message: 'Hi, how are you?', likeCounts: 15},
+            {id: v1(), message: 'It\'s my first post', likeCounts: 20}
+        ],
+        newPostText: '',
     },
     dialogsPage: {
         dialogs: [
-            {id: 1, name: 'Dimych'},
-            {id: 2, name: 'Valera'},
-            {id: 3, name: 'Svetlana'},
-            {id: 4, name: 'Oleg'},
-            {id: 5, name: 'Igor'},
-            {id: 6, name: 'Tolik'}
+            {id: v1(), name: 'Dimych'},
+            {id: v1(), name: 'Valera'},
+            {id: v1(), name: 'Svetlana'},
+            {id: v1(), name: 'Oleg'},
+            {id: v1(), name: 'Igor'},
+            {id: v1(), name: 'Tolik'}
         ],
         messages: [
-            {id: 1, message: 'Hi'},
-            {id: 2, message: 'Yo'},
-            {id: 3, message: 'This is IT-kamasutra'},
-            {id: 4, message: 'Bye'},
-            {id: 5, message: 'Hi'},
-            {id: 6, message: 'Hi'},
+            {id: v1(), message: 'Hi'},
+            {id: v1(), message: 'Yo'},
+            {id: v1(), message: 'This is IT-kamasutra'},
+            {id: v1(), message: 'Bye'},
+            {id: v1(), message: 'Hi'},
+            {id: v1(), message: 'Hi'},
         ]
     },
     sidebar: {}
 }
 
-export const addPost =(postMessage: string)=> {
+export const addPost =()=> {
     const newPost: PostPropsType = {
-        id: 5,
-        message: postMessage,
+        id: v1(),
+        message: state.profilePage.newPostText,
         likeCounts: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ''
+    rerenderEntireTree(state)
+}
+
+export const changeNewPostText =(newPostText: string)=> {
+    state.profilePage.newPostText = newPostText
     rerenderEntireTree(state)
 }

@@ -2,10 +2,13 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './post/Post';
 import {PostPropsType} from '../../../redux/state';
+import {text} from 'stream/consumers';
 
 type MyPostsPropsType = {
     posts: PostPropsType[]
-    addPost: (postMessage: string) => void
+    newPostText: string
+    addPost: () => void
+    changeNewPostText: (newPostText: string)=> void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
@@ -15,9 +18,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost =()=> {
+            props.addPost()
+    }
+
+    const changeNewPostTextHandler = ()=> {
         if (newPostElement.current) {
-            props.addPost(newPostElement.current.value)
-            newPostElement.current.value = ""
+            props.changeNewPostText(newPostElement.current.value)
         }
     }
 
@@ -25,7 +31,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
         <div className={s.postsBlock}>
             <h3>My Posts</h3>
             <div>
-                <div className={s.textarea}><textarea placeholder={'Your news...'} ref={newPostElement}></textarea></div>
+                <div className={s.textarea}>
+                    <textarea value={props.newPostText}
+                              onChange={changeNewPostTextHandler}
+                              placeholder={'Your news...'} ref={newPostElement} />
+                </div>
                 <div className={s.button}>
                     <button onClick={addPost}>Add post</button>
                 </div>

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './post/Post';
 import {PostPropsType} from '../../../redux/state';
-import {text} from 'stream/consumers';
 
 type MyPostsPropsType = {
     posts: PostPropsType[]
@@ -21,10 +20,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
             props.addPost()
     }
 
-    const changeNewPostTextHandler = ()=> {
-        if (newPostElement.current) {
+    const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>)=> {
+        props.changeNewPostText(e.currentTarget.value)
+        /*if (newPostElement.current) {
             props.changeNewPostText(newPostElement.current.value)
-        }
+        }*/
     }
 
     return (

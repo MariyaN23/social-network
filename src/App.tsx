@@ -8,12 +8,11 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Settings} from './components/settings/Settings';
-import {RootStatePropsType} from './redux/state';
+import {RootStatePropsType, StoreType} from './redux/state';
 
 type AppPropsType = {
     state: RootStatePropsType
-    addPost: ()=> void
-    changeNewPostText: (newPostText: string)=> void
+    store: StoreType
 }
 
 function App(props: AppPropsType) {
@@ -24,12 +23,8 @@ function App(props: AppPropsType) {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/'} element={<Profile profilePage={props.state.profilePage}
-                                                            addPost={props.addPost}
-                                                            changeNewPostText={props.changeNewPostText}/>}/>
-                        <Route path={'/profile'} element={<Profile profilePage={props.state.profilePage}
-                                                                   addPost={props.addPost}
-                                                                   changeNewPostText={props.changeNewPostText}/>}/>
+                        <Route path={'/'} element={<Profile profilePage={props.state.profilePage} store={props.store}/>}/>
+                        <Route path={'/profile'} element={<Profile profilePage={props.state.profilePage} store={props.store}/>}/>
                         <Route path={'/dialogs/*'} element={<Dialogs state={props.state.dialogsPage}/>}/>
                         <Route path={'/news'} element={<News />}/>
                         <Route path={'/music'} element={<Music />}/>

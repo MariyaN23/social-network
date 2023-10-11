@@ -8,11 +8,12 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Settings} from './components/settings/Settings';
-import {RootStatePropsType, StoreType} from './redux/state';
+import {RootStatePropsType} from './redux/state';
 
 type AppPropsType = {
     state: RootStatePropsType
-    store: StoreType
+    addPost: () => void
+    changeNewPostText: (newPostText: string) => void
 }
 
 function App(props: AppPropsType) {
@@ -23,13 +24,17 @@ function App(props: AppPropsType) {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/'} element={<Profile profilePage={props.state.profilePage} store={props.store}/>}/>
-                        <Route path={'/profile'} element={<Profile profilePage={props.state.profilePage} store={props.store}/>}/>
+                        <Route path={'/'} element={<Profile profilePage={props.state.profilePage}
+                                                            addPost={props.addPost}
+                                                            changeNewPostText={props.changeNewPostText}/>}/>
+                        <Route path={'/profile'} element={<Profile profilePage={props.state.profilePage}
+                                                                   addPost={props.addPost}
+                                                                   changeNewPostText={props.changeNewPostText}/>}/>
                         <Route path={'/dialogs/*'} element={<Dialogs state={props.state.dialogsPage}/>}/>
-                        <Route path={'/news'} element={<News />}/>
-                        <Route path={'/music'} element={<Music />}/>
-                        <Route path={'/settings'} element={<Settings />}/>
-                    </Routes >
+                        <Route path={'/news'} element={<News/>}/>
+                        <Route path={'/music'} element={<Music/>}/>
+                        <Route path={'/settings'} element={<Settings/>}/>
+                    </Routes>
                 </div>
             </div>
         </BrowserRouter>

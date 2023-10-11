@@ -38,7 +38,7 @@ export type StoreType = {
     _state: RootStatePropsType
     addPost: ()=> void
     changeNewPostText: (newPostText: string)=> void
-    rerenderEntireTree: ()=> void
+    _callSubscriber: (state: RootStatePropsType)=> void
     subscribe: (observer: () => void)=> void
 }
 
@@ -71,6 +71,9 @@ export const store = {
         },
         sidebar: {},
     },
+    getState() {
+        return this._state
+    },
     addPost() {
         const newPost: PostPropsType = {
             id: v1(),
@@ -79,15 +82,15 @@ export const store = {
         }
         this._state.profilePage.posts.push(newPost)
         this._state.profilePage.newPostText = ''
-        this.rerenderEntireTree()
+        this._callSubscriber(this._state)
     },
     changeNewPostText(newPostText: string) {
         this._state.profilePage.newPostText = newPostText
-        this.rerenderEntireTree()
+        this._callSubscriber(this._state)
     },
-    rerenderEntireTree() {
+    _callSubscriber(state: RootStatePropsType) {
     },
-    subscribe(observer: () => void) {
-        this.rerenderEntireTree = observer
+    subscribe(observer: (state: RootStatePropsType) => void) {
+        this._callSubscriber = observer
     },
 }

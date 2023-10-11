@@ -1,12 +1,13 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './post/Post';
-import {PostPropsType, StoreType} from '../../../redux/state';
+import {PostPropsType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostPropsType[]
     newPostText: string
-    store: StoreType
+    addPost: () => void
+    changeNewPostText: (newPostText: string) => void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
@@ -16,11 +17,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost =()=> {
-            props.store.addPost()
+            props.addPost()
     }
 
     const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>)=> {
-        props.store.changeNewPostText(e.currentTarget.value)
+        props.changeNewPostText(e.currentTarget.value)
     }
 
     return (

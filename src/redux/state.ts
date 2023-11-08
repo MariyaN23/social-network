@@ -36,11 +36,23 @@ export type RootStatePropsType = {
 
 export type StoreType = {
     _state: RootStatePropsType
-    addPost: ()=> void
-    changeNewPostText: (newPostText: string)=> void
-    _callSubscriber: (state: RootStatePropsType)=> void
-    subscribe: (observer: () => void)=> void
+    addPost: () => void
+    changeNewPostText: (newPostText: string) => void
+    _callSubscriber: (state: RootStatePropsType) => void
+    subscribe: (observer: () => void) => void
+    dispatch: (action: ActionType) => void
 }
+
+type AddPostActionType = {
+    type: 'ADD-POST'
+}
+
+type ChangeNewPostTextActionType = {
+    type: 'CHANGE-NEW-POST-TEXT'
+    newPostText: string
+}
+
+export type ActionType = AddPostActionType | ChangeNewPostTextActionType
 
 export const store = {
     _state: {
@@ -71,9 +83,16 @@ export const store = {
         },
         sidebar: {},
     },
+    _callSubscriber(state: RootStatePropsType) {
+    },
+
     getState() {
         return this._state
     },
+    subscribe(observer: (state: RootStatePropsType) => void) {
+        this._callSubscriber = observer
+    },
+
     addPost() {
         const newPost: PostPropsType = {
             id: v1(),
@@ -88,9 +107,23 @@ export const store = {
         this._state.profilePage.newPostText = newPostText
         this._callSubscriber(this._state)
     },
-    _callSubscriber(state: RootStatePropsType) {
-    },
-    subscribe(observer: (state: RootStatePropsType) => void) {
-        this._callSubscriber = observer
-    },
+
+    dispatch(action: ActionType) {
+        switch (action.type) {
+            case 'ADD-POST':
+                const newPost: PostPropsType = {
+                    id: v1(),
+                    message: this._state.profilePage.newPostText,
+                    likeCounts: 0
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.newPostText = ''
+                this._callSubscriber(this._state)
+            break
+            case 'CHANGE-NEW-POST-TEXT':
+                this._state.profilePage.newPostText = action.newPostText
+                this._callSubscriber(this._state)
+            break
+        }
+    }
 }

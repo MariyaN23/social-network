@@ -1,5 +1,8 @@
 import {v1} from 'uuid';
 
+const ADD_POST = 'ADD-POST'
+const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
+
 export type PostPropsType = {
     id: string
     message: string
@@ -93,24 +96,9 @@ export const store = {
         this._callSubscriber = observer
     },
 
-    addPost() {
-        const newPost: PostPropsType = {
-            id: v1(),
-            message: this._state.profilePage.newPostText,
-            likeCounts: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    changeNewPostText(newPostText: string) {
-        this._state.profilePage.newPostText = newPostText
-        this._callSubscriber(this._state)
-    },
-
     dispatch(action: ActionType) {
         switch (action.type) {
-            case 'ADD-POST':
+            case ADD_POST:
                 const newPost: PostPropsType = {
                     id: v1(),
                     message: this._state.profilePage.newPostText,
@@ -120,10 +108,13 @@ export const store = {
                 this._state.profilePage.newPostText = ''
                 this._callSubscriber(this._state)
             break
-            case 'CHANGE-NEW-POST-TEXT':
+            case CHANGE_NEW_POST_TEXT:
                 this._state.profilePage.newPostText = action.newPostText
                 this._callSubscriber(this._state)
             break
         }
     }
 }
+
+export const addPostActionCreator = ()=> ({type: ADD_POST}) as const
+export const changeNewPostTextActionCreator =(text: string)=> ({type: CHANGE_NEW_POST_TEXT, newPostText: text}) as const

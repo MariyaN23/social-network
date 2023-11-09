@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './post/Post';
-import {ActionType, PostPropsType} from '../../../redux/state';
+import {ActionType, addPostActionCreator, changeNewPostTextActionCreator, PostPropsType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostPropsType[]
@@ -16,11 +16,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost =()=> {
-        props.dispatch({type: 'ADD-POST'})
+        props.dispatch(addPostActionCreator())
     }
 
     const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>)=> {
-        const action: ActionType = {type: 'CHANGE-NEW-POST-TEXT', newPostText: e.currentTarget.value};
+        const action: ActionType = changeNewPostTextActionCreator(e.currentTarget.value)
         props.dispatch(action)
     }
 

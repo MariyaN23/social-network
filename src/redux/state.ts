@@ -2,6 +2,8 @@ import {v1} from 'uuid';
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
+const CHANGE_NEW_MESSAGE_BODY = 'CHANGE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'SEND-MESSAGE'
 
 export type PostPropsType = {
     id: string
@@ -27,6 +29,7 @@ export type profilePagePropsType = {
 export type dialogPropsType = {
     dialogs: DialogPropsType[]
     messages: MessagesPropsType[]
+    newMessageBody: string
 }
 
 export type sidebarPropsType = {}
@@ -55,7 +58,16 @@ type ChangeNewPostTextActionType = {
     newPostText: string
 }
 
-export type ActionType = AddPostActionType | ChangeNewPostTextActionType
+type ChangeNewMessageBodyActionType = {
+    type: 'CHANGE-NEW-MESSAGE-BODY'
+    body: string
+}
+
+type SendMessageActionType = {
+    type: 'SEND-MESSAGE'
+}
+
+export type ActionType = AddPostActionType | ChangeNewPostTextActionType | ChangeNewMessageBodyActionType | SendMessageActionType
 
 export const store = {
     _state: {
@@ -82,7 +94,8 @@ export const store = {
                 {id: v1(), message: 'Bye'},
                 {id: v1(), message: 'Hi'},
                 {id: v1(), message: 'Hi'},
-            ]
+            ],
+            newMessageBody: ''
         },
         sidebar: {},
     },
@@ -112,9 +125,24 @@ export const store = {
                 this._state.profilePage.newPostText = action.newPostText
                 this._callSubscriber(this._state)
             break
+            case CHANGE_NEW_MESSAGE_BODY:
+                this._state.dialogsPage.newMessageBody = action.body
+                this._callSubscriber(this._state)
+                break
+            case SEND_MESSAGE:
+                const newMessage: MessagesPropsType = {
+                    id: v1(),
+                    message: this._state.dialogsPage.newMessageBody
+                }
+                this._state.dialogsPage.messages.push(newMessage)
+                this._state.dialogsPage.newMessageBody = ''
+                this._callSubscriber(this._state)
+                break
         }
     }
 }
 
 export const addPostActionCreator = ()=> ({type: ADD_POST}) as const
 export const changeNewPostTextActionCreator =(text: string)=> ({type: CHANGE_NEW_POST_TEXT, newPostText: text}) as const
+export const updateNewMessageBodyActionCreator =(message: string)=> ({type: CHANGE_NEW_MESSAGE_BODY, body: message}) as const
+export const sendMessageActionCreator =()=> ({type: SEND_MESSAGE}) as const

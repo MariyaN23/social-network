@@ -1,9 +1,6 @@
 import {v1} from 'uuid';
-
-const ADD_POST = 'ADD-POST'
-const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
-const CHANGE_NEW_MESSAGE_BODY = 'CHANGE-NEW-MESSAGE-BODY'
-const SEND_MESSAGE = 'SEND-MESSAGE'
+import {profileReducer} from './profile-reducer';
+import {dialogsReducer} from './dialogs-reducer';
 
 export type PostPropsType = {
     id: string
@@ -110,39 +107,8 @@ export const store = {
     },
 
     dispatch(action: ActionType) {
-        switch (action.type) {
-            case ADD_POST:
-                const newPost: PostPropsType = {
-                    id: v1(),
-                    message: this._state.profilePage.newPostText,
-                    likeCounts: 0
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.newPostText = ''
-                this._callSubscriber(this._state)
-            break
-            case CHANGE_NEW_POST_TEXT:
-                this._state.profilePage.newPostText = action.newPostText
-                this._callSubscriber(this._state)
-            break
-            case CHANGE_NEW_MESSAGE_BODY:
-                this._state.dialogsPage.newMessageBody = action.body
-                this._callSubscriber(this._state)
-                break
-            case SEND_MESSAGE:
-                const newMessage: MessagesPropsType = {
-                    id: v1(),
-                    message: this._state.dialogsPage.newMessageBody
-                }
-                this._state.dialogsPage.messages.push(newMessage)
-                this._state.dialogsPage.newMessageBody = ''
-                this._callSubscriber(this._state)
-                break
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._callSubscriber(this._state)
     }
 }
-
-export const addPostActionCreator = ()=> ({type: ADD_POST}) as const
-export const changeNewPostTextActionCreator =(text: string)=> ({type: CHANGE_NEW_POST_TEXT, newPostText: text}) as const
-export const updateNewMessageBodyActionCreator =(message: string)=> ({type: CHANGE_NEW_MESSAGE_BODY, body: message}) as const
-export const sendMessageActionCreator =()=> ({type: SEND_MESSAGE}) as const

@@ -3,7 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {RootStatePropsType, store} from './redux/store';
+import {RootStatePropsType} from './redux/store';
+import {store} from './redux/redux-store';
 
 const rerenderEntireTree =(state: RootStatePropsType)=> {ReactDOM.render(
     <App state={state} dispatch={store.dispatch.bind(store)}/>,
@@ -12,5 +13,6 @@ const rerenderEntireTree =(state: RootStatePropsType)=> {ReactDOM.render(
 
 rerenderEntireTree(store.getState())
 
-store.subscribe(rerenderEntireTree)
-
+store.subscribe(()=> {
+    rerenderEntireTree(store.getState())
+})

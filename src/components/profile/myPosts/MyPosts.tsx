@@ -7,7 +7,8 @@ import {addPostActionCreator, changeNewPostTextActionCreator} from '../../../red
 type MyPostsPropsType = {
     posts: PostPropsType[]
     newPostText: string
-    dispatch: (action: ActionType) => void
+    addPost: ()=>void
+    updateNewPostText: (text: string)=>void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
@@ -16,13 +17,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const addPost =()=> {
-        props.dispatch(addPostActionCreator())
+    const addPostHandler =()=> {
+        props.addPost()
     }
 
     const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>)=> {
-        const action: ActionType = changeNewPostTextActionCreator(e.currentTarget.value)
-        props.dispatch(action)
+        props.updateNewPostText(e.currentTarget.value)
     }
 
     return (
@@ -35,7 +35,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
                               placeholder={'Your news...'} ref={newPostElement} />
                 </div>
                 <div className={s.button}>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={addPostHandler}>Add post</button>
                 </div>
             </div>
             <div>

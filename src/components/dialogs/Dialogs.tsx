@@ -3,14 +3,13 @@ import s from './Dialogs.module.css'
 import {DialogItem} from './dialogItem/DialogItem';
 import {Message} from './message/Message';
 import {
-    ActionType,
-    dialogPropsType
+   dialogPropsType
 } from '../../redux/store';
-import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from '../../redux/dialogs-reducer';
 
 type DialogsPropsType = {
     state: dialogPropsType
-    dispatch: (action: ActionType)=> void
+    sendMessage: ()=> void
+    changeNewMessageHandler: (message: string)=> void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
@@ -19,12 +18,11 @@ export const Dialogs = (props: DialogsPropsType) => {
 
     const newMessageBody = props.state.newMessageBody
     const sendMessage =()=> {
-        props.dispatch(sendMessageActionCreator())
+        props.sendMessage()
     }
 
     const changeNewMessageHandler =(e: ChangeEvent<HTMLTextAreaElement>)=> {
-        const action: ActionType = updateNewMessageBodyActionCreator(e.currentTarget.value)
-        props.dispatch(action)
+        props.changeNewMessageHandler(e.currentTarget.value)
     }
 
     return (

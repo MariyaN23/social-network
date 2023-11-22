@@ -37,7 +37,7 @@ export type RootStatePropsType = {
     sidebar: sidebarPropsType
 }
 
-export type StoreType = {
+type StoreType = {
     _state: RootStatePropsType
     addPost: () => void
     changeNewPostText: (newPostText: string) => void

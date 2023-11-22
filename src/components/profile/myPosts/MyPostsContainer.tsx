@@ -1,25 +1,29 @@
 import React from 'react';
-import {ActionType, PostPropsType} from '../../../redux/store';
+import {ActionType} from '../../../redux/store';
 import {addPostActionCreator, changeNewPostTextActionCreator} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
+import {StoreType} from '../../../redux/redux-store';
 
 type MyPostsPropsType = {
-    posts: PostPropsType[]
-    newPostText: string
-    dispatch: (action: ActionType) => void
+    store: StoreType
 }
 
 export const MyPostsContainer = (props: MyPostsPropsType) => {
+    const state = props.store.getState().profilePage
+
     const addPost =()=> {
-        props.dispatch(addPostActionCreator())
+        props.store.dispatch(addPostActionCreator())
     }
 
     const changeNewPostTextHandler = (text: string)=> {
         const action: ActionType = changeNewPostTextActionCreator(text)
-        props.dispatch(action)
+        props.store.dispatch(action)
     }
 
     return (
-        <MyPosts addPost={addPost} updateNewPostText = {changeNewPostTextHandler} posts={props.posts} newPostText={props.newPostText}/>
+        <MyPosts addPost={addPost}
+                 updateNewPostText={changeNewPostTextHandler}
+                 posts={state.posts}
+                 newPostText={state.newPostText}/>
     );
 };

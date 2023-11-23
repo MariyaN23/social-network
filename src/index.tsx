@@ -5,10 +5,12 @@ import './index.css';
 import App from './App';
 import {RootStatePropsType} from './redux/store';
 import {store} from './redux/redux-store';
+import {Provider} from './StoreContext';
 
 const rerenderEntireTree =(state: RootStatePropsType)=> {ReactDOM.render(
-    <App store={store}/>,
-    document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>, document.getElementById('root')
 );}
 
 rerenderEntireTree(store.getState())

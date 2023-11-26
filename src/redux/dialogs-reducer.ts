@@ -1,8 +1,12 @@
 import {v1} from 'uuid';
-import {ActionType, dialogPropsType, MessagesPropsType} from './store';
+import {dialogPropsType, MessagesPropsType} from './store';
+import {ActionType} from './redux-store';
 
 const CHANGE_NEW_MESSAGE_BODY = 'CHANGE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
+
+export type ChangeNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyActionCreator>
+export type SendMessageActionType = ReturnType<typeof sendMessageActionCreator>
 
 const initialState: dialogPropsType = {
     dialogs: [
@@ -45,5 +49,5 @@ export const dialogsReducer = (state: dialogPropsType = initialState, action: Ac
     }
 }
 
-export const updateNewMessageBodyActionCreator =(message: string)=> ({type: CHANGE_NEW_MESSAGE_BODY, body: message}) as const
-export const sendMessageActionCreator =()=> ({type: SEND_MESSAGE}) as const
+export const updateNewMessageBodyActionCreator =(message: string) => ({type: CHANGE_NEW_MESSAGE_BODY, body: message}) as const
+export const sendMessageActionCreator =() => ({type: SEND_MESSAGE}) as const

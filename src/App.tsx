@@ -3,7 +3,7 @@ import './App.css';
 import {Header} from './components/header/Header';
 import {Navbar} from './components/navbar/Navbar';
 import {Profile} from './components/profile/Profile';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Settings} from './components/settings/Settings';
@@ -11,9 +11,7 @@ import {DialogsContainer} from './components/dialogs/DialogsContainer';
 
 
 function App() {
-    return (
-        <BrowserRouter>
-            <div className={'app-wrapper'}>
+    return <div className={'app-wrapper'}>
                 <Header/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
@@ -27,8 +25,6 @@ function App() {
                     </Routes>
                 </div>
             </div>
-        </BrowserRouter>
-    );
 }
 
 export default App;

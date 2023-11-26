@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-    ActionType
-} from '../../redux/store';
 import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from '../../redux/dialogs-reducer';
 
 import {Dialogs} from './Dialogs';
 import {StoreContext} from '../../StoreContext';
+import {ActionType} from '../../redux/redux-store';
 
 
 

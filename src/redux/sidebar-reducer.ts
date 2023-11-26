@@ -1,4 +1,5 @@
-import {ActionType, sidebarPropsType} from './store';
+import {sidebarPropsType} from './store';
+import {ActionType} from './redux-store';
 
 const initialState = {}
 

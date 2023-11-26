@@ -1,9 +1,8 @@
 import React from 'react';
-import {ActionType} from '../../../redux/store';
 import {addPostActionCreator, changeNewPostTextActionCreator} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {StoreContext} from '../../../StoreContext';
-
+import {ActionType} from '../../../redux/redux-store';
 
 
 export const MyPostsContainer = () => {

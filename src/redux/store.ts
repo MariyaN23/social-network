@@ -1,6 +1,7 @@
 import {v1} from 'uuid';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
+import {ActionType} from './redux-store';
 
 export type PostPropsType = {
     id: string
@@ -44,27 +45,8 @@ type StoreType = {
     _callSubscriber: (state: RootStatePropsType) => void
     subscribe: (observer: () => void) => void
     dispatch: (action: ActionType) => void
+    getState: ()=>RootStatePropsType
 }
-
-type AddPostActionType = {
-    type: 'ADD-POST'
-}
-
-type ChangeNewPostTextActionType = {
-    type: 'CHANGE-NEW-POST-TEXT'
-    newPostText: string
-}
-
-type ChangeNewMessageBodyActionType = {
-    type: 'CHANGE-NEW-MESSAGE-BODY'
-    body: string
-}
-
-type SendMessageActionType = {
-    type: 'SEND-MESSAGE'
-}
-
-export type ActionType = AddPostActionType | ChangeNewPostTextActionType | ChangeNewMessageBodyActionType | SendMessageActionType
 
 export const store = {
     _state: {

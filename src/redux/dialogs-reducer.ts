@@ -46,17 +46,14 @@ const initialState: dialogPropsType = {
 export const dialogsReducer = (state: dialogPropsType = initialState, action: ActionType)=> {
     switch (action.type) {
         case CHANGE_NEW_MESSAGE_BODY: {
-            state.newMessageBody = action.body
-            return state
+            return {...state, newMessageBody: action.body}
         }
         case SEND_MESSAGE: {
             const newMessage: MessagesPropsType = {
                 id: v1(),
                 message: state.newMessageBody
             }
-            state.messages.push(newMessage)
-            state.newMessageBody = ''
-            return state
+            return {...state, messages: [...state.messages, newMessage], newMessageBody: ''}
         }
         default: {
             return state

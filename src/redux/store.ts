@@ -1,54 +1,9 @@
 import {v1} from 'uuid';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
-import {ActionType} from './redux-store';
+import {ActionType, RootStatePropsType} from './redux-store';
 
-export type PostPropsType = {
-    id: string
-    message: string
-    likeCounts: number
-}
-
-export type DialogPropsType = {
-    id: string
-    name: string
-}
-
-export type MessagesPropsType = {
-    id: string
-    message: string
-}
-
-export type profilePagePropsType = {
-    posts: PostPropsType[],
-    newPostText: string
-}
-
-export type dialogPropsType = {
-    dialogs: DialogPropsType[]
-    messages: MessagesPropsType[]
-    newMessageBody: string
-}
-
-export type sidebarPropsType = {}
-
-export type RootStatePropsType = {
-    profilePage: profilePagePropsType
-    dialogsPage: dialogPropsType
-    sidebar: sidebarPropsType
-}
-
-type StoreType = {
-    _state: RootStatePropsType
-    addPost: () => void
-    changeNewPostText: (newPostText: string) => void
-    _callSubscriber: (state: RootStatePropsType) => void
-    subscribe: (observer: () => void) => void
-    dispatch: (action: ActionType) => void
-    getState: ()=>RootStatePropsType
-}
-
-export const store = {
+const store = {
     _state: {
         profilePage: {
             posts: [

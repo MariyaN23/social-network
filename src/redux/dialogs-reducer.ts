@@ -1,9 +1,24 @@
 import {v1} from 'uuid';
-import {dialogPropsType, MessagesPropsType} from './store';
 import {ActionType} from './redux-store';
 
 const CHANGE_NEW_MESSAGE_BODY = 'CHANGE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
+
+type DialogPropsType = {
+    id: string
+    name: string
+}
+
+type MessagesPropsType = {
+    id: string
+    message: string
+}
+
+export type dialogPropsType = {
+    dialogs: DialogPropsType[]
+    messages: MessagesPropsType[]
+    newMessageBody: string
+}
 
 export type ChangeNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyActionCreator>
 export type SendMessageActionType = ReturnType<typeof sendMessageActionCreator>

@@ -2,7 +2,9 @@ import {v1} from 'uuid';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
 import {ActionType, RootStatePropsType} from './redux-store';
+import {usersReducer} from './users-reducer';
 
+/*
 const store = {
     _state: {
         profilePage: {
@@ -48,4 +50,4 @@ const store = {
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._callSubscriber(this._state)
     }
-}
+}*/

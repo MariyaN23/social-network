@@ -7,10 +7,12 @@ import {
     SendMessageActionType
 } from './dialogs-reducer';
 import {sidebarPropsType, sidebarReducer} from './sidebar-reducer';
+import {FollowActionType, setUsersActionType, UnfollowActionType, UsersPropsType, usersReducer} from './users-reducer';
 
 export type RootStatePropsType = {
     profilePage: profilePagePropsType
     dialogsPage: dialogPropsType
+    usersPage: UsersPropsType
     sidebar: sidebarPropsType
 }
 
@@ -24,12 +26,16 @@ export type StoreType = typeof store
     getState: () => RootStatePropsType
 }*/
 
-export type ActionType = AddPostActionType | ChangeNewPostTextActionType | ChangeNewMessageBodyActionType | SendMessageActionType
+export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
+    ChangeNewMessageBodyActionType | SendMessageActionType |
+    FollowActionType | UnfollowActionType | setUsersActionType
+
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    sidebar: sidebarReducer
+    usersPage: usersReducer,
+    sidebar: sidebarReducer,
 })
 
 export const store = createStore(rootReducer)

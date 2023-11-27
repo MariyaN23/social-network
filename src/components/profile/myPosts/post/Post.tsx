@@ -12,8 +12,8 @@ export const Post = (props: PostPropsType) => {
         <div className={s.item}>
             <img src={avatar} alt={'avatar'}/>
             {props.message}
-            <div>
-                <button>💙Like</button>{props.likeCounts}
+            <div className={s.btn}>
+                <button>❤️ {props.likeCounts} </button>
             </div>
         </div>
     );

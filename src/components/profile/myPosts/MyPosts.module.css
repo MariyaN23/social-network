@@ -1,14 +1,24 @@
 .postsBlock {
     padding: 10px;
+    word-break: break-all;
+}
+
+.postsBlock h3 {
+    margin-left: 50px;
 }
 
 textarea {
     resize: none;
-    width: 690px;
+    width: 810px;
     height: 60px;
     padding: 10px;
+    margin-left: 50px;
     border-radius: 10px;
     background: #FFF;
+}
+
+.buttonPost button {
+    margin-left: 50px;
 }
 
 button {
@@ -18,4 +28,5 @@ button {
     width: 110px;
     height: 30px;
     color: #FFF;
+    cursor: pointer;
 }

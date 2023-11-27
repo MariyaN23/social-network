@@ -33,7 +33,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
                               onChange={changeNewPostTextHandler}
                               placeholder={'Your news...'} ref={newPostElement} />
                 </div>
-                <div className={s.button}>
+                <div className={s.buttonPost}>
                     <button onClick={addPostHandler}>Add post</button>
                 </div>
             </div>

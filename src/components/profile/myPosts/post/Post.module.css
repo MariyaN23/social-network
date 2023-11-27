@@ -1,12 +1,26 @@
 .item {
-    color: #515ff1;
-    margin-top: 50px;
+    margin: 50px 50px 5px 50px;
+    padding: 30px;
+    border-radius: 9px;
+    border: 1px solid #C5C5C5;
+    background: #FFF;
+}
+
+.item textarea {
+    width: 900px;
+    color: #171515;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .item img {
-    width: 60px;
-    height: 60px;
-    border-radius: 60px;
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+}
+
+.btn {
+    padding-top: 20px;
 }
 
 .item button {

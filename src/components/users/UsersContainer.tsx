@@ -1,21 +1,32 @@
-import React from 'react';
 import {connect} from 'react-redux';
-import {RootStatePropsType} from '../../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {
     followActionCreator,
     setUsersActionCreator,
-    unfollowActionCreator,
-    UsersPropsType
+    unfollowActionCreator, UserType
 } from '../../redux/users-reducer';
 import {Users} from './Users';
+import {Dispatch} from 'redux';
 
-const mapStateToProps = (state: RootStatePropsType)=> {
+type MapStatePropsType = {
+    users: UserType[]
+}
+
+type MapDispatchPropsType = {
+    follow: (userId: string)=> void
+    unfollow: (userId: string)=> void
+    setUsers: (users: UserType[])=> void
+}
+
+export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: state.usersPage.users
     }
 }
 
-const mapDispatchToProps = (dispatch: any)=> {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
         follow: (userId: string) => {
             dispatch(followActionCreator(userId))
@@ -23,7 +34,7 @@ const mapDispatchToProps = (dispatch: any)=> {
         unfollow: (userId: string) => {
             dispatch(unfollowActionCreator(userId))
         },
-        setUsers: (users: UsersPropsType)=> {
+        setUsers: (users: UserType[])=> {
             dispatch(setUsersActionCreator(users))
         }
     }

@@ -9,7 +9,7 @@ type DialogItemPropsType = {
 
 export const DialogItem:React.FC<DialogItemPropsType> = (props) => {
 
-    const path = `dialogs/${props.id}`
+    const path = `${props.id}`
 
     return (
         <div className={s.item}>

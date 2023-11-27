@@ -1,3 +1,6 @@
+export const Zaglushka = ()=>{}
+
+/*
 import React from 'react';
 import {StoreType} from './redux/redux-store';
 
@@ -12,4 +15,4 @@ const Provider = (props: ProviderPropsType) => {
     return <StoreContext.Provider value={props.store}>
         {props.children}
     </StoreContext.Provider>
-}
+}*/

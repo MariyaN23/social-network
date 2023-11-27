@@ -1,10 +1,11 @@
+export const Zaglushka1 = ()=>{}
+/*
 import {v1} from 'uuid';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
 import {ActionType, RootStatePropsType} from './redux-store';
 import {usersReducer} from './users-reducer';
 
-/*
 const store = {
     _state: {
         profilePage: {

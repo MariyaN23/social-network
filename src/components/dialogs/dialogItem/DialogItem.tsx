@@ -13,7 +13,7 @@ export const DialogItem:React.FC<DialogItemPropsType> = (props) => {
 
     return (
         <div className={s.item}>
-            <NavLink to={path}>{props.name}</NavLink>
+            <NavLink to={path} className={s.active}>{props.name}</NavLink>
         </div>
     );
 };

@@ -25,9 +25,11 @@ export const Dialogs = (props: DialogsPropsType) => {
                     {dialogsElements}
                 </div>}/>
                 <Route path={'/*'} element={<div className={s.messages}>
-                    <NavLink to={'/dialogs'}>Back</NavLink>
+                    <button className={s.backBtn}>
+                        <NavLink to={'/dialogs'}>Back</NavLink>
+                    </button>
                     <div>{messagesElements}</div>
-                    <div>
+                    <div className={s.sendForm}>
                         <div><textarea value={newMessageBody} onChange={changeNewMessageHandler} placeholder={'Enter your message'}></textarea></div>
                         <div><button onClick={sendMessage}>Send</button></div>
                     </div>

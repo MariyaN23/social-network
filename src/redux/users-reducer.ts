@@ -8,11 +8,15 @@ type LocationPropsType = {
     country: string
     city: string
 }
+type PhotosPropsType = {
+    small: string
+    large: string
+}
 
 export type UserType = {
     id: string
-    photoUrl: string
-    fullName: string
+    photos: PhotosPropsType
+    name: string
     status: string
     location: LocationPropsType
     followed: boolean

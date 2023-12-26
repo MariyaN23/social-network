@@ -1,16 +1,18 @@
 import React from 'react';
 import s from './Users.module.css';
-import {v1} from 'uuid';
 import {UsersPropsType} from './UsersContainer';
 import axios from 'axios';
 import img from '../../assets/images/noavatar.jpg'
 
 export const Users = (props: UsersPropsType) => {
-    if (props.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users?count=4')
-            .then(response => {
-            props.setUsers(response.data.items)
-        })
+    const getUsers =()=> {
+        if (props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users?count=4')
+                .then(response => {
+                    props.setUsers(response.data.items)
+                })
+    }
+
         /*props.setUsers( [
             {
                 id: v1(),
@@ -48,6 +50,7 @@ export const Users = (props: UsersPropsType) => {
 
     return (
         <div>
+            <button onClick={getUsers}>Get Users</button>
             <div className={s.pageName}>Users</div>
             <div className={s.usersMap}>
                 {

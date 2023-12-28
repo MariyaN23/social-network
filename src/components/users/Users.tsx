@@ -6,13 +6,25 @@ import img from '../../assets/images/noavatar.jpg'
 
 export class Users extends React.Component<UsersPropsType> {
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users?count=4')
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
         .then(response => {
             this.props.setUsers(response.data.items)
+            this.props.setUsersCount(response.data.totalCount)
         })
     }
-
+    onPageChanged =(currentPage: number)=> {
+        this.props.setCurrentPage(currentPage)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
+    }
     render() {
+        const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        const pages = []
+        for (let i = this.props.currentPage-2; i <= this.props.currentPage+2; i++) {
+            pages.push(i)
+        }
         return <div>
             <div className={s.pageName}>Users</div>
             <div className={s.usersMap}>
@@ -41,8 +53,11 @@ export class Users extends React.Component<UsersPropsType> {
                     </div>)
                 }
             </div>
-            <div className={s.showMore}>
-                <button>Show more</button>
+            <div>
+                <button>В начало</button>
+                {pages.map(p => <button className={p === this.props.currentPage ? s.selectedPage : ""}
+                                       onClick={()=>this.onPageChanged(p)}>{p} </button>)}
+                <button>Next</button>
             </div>
         </div>
     }

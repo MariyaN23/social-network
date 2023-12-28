@@ -58,9 +58,6 @@
     text-align: center;
 }
 
-.showMore {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
+.selectedPage {
+    font-weight: bold;
 }

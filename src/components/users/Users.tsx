@@ -19,11 +19,25 @@ export class Users extends React.Component<UsersPropsType> {
                 this.props.setUsers(response.data.items)
             })
     }
+    goToTheFirstBtn =()=> {
+        this.onPageChanged(1)
+    }
+    goToTheNextBtn =(currentPage: number)=> {
+        this.onPageChanged(currentPage + 1)
+    }
     render() {
         const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
         const pages = []
-        for (let i = this.props.currentPage-2; i <= this.props.currentPage+2; i++) {
-            pages.push(i)
+        const currentPage = this.props.currentPage
+        if (currentPage < 4) {
+            for (let i = 1; i < 6; i++) {
+                pages.push(i)
+            }
+        }
+        if (currentPage >= 4) {
+            for (let i = currentPage -2; i < currentPage + 3; i++) {
+                pages.push(i)
+            }
         }
         return <div>
             <div className={s.pageName}>Users</div>
@@ -53,11 +67,11 @@ export class Users extends React.Component<UsersPropsType> {
                     </div>)
                 }
             </div>
-            <div>
-                <button>В начало</button>
-                {pages.map(p => <button className={p === this.props.currentPage ? s.selectedPage : ""}
+            <div className={s.paginationWrap}>
+                {(currentPage >= 4) && < button onClick={this.goToTheFirstBtn} className={s.goToBtn}>To the first</button>}
+                {pages.map(p => <button className={p === this.props.currentPage ? s.selectedPage : s.paginationBtn}
                                        onClick={()=>this.onPageChanged(p)}>{p} </button>)}
-                <button>Next</button>
+                <button onClick={()=>this.goToTheNextBtn(this.props.currentPage)} className={s.goToBtn}>Next</button>
             </div>
         </div>
     }

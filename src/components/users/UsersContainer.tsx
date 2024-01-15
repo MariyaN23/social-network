@@ -15,6 +15,7 @@ type MapStatePropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 type MapDispatchPropsType = {
@@ -43,12 +44,15 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
             })
     }
     render() {
-        return <Users currentPage={this.props.currentPage}
-                      onPageChanged={this.onPageChanged}
-                      users={this.props.users}
-                      follow={this.props.follow}
-                      unfollow={this.props.unfollow}
-        />
+        return <>
+            <Users currentPage={this.props.currentPage}
+                   onPageChanged={this.onPageChanged}
+                   users={this.props.users}
+                   follow={this.props.follow}
+                   unfollow={this.props.unfollow}
+                   isFetching={this.props.isFetching}
+            />
+        </>
     }
 }
 
@@ -58,6 +62,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     }
 }
 

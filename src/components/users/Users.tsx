@@ -9,6 +9,7 @@ type UsersPropsType = {
     users: UserType[]
     follow: (userId: string) => void
     unfollow: (userId: string) => void
+    isFetching: boolean
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -26,7 +27,10 @@ export const Users = (props: UsersPropsType) => {
     }
     return <div>
         <div className={s.pageName}>Users</div>
-        <div className={s.usersMap}>
+        {props.isFetching &&<div>
+            <img src={"https://m.media-amazon.com/images/I/512UWQf8s9L._AC_UF1000,1000_QL80_.jpg"} className={s.krutilka}/>
+        </div>}
+        {!props.isFetching && <div className={s.usersMap}>
             {
                 props.users.map(u => <div key={u.id} className={s.user}>
                     <div>
@@ -51,7 +55,7 @@ export const Users = (props: UsersPropsType) => {
                     </div>
                 </div>)
             }
-        </div>
+        </div>}
         <div className={s.paginationWrap}>
             {(currentPage >= 4) && < button onClick={goToTheFirstBtn} className={s.goToBtn}>To the first</button>}
             {pages.map(p => <button className={p === props.currentPage ? s.selectedPage : s.paginationBtn}

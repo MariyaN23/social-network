@@ -29,6 +29,7 @@ export type UsersType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 export type FollowActionType = ReturnType<typeof followActionCreator>
@@ -41,7 +42,8 @@ const initialState: UsersType = {
     users: [],
     pageSize: 4,
     totalUsersCount: 21,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: true,
 }
 
 export const usersReducer = (state: UsersType = initialState, action: ActionType): UsersType => {

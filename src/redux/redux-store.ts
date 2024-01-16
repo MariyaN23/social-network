@@ -8,33 +8,16 @@ import {
 import {sidebarReducer} from './sidebar-reducer';
 import {
     FollowActionType,
-    setCurrentPageActionType,
-    setUsersActionType, setUsersCountActionCreator, setUsersCountActionType,
+    setCurrentPageActionType, setIsFetchingActionType,
+    setUsersActionType, setUsersCountActionType,
     UnfollowActionType,
     usersReducer
 } from './users-reducer';
 
-/*export type RootStatePropsType = {
-    profilePage: profilePagePropsType
-    dialogsPage: dialogPropsType
-    usersPage: UsersPropsType
-    sidebar: sidebarPropsType
-}
-
-export type StoreType = typeof store*/
-
-/*export type StoreType = {
-    _state: RootStatePropsType
-    _callSubscriber: (state: RootStatePropsType) => void
-    subscribe: (observer: () => void) => void
-    dispatch: (action: ActionType) => void
-    getState: () => RootStatePropsType
-}*/
-
 export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
     ChangeNewMessageBodyActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
-    setCurrentPageActionType | setUsersCountActionType
+    setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType
 
 
 const rootReducer = combineReducers({

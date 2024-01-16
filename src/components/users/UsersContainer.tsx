@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
-    followActionCreator, setCurrentPageActionCreator,
+    followActionCreator, setCurrentPageActionCreator, setIsFetchingActionCreator,
     setUsersActionCreator, setUsersCountActionCreator,
     unfollowActionCreator, UserType
 } from '../../redux/users-reducer';
@@ -24,23 +24,28 @@ type MapDispatchPropsType = {
     setUsers: (users: UserType[])=> void
     setCurrentPage: (currentPage: number)=> void
     setUsersCount: (usersCount: number)=> void
+    setIsFetching: (isFetching: boolean)=> void
 }
 
 export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
 
 class UsersContainer extends React.Component<UsersAPIPropsType> {
     componentDidMount() {
+        this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
                 this.props.setUsersCount(response.data.totalCount)
+                this.props.setIsFetching(false)
             })
     }
     onPageChanged = (currentPage: number) => {
+        this.props.setIsFetching(true)
         this.props.setCurrentPage(currentPage)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
+                this.props.setIsFetching(false)
             })
     }
     render() {
@@ -82,6 +87,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         },
         setUsersCount: (usersCount: number) => {
             dispatch(setUsersCountActionCreator(usersCount))
+        },
+        setIsFetching: (isFetching: boolean) => {
+            dispatch(setIsFetchingActionCreator(isFetching))
         }
     }
 }

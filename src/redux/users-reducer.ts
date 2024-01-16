@@ -5,6 +5,7 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_COUNT = 'SET-USERS-COUNT'
+const SET_IS_FETCHING = 'SET-IS-FETCHING'
 
 type LocationPropsType = {
     country: string
@@ -37,6 +38,7 @@ export type UnfollowActionType = ReturnType<typeof unfollowActionCreator>
 export type setUsersActionType = ReturnType<typeof setUsersActionCreator>
 export type setCurrentPageActionType = ReturnType<typeof setCurrentPageActionCreator>
 export type setUsersCountActionType = ReturnType<typeof setUsersCountActionCreator>
+export type setIsFetchingActionType = ReturnType<typeof setIsFetchingActionCreator>
 
 const initialState: UsersType = {
     users: [],
@@ -63,6 +65,9 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
         case SET_USERS_COUNT: {
             return {...state, totalUsersCount: action.usersCount}
         }
+        case SET_IS_FETCHING: {
+                return {...state, isFetching: action.isFetching}
+        }
         default:
             return state
     }
@@ -73,3 +78,4 @@ export const unfollowActionCreator = (userId: string)=> ({type: UNFOLLOW, userId
 export const setUsersActionCreator = (users: UserType[])=> ({type: SET_USERS, users}) as const
 export const setCurrentPageActionCreator = (currentPage: number)=> ({type: SET_CURRENT_PAGE, currentPage}) as const
 export const setUsersCountActionCreator = (usersCount: number)=> ({type: SET_USERS_COUNT, usersCount}) as const
+export const setIsFetchingActionCreator = (isFetching: boolean)=> ({type: SET_IS_FETCHING, isFetching}) as const

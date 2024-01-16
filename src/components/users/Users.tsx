@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Users.module.css';
 import img from '../../assets/images/noavatar.jpg'
 import {UserType} from '../../redux/users-reducer';
+import {Preloader} from '../common/Preloader';
 
 type UsersPropsType = {
     currentPage: number
@@ -27,9 +28,7 @@ export const Users = (props: UsersPropsType) => {
     }
     return <div>
         <div className={s.pageName}>Users</div>
-        {props.isFetching &&<div>
-            <img src={"https://m.media-amazon.com/images/I/512UWQf8s9L._AC_UF1000,1000_QL80_.jpg"} className={s.krutilka}/>
-        </div>}
+        {props.isFetching && <Preloader/>}
         {!props.isFetching && <div className={s.usersMap}>
             {
                 props.users.map(u => <div key={u.id} className={s.user}>

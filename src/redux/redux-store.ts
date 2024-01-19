@@ -1,5 +1,10 @@
 import {combineReducers, createStore} from 'redux';
-import {AddPostActionType, ChangeNewPostTextActionType, profileReducer} from './profile-reducer';
+import {
+    AddPostActionType,
+    ChangeNewPostTextActionType,
+    profileReducer,
+    SetUsersProfileActionType
+} from './profile-reducer';
 import {
     ChangeNewMessageBodyActionType,
     dialogsReducer,
@@ -17,7 +22,8 @@ import {
 export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
     ChangeNewMessageBodyActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
-    setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType
+    setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
+    SetUsersProfileActionType
 
 
 const rootReducer = combineReducers({

@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {Header} from './components/header/Header';
 import {Navbar} from './components/navbar/Navbar';
-import {Profile} from './components/profile/Profile';
 import {Route, Routes} from 'react-router-dom';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
@@ -18,8 +17,8 @@ function App() {
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/'} element={<Profile />}/>
-                        <Route path={'/profile'} element={<ProfileContainer />}/>
+                        <Route path={'/'} element={<ProfileContainer />}/>
+                        <Route path={'/profile/*'} element={<ProfileContainer />}/>
                         <Route path={'/dialogs/*'} element={<DialogsContainer />}/>
                         <Route path={'/users'} element={<UsersContainer />}/>
                         <Route path={'/news'} element={<News/>}/>

@@ -11,11 +11,13 @@ import {
 } from '../../redux/profile-reducer';
 
 type MapStatePropsType = {
-
+    profile: ProfileType | null
 }
 
 type MapDispatchPropsType = {
-    setUserProfile: (profile: ProfileType)=> void
+    setUsersProfile: (profile: ProfileType | null)=> void
+    addPost: ()=> void
+    changeNewPostText: (text: string)=> void
 }
 
 export type ProfileAPIPropsType = MapStatePropsType & MapDispatchPropsType
@@ -24,17 +26,19 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
             .then(response => {
-                this.props.setUserProfile(response.data)
+                this.props.setUsersProfile(response.data)
             })
     }
     render() {
-        return <Profile {...this.props}/>;
+        return <>
+            <Profile {...this.props} profile={this.props.profile}/>
+        </>
     }
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-
+        profile: state.profilePage.profile
     }
 }
 

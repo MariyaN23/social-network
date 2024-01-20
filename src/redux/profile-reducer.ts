@@ -12,7 +12,7 @@ export type PostPropsType = {
 }
 
 export type profilePagePropsType = {
-    profile: ProfileType
+    profile: ProfileType | null
     posts: PostPropsType[],
     newPostText: string
 }
@@ -38,6 +38,7 @@ type ContactsType = {
 }
 
 export type ProfileType = {
+    aboutMe: string
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -47,26 +48,7 @@ export type ProfileType = {
 }
 
 const initialState: profilePagePropsType = {
-    profile: {
-        userId: 2,
-        lookingForAJob: true,
-        lookingForAJobDescription: 'Description',
-        fullName: 'Dimych',
-        contacts: {
-            github: 'string',
-            vk: "",
-            facebook: "",
-            instagram: "",
-            twitter: "",
-            website: "",
-            youtube: "",
-            mainLink: ""
-        },
-        photos: {
-            small: "",
-            large: ""
-        }
-    },
+    profile: null,
     posts: [
         {id: v1(), message: 'Hi, how are you?', likeCounts: 15},
         {id: v1(), message: 'It\'s my first post', likeCounts: 20}
@@ -98,4 +80,4 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
 
 export const addPostActionCreator = ()=> ({type: ADD_POST}) as const
 export const changeNewPostTextActionCreator =(text: string) => ({type: CHANGE_NEW_POST_TEXT, newPostText: text}) as const
-export const setUsersProfileActionCreator =(profile: ProfileType) => ({type: SET_USERS_PROFILE, profile}) as const
+export const setUsersProfileActionCreator =(profile: ProfileType | null) => ({type: SET_USERS_PROFILE, profile}) as const

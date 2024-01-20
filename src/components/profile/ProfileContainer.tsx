@@ -9,9 +9,12 @@ import {
     ProfileType,
     setUsersProfileActionCreator as setUsersProfile
 } from '../../redux/profile-reducer';
+import {withRouter} from './withRouter';
+
 
 type MapStatePropsType = {
     profile: ProfileType | null
+    router?: any
 }
 
 type MapDispatchPropsType = {
@@ -24,7 +27,11 @@ export type ProfileAPIPropsType = MapStatePropsType & MapDispatchPropsType
 
 class ProfileContainer extends React.Component<ProfileAPIPropsType> {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+        let userId = this.props.router.params.userId
+        if (!userId) {
+            userId = 30289
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then(response => {
                 this.props.setUsersProfile(response.data)
             })
@@ -46,4 +53,4 @@ export default connect(mapStateToProps, {
     addPost,
     changeNewPostText,
     setUsersProfile
-})(ProfileContainer)
+})(withRouter(ProfileContainer))

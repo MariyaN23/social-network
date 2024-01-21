@@ -18,12 +18,13 @@ import {
     UnfollowActionType,
     usersReducer
 } from './users-reducer';
+import {authReducer, SetUserDataActionType} from './auth-reducer';
 
 export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
     ChangeNewMessageBodyActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
-    SetUsersProfileActionType
+    SetUsersProfileActionType | SetUserDataActionType
 
 
 const rootReducer = combineReducers({
@@ -31,8 +32,12 @@ const rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     sidebar: sidebarReducer,
+    auth: authReducer,
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer)
+
+//@ts-ignore
+window.store = store

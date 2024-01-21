@@ -9,3 +9,7 @@
 .header svg {
     margin: 20px 65px;
 }
+
+.login {
+    float: right;
+}

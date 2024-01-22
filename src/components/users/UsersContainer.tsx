@@ -35,17 +35,33 @@ export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
 class UsersContainer extends React.Component<UsersAPIPropsType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
             .then(response => {
                 this.props.setUsers(response.data.items)
                 this.props.setUsersCount(response.data.totalCount)
                 this.props.setIsFetching(false)
             })
     }
+    onFollowClick = (userId: string)=> {
+        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {withCredentials: true})
+            .then((response)=> {
+                if (response.data.resultCode === 0) {
+                    this.props.follow(userId)
+                }
+            })
+    }
+    onUnfollowClick = (userId: string)=> {
+        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {withCredentials: true})
+            .then((response)=> {
+                if (response.data.resultCode === 0){
+                    this.props.unfollow(userId)
+                }
+            })
+    }
     onPageChanged = (currentPage: number) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
             .then(response => {
                 this.props.setUsers(response.data.items)
                 this.props.setIsFetching(false)
@@ -56,9 +72,9 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
             <Users currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
                    users={this.props.users}
-                   follow={this.props.follow}
-                   unfollow={this.props.unfollow}
                    isFetching={this.props.isFetching}
+                   onFollowClick={this.onFollowClick}
+                   onUnfollowClick={this.onUnfollowClick}
             />
         </>
     }

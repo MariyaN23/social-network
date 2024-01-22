@@ -9,8 +9,8 @@ type UsersPropsType = {
     currentPage: number
     onPageChanged: (currentPage: number) => void
     users: UserType[]
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
+    onFollowClick: (userId: string) => void
+    onUnfollowClick: (userId: string) => void
     isFetching: boolean
 }
 
@@ -39,10 +39,10 @@ export const Users = (props: UsersPropsType) => {
                         <div>
                             {u.followed
                                 ? <button className={s.unfollow} onClick={() => {
-                                    props.unfollow(u.id)
+                                    props.onUnfollowClick(u.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    props.onFollowClick(u.id)
                                 }}>Follow</button>}
                         </div>
                     </div>

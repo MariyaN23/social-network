@@ -10,8 +10,8 @@ import {
     UserType
 } from '../../redux/users-reducer';
 import React from 'react';
-import axios from 'axios';
 import {Users} from './Users';
+import {api} from '../../api/api';
 
 type MapStatePropsType = {
     users: UserType[]
@@ -35,25 +35,25 @@ export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
 class UsersContainer extends React.Component<UsersAPIPropsType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
-            .then(response => {
-                this.props.setUsers(response.data.items)
-                this.props.setUsersCount(response.data.totalCount)
+        api.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items)
+                this.props.setUsersCount(data.totalCount)
                 this.props.setIsFetching(false)
             })
     }
     onFollowClick = (userId: string)=> {
-        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {withCredentials: true})
-            .then((response)=> {
-                if (response.data.resultCode === 0) {
+        api.follow(userId)
+            .then((data)=> {
+                if (data.resultCode === 0) {
                     this.props.follow(userId)
                 }
             })
     }
     onUnfollowClick = (userId: string)=> {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {withCredentials: true})
-            .then((response)=> {
-                if (response.data.resultCode === 0){
+        api.unfollow(userId)
+            .then((data)=> {
+                if (data.resultCode === 0){
                     this.props.unfollow(userId)
                 }
             })
@@ -61,9 +61,9 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
     onPageChanged = (currentPage: number) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
-            .then(response => {
-                this.props.setUsers(response.data.items)
+        api.getUsers(currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items)
                 this.props.setIsFetching(false)
             })
     }

@@ -7,6 +7,7 @@ import {
     setUsersActionCreator as setUsers,
     setUsersCountActionCreator as setUsersCount,
     unfollowActionCreator as unfollow,
+    setFollowingInProgressActionCreator as setFollowingInProgress,
     UserType
 } from '../../redux/users-reducer';
 import React from 'react';
@@ -19,6 +20,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: boolean
 }
 
 type MapDispatchPropsType = {
@@ -28,6 +30,7 @@ type MapDispatchPropsType = {
     setCurrentPage: (currentPage: number)=> void
     setUsersCount: (usersCount: number)=> void
     setIsFetching: (isFetching: boolean)=> void
+    setFollowingInProgress: (followingInProgress: boolean)=>void
 }
 
 export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
@@ -43,19 +46,23 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
             })
     }
     onFollowClick = (userId: string)=> {
+        this.props.setFollowingInProgress(true)
         api.follow(userId)
             .then((data)=> {
                 if (data.resultCode === 0) {
                     this.props.follow(userId)
                 }
+                this.props.setFollowingInProgress(false)
             })
     }
     onUnfollowClick = (userId: string)=> {
+        this.props.setFollowingInProgress(true)
         api.unfollow(userId)
             .then((data)=> {
                 if (data.resultCode === 0){
                     this.props.unfollow(userId)
                 }
+                this.props.setFollowingInProgress(false)
             })
     }
     onPageChanged = (currentPage: number) => {
@@ -75,6 +82,7 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
                    isFetching={this.props.isFetching}
                    onFollowClick={this.onFollowClick}
                    onUnfollowClick={this.onUnfollowClick}
+                   followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -86,7 +94,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
@@ -96,4 +105,6 @@ export default connect(mapStateToProps,  {
     setUsers,
     setCurrentPage,
     setUsersCount,
-    setIsFetching})(UsersContainer)
+    setIsFetching,
+    setFollowingInProgress
+})(UsersContainer)

@@ -6,6 +6,7 @@ const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_COUNT = 'SET-USERS-COUNT'
 const SET_IS_FETCHING = 'SET-IS-FETCHING'
+const SET_FOLLOWING_IN_PROGRESS = 'SET-FOLLOWING-IN-PROGRESS'
 
 type LocationPropsType = {
     country: string
@@ -31,6 +32,7 @@ export type UsersType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: boolean
 }
 
 export type FollowActionType = ReturnType<typeof followActionCreator>
@@ -39,6 +41,7 @@ export type setUsersActionType = ReturnType<typeof setUsersActionCreator>
 export type setCurrentPageActionType = ReturnType<typeof setCurrentPageActionCreator>
 export type setUsersCountActionType = ReturnType<typeof setUsersCountActionCreator>
 export type setIsFetchingActionType = ReturnType<typeof setIsFetchingActionCreator>
+export type setFollowingInProgressActionType = ReturnType<typeof setFollowingInProgressActionCreator>
 
 const initialState: UsersType = {
     users: [],
@@ -46,6 +49,7 @@ const initialState: UsersType = {
     totalUsersCount: 21,
     currentPage: 1,
     isFetching: true,
+    followingInProgress: false,
 }
 
 export const usersReducer = (state: UsersType = initialState, action: ActionType): UsersType => {
@@ -68,6 +72,9 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
         case SET_IS_FETCHING: {
                 return {...state, isFetching: action.isFetching}
         }
+        case SET_FOLLOWING_IN_PROGRESS: {
+            return {...state, followingInProgress: action.followingInProgress}
+        }
         default:
             return state
     }
@@ -79,3 +86,4 @@ export const setUsersActionCreator = (users: UserType[])=> ({type: SET_USERS, us
 export const setCurrentPageActionCreator = (currentPage: number)=> ({type: SET_CURRENT_PAGE, currentPage}) as const
 export const setUsersCountActionCreator = (usersCount: number)=> ({type: SET_USERS_COUNT, usersCount}) as const
 export const setIsFetchingActionCreator = (isFetching: boolean)=> ({type: SET_IS_FETCHING, isFetching}) as const
+export const setFollowingInProgressActionCreator = (followingInProgress: boolean)=> ({type: SET_FOLLOWING_IN_PROGRESS, followingInProgress}) as const

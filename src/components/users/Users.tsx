@@ -12,7 +12,7 @@ type UsersPropsType = {
     onFollowClick: (userId: string) => void
     onUnfollowClick: (userId: string) => void
     isFetching: boolean
-    followingInProgress: boolean
+    followingInProgress: string[]
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -39,10 +39,10 @@ export const Users = (props: UsersPropsType) => {
                         </NavLink>
                         <div>
                             {u.followed
-                                ? <button disabled={props.followingInProgress} className={s.unfollow} onClick={() => {
+                                ? <button disabled={props.followingInProgress.some(id => id === u.id)} className={s.unfollow} onClick={() => {
                                     props.onUnfollowClick(u.id)
                                 }}>Unfollow</button>
-                                : <button disabled={props.followingInProgress} onClick={() => {
+                                : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                                     props.onFollowClick(u.id)
                                 }}>Follow</button>}
                         </div>

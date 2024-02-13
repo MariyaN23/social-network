@@ -20,7 +20,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgress: boolean
+    followingInProgress: string[]
 }
 
 type MapDispatchPropsType = {
@@ -30,7 +30,7 @@ type MapDispatchPropsType = {
     setCurrentPage: (currentPage: number)=> void
     setUsersCount: (usersCount: number)=> void
     setIsFetching: (isFetching: boolean)=> void
-    setFollowingInProgress: (followingInProgress: boolean)=>void
+    setFollowingInProgress: (isFetching: boolean, userId: string)=> void
 }
 
 export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
@@ -46,23 +46,23 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
             })
     }
     onFollowClick = (userId: string)=> {
-        this.props.setFollowingInProgress(true)
+        this.props.setFollowingInProgress(true, userId)
         api.follow(userId)
             .then((data)=> {
                 if (data.resultCode === 0) {
                     this.props.follow(userId)
                 }
-                this.props.setFollowingInProgress(false)
+                this.props.setFollowingInProgress(false, userId)
             })
     }
     onUnfollowClick = (userId: string)=> {
-        this.props.setFollowingInProgress(true)
+        this.props.setFollowingInProgress(true, userId)
         api.unfollow(userId)
             .then((data)=> {
                 if (data.resultCode === 0){
                     this.props.unfollow(userId)
                 }
-                this.props.setFollowingInProgress(false)
+                this.props.setFollowingInProgress(false, userId)
             })
     }
     onPageChanged = (currentPage: number) => {

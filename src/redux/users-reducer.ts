@@ -1,4 +1,6 @@
-import {ActionType} from './redux-store';
+import {ActionType, AppStateType, AppThunk} from './redux-store';
+import {api} from '../api/api';
+import {ThunkDispatch} from 'redux-thunk';
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -90,3 +92,26 @@ export const setCurrentPageActionCreator = (currentPage: number)=> ({type: SET_C
 export const setUsersCountActionCreator = (usersCount: number)=> ({type: SET_USERS_COUNT, usersCount}) as const
 export const setIsFetchingActionCreator = (isFetching: boolean)=> ({type: SET_IS_FETCHING, isFetching}) as const
 export const setFollowingInProgressActionCreator = (isFetching: boolean, userId: string)=> ({type: SET_FOLLOWING_IN_PROGRESS, userId, isFetching}) as const
+
+export const getUsersThunkCreator =(currentPage: number, pageSize: number): AppThunk =>
+    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
+    dispatch(setIsFetchingActionCreator(true))
+    api.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setUsersActionCreator(data.items))
+            dispatch(setUsersCountActionCreator(data.totalCount))
+            dispatch(setIsFetchingActionCreator(false))
+        })
+}
+
+export const followThunkCreator =(userId: string, follow: boolean): AppThunk =>
+    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
+        dispatch(setFollowingInProgressActionCreator(true, userId));
+        (follow ? api.follow(userId) : api.unfollow(userId))
+            .then((data)=> {
+                if (data.resultCode === 0) {
+                    follow ? dispatch(followActionCreator(userId)) : dispatch(unfollowActionCreator(userId))
+                }
+                dispatch(setFollowingInProgressActionCreator(false, userId))
+            })
+    }

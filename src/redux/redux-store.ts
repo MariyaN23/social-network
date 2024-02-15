@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from 'redux';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {
     AddPostActionType,
     ChangeNewPostTextActionType,
@@ -19,6 +19,7 @@ import {
     usersReducer
 } from './users-reducer';
 import {authReducer, SetUserDataActionType} from './auth-reducer';
+import thunk, {ThunkAction} from 'redux-thunk';
 
 export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
     ChangeNewMessageBodyActionType | SendMessageActionType |
@@ -37,7 +38,9 @@ const rootReducer = combineReducers({
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer)
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType>
+
+export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 //@ts-ignore
 window.store = store

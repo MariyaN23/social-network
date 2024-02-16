@@ -1,13 +1,12 @@
 import React from 'react';
 import {Profile} from './Profile';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
     addPostActionCreator as addPost,
     changeNewPostTextActionCreator as changeNewPostText,
-    ProfileType,
-    setUsersProfileActionCreator as setUsersProfile
+    getUsersProfileThunkCreator,
+    ProfileType
 } from '../../redux/profile-reducer';
 import {withRouter, WithRouterProps} from './withRouter';
 
@@ -17,9 +16,9 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    setUsersProfile: (profile: ProfileType | null)=> void
     addPost: ()=> void
     changeNewPostText: (text: string)=> void
+    getUsersProfileThunkCreator: (userId: string)=> void
 }
 
 export type ProfileAPIPropsType = MapStatePropsType & MapDispatchPropsType & WithRouterProps
@@ -30,10 +29,7 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
         if (!userId) {
             userId = '30289'
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(response => {
-                this.props.setUsersProfile(response.data)
-            })
+        this.props.getUsersProfileThunkCreator(userId)
     }
     render() {
         return <>
@@ -51,5 +47,5 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export default connect(mapStateToProps, {
     addPost,
     changeNewPostText,
-    setUsersProfile
+    getUsersProfileThunkCreator
 })(withRouter(ProfileContainer))

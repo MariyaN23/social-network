@@ -6,7 +6,6 @@ import {ProfileType} from '../../redux/profile-reducer';
 
 type ProfilePropsType = {
     profile: ProfileType | null
-    setUsersProfile: (profile: ProfileType)=> void
     addPost: ()=> void
     changeNewPostText: (text: string)=> void
 }

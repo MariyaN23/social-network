@@ -1,10 +1,8 @@
 import React from 'react';
 import {Header} from './Header';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {DataType, setUserDataActionCreator as setUserData} from '../../redux/auth-reducer';
+import {authThunkCreator, DataType, setUserDataActionCreator as setUserData} from '../../redux/auth-reducer';
 import {AppStateType} from '../../redux/redux-store';
-import {api} from '../../api/api';
 
 type MapStatePropsType = {
     isAuth: boolean
@@ -13,18 +11,14 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     setUserData: (data: DataType)=> void
+    authThunkCreator: ()=> void
 }
 
 export type HeaderAPIPropsType = MapStatePropsType & MapDispatchPropsType
 
 class HeaderContainer extends React.Component<HeaderAPIPropsType> {
     componentDidMount() {
-        api.authMe()
-            .then((data)=> {
-                if (data.resultCode === 0) {
-                    this.props.setUserData(data.data)
-                }
-            })
+        this.props.authThunkCreator()
     }
     render() {
         return <Header {...this.props} />
@@ -39,5 +33,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 export default connect(mapStateToProps,  {
-    setUserData
+    setUserData,
+    authThunkCreator
 })(HeaderContainer)

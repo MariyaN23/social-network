@@ -1,5 +1,7 @@
 import {v1} from 'uuid';
-import {ActionType} from './redux-store';
+import {ActionType, AppStateType, AppThunk} from './redux-store';
+import {ThunkDispatch} from 'redux-thunk';
+import {api} from '../api/api';
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
@@ -81,3 +83,11 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
 export const addPostActionCreator = ()=> ({type: ADD_POST}) as const
 export const changeNewPostTextActionCreator =(text: string) => ({type: CHANGE_NEW_POST_TEXT, newPostText: text}) as const
 export const setUsersProfileActionCreator =(profile: ProfileType | null) => ({type: SET_USERS_PROFILE, profile}) as const
+
+export const getUsersProfileThunkCreator =(userId: string): AppThunk =>
+    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
+    api.getUsersProfile(userId)
+        .then(data => {
+            dispatch(setUsersProfileActionCreator(data))
+        })
+    }

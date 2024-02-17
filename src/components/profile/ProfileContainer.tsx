@@ -9,12 +9,11 @@ import {
     ProfileType
 } from '../../redux/profile-reducer';
 import {withRouter, WithRouterProps} from './withRouter';
-import {Navigate} from 'react-router-dom';
+import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
 
 
 type MapStatePropsType = {
     profile: ProfileType | null
-    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -34,7 +33,6 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
         this.props.getUsersProfileThunkCreator(userId)
     }
     render() {
-        if (!this.props.isAuth) return <Navigate to={'/login'} replace={true}/>
         return <>
             <Profile {...this.props} />
         </>
@@ -43,13 +41,12 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth
+        profile: state.profilePage.profile
     }
 }
 
-export default connect(mapStateToProps, {
+export default withAuthRedirectComponent(connect(mapStateToProps, {
     addPost,
     changeNewPostText,
     getUsersProfileThunkCreator
-})(withRouter(ProfileContainer))
+})(withRouter(ProfileContainer)))

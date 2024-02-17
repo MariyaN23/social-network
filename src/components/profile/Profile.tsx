@@ -2,15 +2,9 @@ import React from 'react';
 import s from './Profile.module.css';
 import {ProfileInfo} from './myPosts/profileInfo/ProfileInfo';
 import {MyPostsContainer} from './myPosts/MyPostsContainer';
-import {ProfileType} from '../../redux/profile-reducer';
+import {ProfileAPIPropsType} from './ProfileContainer';
 
-type ProfilePropsType = {
-    profile: ProfileType | null
-    addPost: ()=> void
-    changeNewPostText: (text: string)=> void
-}
-
-export const Profile = (props: ProfilePropsType) => {
+export const Profile = (props: ProfileAPIPropsType) => {
     return (
         <div className={s.content}>
             <ProfileInfo profile={props.profile}/>

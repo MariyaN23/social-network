@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import {Users} from './Users';
 import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
+import {compose} from 'redux';
 
 type MapStatePropsType = {
     users: UserType[]
@@ -66,8 +67,18 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
+export default compose<React.ComponentType>(
+    connect(mapStateToProps,  {
+        setCurrentPage,
+        getUsersThunkCreator,
+        followThunkCreator
+    }),
+    withAuthRedirectComponent
+)(UsersContainer)
+
+/*
 export default withAuthRedirectComponent(connect(mapStateToProps,  {
     setCurrentPage,
     getUsersThunkCreator,
     followThunkCreator
-})(UsersContainer))
+})(UsersContainer))*/

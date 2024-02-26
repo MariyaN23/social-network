@@ -5,11 +5,11 @@ import {Route, Routes} from 'react-router-dom';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Settings} from './components/settings/Settings';
-import {DialogsContainer} from './components/dialogs/DialogsContainer';
 import UsersContainer from './components/users/UsersContainer';
 import ProfileContainer from './components/profile/ProfileContainer';
 import HeaderContainer from './components/header/HeaderContainer';
 import {Login} from './components/login/Login';
+import Dialogs from './components/dialogs/DialogsContainer';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={<ProfileContainer />}/>
                         <Route path={'/profile/:userId?'} element={<ProfileContainer />}/>
-                        <Route path={'/dialogs/*'} element={<DialogsContainer />}/>
+                        <Route path={'/dialogs/*'} element={<Dialogs />}/>
                         <Route path={'/users'} element={<UsersContainer />}/>
                         <Route path={'/news'} element={<News/>}/>
                         <Route path={'/music'} element={<Music/>}/>

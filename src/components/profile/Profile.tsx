@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Profile.module.css';
-import {ProfileInfo} from './myPosts/profileInfo/ProfileInfo';
+import {ProfileInfo} from './profileInfo/ProfileInfo';
 import {MyPostsContainer} from './myPosts/MyPostsContainer';
 import {ProfileAPIPropsType} from './ProfileContainer';
 

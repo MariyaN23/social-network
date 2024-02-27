@@ -55,10 +55,3 @@ export default compose<React.ComponentType>(
     withRouter,
     withAuthRedirectComponent
 )(ProfileContainer)
-
-/*
-export default withAuthRedirectComponent(connect(mapStateToProps, {
-    addPost,
-    changeNewPostText,
-    getUsersProfileThunkCreator
-})(withRouter(ProfileContainer)))*/

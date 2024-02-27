@@ -75,10 +75,3 @@ export default compose<React.ComponentType>(
     }),
     withAuthRedirectComponent
 )(UsersContainer)
-
-/*
-export default withAuthRedirectComponent(connect(mapStateToProps,  {
-    setCurrentPage,
-    getUsersThunkCreator,
-    followThunkCreator
-})(UsersContainer))*/

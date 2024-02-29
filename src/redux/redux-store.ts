@@ -3,7 +3,7 @@ import {
     AddPostActionType,
     ChangeNewPostTextActionType,
     profileReducer,
-    SetUsersProfileActionType
+    SetUsersProfileActionType, SetUsersStatusActionType
 } from './profile-reducer';
 import {
     ChangeNewMessageBodyActionType,
@@ -25,7 +25,8 @@ export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
     ChangeNewMessageBodyActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
-    SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType
+    SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
+    SetUsersStatusActionType
 
 
 const rootReducer = combineReducers({

@@ -110,10 +110,13 @@ export const getUsersStatusThunkCreator =(userId: string): AppThunk =>
 
 export const updateUsersStatusThunkCreator =(status: string): AppThunk =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
-        api.updateStatus(status)
-            .then(data => {
-                if (data.data.resultCode === 0) {
-                    dispatch(setUsersStatusActionCreator(status))
-                }
-            })
+    const state = getState()
+        if (state.profilePage.profile?.userId === state.auth.data.id) {
+            api.updateStatus(status)
+                .then(data => {
+                    if (data.data.resultCode === 0) {
+                        dispatch(setUsersStatusActionCreator(status))
+                    }
+                })
+        }
     }

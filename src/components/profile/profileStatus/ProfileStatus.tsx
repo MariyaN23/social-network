@@ -3,6 +3,8 @@ import React, {ChangeEvent} from 'react';
 type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string)=> void
+    profileId: string
+    authId: string | null
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
@@ -11,7 +13,9 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         status: this.props.status
     }
     onDoubleClick =()=> {
-        this.setState({editMode: true})
+        if (this.props.profileId === this.props.authId) {
+            this.setState({editMode: true})
+        }
     }
     onBlur =()=> {
         this.setState({editMode: false})
@@ -19,6 +23,11 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     }
     onStatusChange =(e: ChangeEvent<HTMLInputElement>)=> {
         this.setState({status: e.currentTarget.value})
+    }
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({status: this.props.status})
+        }
     }
     render() {
         return <>

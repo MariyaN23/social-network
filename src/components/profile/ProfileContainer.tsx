@@ -16,6 +16,7 @@ import {compose} from 'redux';
 type MapStatePropsType = {
     profile: ProfileType | null
     status: string
+    authId: string | null
 }
 
 type MapDispatchPropsType = {
@@ -47,7 +48,8 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        authId: state.auth.data.id
     }
 }
 

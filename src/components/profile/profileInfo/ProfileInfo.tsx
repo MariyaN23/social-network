@@ -9,6 +9,7 @@ type ProfileInfoPropsType = {
     profile: ProfileType | null
     status: string
     updateStatus: (status: string)=> void
+    authId: string | null
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -21,7 +22,12 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <img src={props.profile?.photos.large} alt={'avatar'}/>
                 <div>
                     <h2>{props.profile.fullName}</h2>
-                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                    <ProfileStatus
+                        status={props.status}
+                        updateStatus={props.updateStatus}
+                        profileId={props.profile.userId}
+                        authId={props.authId}
+                    />
                     <p>{props.profile.aboutMe}</p>
                     <hr/>
                     <p>Looking for a job: {props.profile.lookingForAJob ? '✔' : '❌'}</p>

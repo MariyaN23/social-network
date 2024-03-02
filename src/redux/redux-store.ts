@@ -13,7 +13,7 @@ import {
 import {sidebarReducer} from './sidebar-reducer';
 import {
     FollowActionType,
-    setCurrentPageActionType, setFollowingInProgressActionType, setIsFetchingActionType,
+    setCurrentPageActionType, setFilterActionType, setFollowingInProgressActionType, setIsFetchingActionType,
     setUsersActionType, setUsersCountActionType,
     UnfollowActionType,
     usersReducer
@@ -26,7 +26,7 @@ export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
-    SetUsersStatusActionType
+    SetUsersStatusActionType | setFilterActionType
 
 
 const rootReducer = combineReducers({

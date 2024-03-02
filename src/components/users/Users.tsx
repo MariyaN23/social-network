@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './Users.module.css';
 import img from '../../assets/images/noavatar.jpg'
-import {UserType} from '../../redux/users-reducer';
+import {FilterType, UserType} from '../../redux/users-reducer';
 import {Preloader} from '../common/Preloader';
 import {NavLink} from 'react-router-dom';
+import {UsersSearchForm} from './UsersSearchForm';
 
 type UsersPropsType = {
     currentPage: number
@@ -13,6 +14,7 @@ type UsersPropsType = {
     onUnfollowClick: (userId: string) => void
     isFetching: boolean
     followingInProgress: string[]
+    onFilterChanged: (filter: FilterType)=> void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -29,6 +31,7 @@ export const Users = (props: UsersPropsType) => {
     }
     return <div>
         <div className={s.pageName}>Users</div>
+        <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
         {props.isFetching && <Preloader/>}
         {!props.isFetching && <div className={s.usersMap}>
             {

@@ -9,6 +9,7 @@ const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_COUNT = 'SET-USERS-COUNT'
 const SET_IS_FETCHING = 'SET-IS-FETCHING'
 const SET_FOLLOWING_IN_PROGRESS = 'SET-FOLLOWING-IN-PROGRESS'
+const SET_FILTER = 'SET-FILTER'
 
 type LocationPropsType = {
     country: string
@@ -28,6 +29,11 @@ export type UserType = {
     followed: boolean
 }
 
+export type FilterType = {
+    term: string
+    friend: null | boolean
+}
+
 export type UsersType = {
     users: UserType[]
     pageSize: number
@@ -35,6 +41,7 @@ export type UsersType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: string[]
+    filter: FilterType
 }
 
 export type FollowActionType = ReturnType<typeof followActionCreator>
@@ -44,6 +51,7 @@ export type setCurrentPageActionType = ReturnType<typeof setCurrentPageActionCre
 export type setUsersCountActionType = ReturnType<typeof setUsersCountActionCreator>
 export type setIsFetchingActionType = ReturnType<typeof setIsFetchingActionCreator>
 export type setFollowingInProgressActionType = ReturnType<typeof setFollowingInProgressActionCreator>
+export type setFilterActionType = ReturnType<typeof setFilterActionCreator>
 
 const initialState: UsersType = {
     users: [],
@@ -52,6 +60,10 @@ const initialState: UsersType = {
     currentPage: 1,
     isFetching: true,
     followingInProgress: [],
+    filter: {
+        term: "",
+        friend: null as null | boolean
+    }
 }
 
 export const usersReducer = (state: UsersType = initialState, action: ActionType): UsersType => {
@@ -80,6 +92,9 @@ export const usersReducer = (state: UsersType = initialState, action: ActionType
                 ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)}
         }
+        case SET_FILTER: {
+            return {...state, filter: action.payload}
+        }
         default:
             return state
     }
@@ -92,11 +107,13 @@ export const setCurrentPageActionCreator = (currentPage: number)=> ({type: SET_C
 export const setUsersCountActionCreator = (usersCount: number)=> ({type: SET_USERS_COUNT, usersCount}) as const
 export const setIsFetchingActionCreator = (isFetching: boolean)=> ({type: SET_IS_FETCHING, isFetching}) as const
 export const setFollowingInProgressActionCreator = (isFetching: boolean, userId: string)=> ({type: SET_FOLLOWING_IN_PROGRESS, userId, isFetching}) as const
+export const setFilterActionCreator = (filter: FilterType)=> ({type: SET_FILTER, payload: filter}) as const
 
-export const getUsersThunkCreator =(currentPage: number, pageSize: number): AppThunk =>
+export const getUsersThunkCreator =(currentPage: number, pageSize: number, filter: FilterType): AppThunk =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
     dispatch(setIsFetchingActionCreator(true))
-    api.getUsers(currentPage, pageSize)
+    dispatch(setFilterActionCreator(filter))
+    api.getUsers(currentPage, pageSize, filter)
         .then(data => {
             dispatch(setUsersActionCreator(data.items))
             dispatch(setUsersCountActionCreator(data.totalCount))

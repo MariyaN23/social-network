@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
+    FilterType,
     followThunkCreator,
     getUsersThunkCreator,
     setCurrentPageActionCreator as setCurrentPage,
@@ -18,11 +19,12 @@ type MapStatePropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: string[]
+    filter: FilterType
 }
 
 type MapDispatchPropsType = {
     setCurrentPage: (currentPage: number)=> void
-    getUsersThunkCreator: (currentPage: number, pageSize: number)=> void
+    getUsersThunkCreator: (currentPage: number, pageSize: number, filter: FilterType)=> void
     followThunkCreator: (userId: string, follow: boolean)=> void
 }
 
@@ -30,7 +32,7 @@ export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
 
 class UsersContainer extends React.Component<UsersAPIPropsType> {
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize, this.props.filter)
     }
     onFollowClick = (userId: string)=> {
         this.props.followThunkCreator(userId, true)
@@ -40,7 +42,10 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
     }
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPage(currentPage)
-        this.props.getUsersThunkCreator(currentPage, this.props.pageSize)
+        this.props.getUsersThunkCreator(currentPage, this.props.pageSize, this.props.filter)
+    }
+    onFilterChanged =(filter: FilterType)=> {
+        this.props.getUsersThunkCreator(1, this.props.pageSize, filter)
     }
     render() {
         return <>
@@ -51,6 +56,8 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
                    onFollowClick={this.onFollowClick}
                    onUnfollowClick={this.onUnfollowClick}
                    followingInProgress={this.props.followingInProgress}
+                   onFilterChanged={this.onFilterChanged}
+
             />
         </>
     }
@@ -64,6 +71,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
+        filter: state.usersPage.filter
     }
 }
 

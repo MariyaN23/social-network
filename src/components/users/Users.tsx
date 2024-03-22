@@ -31,7 +31,9 @@ export const Users = (props: UsersPropsType) => {
     }
     return <div>
         <div className={s.pageName}>Users</div>
-        <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+        <div className={s.UsersSearchForm}>
+            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+        </div>
         {props.isFetching && <Preloader/>}
         {!props.isFetching && <div className={s.usersMap}>
             {

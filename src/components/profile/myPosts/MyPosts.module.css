@@ -20,17 +20,3 @@ textarea {
 .buttonPost button {
     margin-left: 50px;
 }
-
-button {
-    border-radius: 5px;
-    border: 1px solid #368AC1;
-    background: #368AC1;
-    width: 110px;
-    height: 30px;
-    color: #FFF;
-    cursor: pointer;
-}
-
-button:disabled {
-    background: #89bedc;
-}

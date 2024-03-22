@@ -1,6 +1,7 @@
 import React from 'react';
 import {Field, Formik} from 'formik';
 import {FilterType} from '../../redux/users-reducer';
+import s from './UsersSearchForm.module.css'
 
 type FormType = {
     term: string
@@ -39,19 +40,26 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
                   isSubmitting,
               }) => (
                 <form onSubmit={handleSubmit}>
+                    <Field name="friend" as="select" className={s.FilterField}>
+                        <option value="null">All</option>
+                        <option value="true">Only followed</option>
+                        <option value="false">Only unfollowed</option>
+                    </Field>
                     <Field
                         type="text"
                         name="term"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.term}
+                        className={s.SearchField}
+                        placeholder={'Search...'}
                     />
-                    <Field name="friend" as="select">
+                   {/* <Field name="friend" as="select">
                         <option value="null">All</option>
                         <option value="true">Only followed</option>
                         <option value="false">Only unfollowed</option>
-                    </Field>
-                    <button type="submit" disabled={isSubmitting}>
+                    </Field>*/}
+                    <button type="submit" disabled={isSubmitting} className={s.SearchBtn}>
                         Find
                     </button>
                 </form>

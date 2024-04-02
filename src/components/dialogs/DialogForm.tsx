@@ -2,6 +2,10 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Field, Formik} from 'formik';
 
+type DialogFormPropsType = {
+    sendMessage: (message: string)=> void
+}
+
 type DialogFormType = {
     newMessageBody: string
 }
@@ -11,12 +15,12 @@ const dialogFormValidate = (values: any) => {
     return errors;
 }
 
-export const DialogForm = () => {
+export const DialogForm = (props: DialogFormPropsType) => {
     const submit =(values: DialogFormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
-        const filter: DialogFormType = {
+        const message: DialogFormType = {
             newMessageBody: values.newMessageBody
         }
-        console.log(filter)
+        props.sendMessage(message.newMessageBody)
         setSubmitting(false)
     }
     return (

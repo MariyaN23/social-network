@@ -1,7 +1,6 @@
 import {v1} from 'uuid';
 import {ActionType} from './redux-store';
 
-const CHANGE_NEW_MESSAGE_BODY = 'CHANGE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
 type DialogPropsType = {
@@ -17,10 +16,8 @@ type MessagesPropsType = {
 export type dialogPropsType = {
     dialogs: DialogPropsType[]
     messages: MessagesPropsType[]
-    newMessageBody: string
 }
 
-export type ChangeNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyActionCreator>
 export type SendMessageActionType = ReturnType<typeof sendMessageActionCreator>
 
 const initialState: dialogPropsType = {
@@ -39,21 +36,17 @@ const initialState: dialogPropsType = {
         {id: v1(), message: 'Bye'},
         {id: v1(), message: 'Hi'},
         {id: v1(), message: 'Hi'},
-    ],
-    newMessageBody: ''
+    ]
 }
 
 export const dialogsReducer = (state: dialogPropsType = initialState, action: ActionType)=> {
     switch (action.type) {
-        case CHANGE_NEW_MESSAGE_BODY: {
-            return {...state, newMessageBody: action.body}
-        }
         case SEND_MESSAGE: {
             const newMessage: MessagesPropsType = {
                 id: v1(),
-                message: state.newMessageBody
+                message: action.payload.message
             }
-            return {...state, messages: [...state.messages, newMessage], newMessageBody: ''}
+            return {...state, messages: [...state.messages, newMessage]}
         }
         default: {
             return state
@@ -61,5 +54,4 @@ export const dialogsReducer = (state: dialogPropsType = initialState, action: Ac
     }
 }
 
-export const updateNewMessageBodyActionCreator =(message: string) => ({type: CHANGE_NEW_MESSAGE_BODY, body: message}) as const
-export const sendMessageActionCreator =() => ({type: SEND_MESSAGE}) as const
+export const sendMessageActionCreator =(message: string) => ({type: SEND_MESSAGE, payload: {message}}) as const

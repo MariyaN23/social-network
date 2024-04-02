@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
     addPostActionCreator as addPost,
-    changeNewPostTextActionCreator as changeNewPostText,
     getUsersProfileThunkCreator, getUsersStatusThunkCreator,
     ProfileType, updateUsersStatusThunkCreator
 } from '../../redux/profile-reducer';
@@ -57,7 +56,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         addPost,
-        changeNewPostText,
         getUsersProfileThunkCreator,
         getUsersStatusThunkCreator,
         updateUsersStatusThunkCreator

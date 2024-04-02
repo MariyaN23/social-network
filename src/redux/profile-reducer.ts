@@ -4,7 +4,6 @@ import {ThunkDispatch} from 'redux-thunk';
 import {api} from '../api/api';
 
 const ADD_POST = 'ADD-POST'
-const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE'
 const SET_USERS_STATUS = 'SET-USERS-STATUS'
 
@@ -17,12 +16,10 @@ export type PostPropsType = {
 export type profilePagePropsType = {
     profile: ProfileType | null
     posts: PostPropsType[]
-    newPostText: string
     status: string
 }
 
 export type AddPostActionType = ReturnType<typeof addPostActionCreator>
-export type ChangeNewPostTextActionType = ReturnType<typeof changeNewPostTextActionCreator>
 export type SetUsersProfileActionType = ReturnType<typeof setUsersProfileActionCreator>
 export type SetUsersStatusActionType = ReturnType<typeof setUsersStatusActionCreator>
 
@@ -58,7 +55,6 @@ const initialState: profilePagePropsType = {
         {id: v1(), message: 'Hi, how are you?', likeCounts: 15},
         {id: v1(), message: 'It\'s my first post', likeCounts: 20}
     ],
-    newPostText: '',
     status: ''
 }
 
@@ -67,13 +63,10 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
         case ADD_POST: {
             const newPost: PostPropsType = {
                 id: v1(),
-                message: state.newPostText,
+                message: action.payload.post,
                 likeCounts: 0
             }
-            return {...state, posts: [newPost, ...state.posts], newPostText: ''}
-        }
-        case CHANGE_NEW_POST_TEXT: {
-            return {...state, newPostText: action.newPostText}
+            return {...state, posts: [newPost, ...state.posts]}
         }
         case SET_USERS_PROFILE: {
             return {...state, profile: action.profile}
@@ -87,8 +80,7 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
     }
 }
 
-export const addPostActionCreator = ()=> ({type: ADD_POST}) as const
-export const changeNewPostTextActionCreator =(text: string) => ({type: CHANGE_NEW_POST_TEXT, newPostText: text}) as const
+export const addPostActionCreator = (post: string)=> ({type: ADD_POST, payload: {post}}) as const
 export const setUsersProfileActionCreator =(profile: ProfileType | null) => ({type: SET_USERS_PROFILE, profile}) as const
 export const setUsersStatusActionCreator =(status: string) => ({type: SET_USERS_STATUS, status}) as const
 

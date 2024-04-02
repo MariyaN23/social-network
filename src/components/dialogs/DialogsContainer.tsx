@@ -1,10 +1,9 @@
 import {
     dialogPropsType,
-    sendMessageActionCreator,
-    updateNewMessageBodyActionCreator
+    sendMessageActionCreator
 } from '../../redux/dialogs-reducer';
 import {Dialogs} from './Dialogs';
-import {ActionType, AppStateType} from '../../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
 import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
@@ -14,8 +13,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    changeNewMessageHandler: (message: string)=> void
-    sendMessage: ()=> void
+    sendMessage: (message: string)=> void
 }
 
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -28,12 +26,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        changeNewMessageHandler: (message: string)=> {
-            const action: ActionType = updateNewMessageBodyActionCreator(message)
-            dispatch(action)
-        },
-        sendMessage: ()=> {
-            dispatch(sendMessageActionCreator())
+        sendMessage: (message: string)=> {
+            dispatch(sendMessageActionCreator(message))
         }
     }
 }

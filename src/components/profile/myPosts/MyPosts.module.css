@@ -7,7 +7,7 @@
     margin-left: 50px;
 }
 
-textarea {
+.field {
     resize: none;
     width: 810px;
     height: 60px;
@@ -18,5 +18,5 @@ textarea {
 }
 
 .buttonPost button {
-    margin-left: 50px;
+    margin: 20px 0 0 50px;
 }

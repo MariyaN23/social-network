@@ -1,13 +1,14 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
+import {PostForm} from './PostForm';
 
 export const MyPosts = (props: MyPostsPropsType) => {
     const postsElements =
     props.posts.map(p=> <Post key={p.id} message={p.message} likeCounts={p.likeCounts}/>)
 
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
+    /*const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPostHandler =()=> {
         props.addPost()
@@ -15,12 +16,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
     const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>)=> {
         props.updateNewPostText(e.currentTarget.value)
-    }
+    }*/
 
     return (
         <div className={s.postsBlock}>
             <h3>My Posts</h3>
-            <div>
+            {/*<div>
                 <div className={s.textarea}>
                     <textarea value={props.newPostText}
                               onChange={changeNewPostTextHandler}
@@ -29,7 +30,8 @@ export const MyPosts = (props: MyPostsPropsType) => {
                 <div className={s.buttonPost}>
                     <button onClick={addPostHandler}>Add post</button>
                 </div>
-            </div>
+            </div>*/}
+            <PostForm sendPost={props.addPost} />
             <div>
                 {postsElements}
             </div>

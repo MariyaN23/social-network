@@ -1,12 +1,10 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {
     AddPostActionType,
-    ChangeNewPostTextActionType,
     profileReducer,
     SetUsersProfileActionType, SetUsersStatusActionType
 } from './profile-reducer';
 import {
-    ChangeNewMessageBodyActionType,
     dialogsReducer,
     SendMessageActionType
 } from './dialogs-reducer';
@@ -21,8 +19,7 @@ import {
 import {authReducer, SetUserDataActionType} from './auth-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
 
-export type ActionType = AddPostActionType | ChangeNewPostTextActionType |
-    ChangeNewMessageBodyActionType | SendMessageActionType |
+export type ActionType = AddPostActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |

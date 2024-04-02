@@ -10,15 +10,6 @@ export const Dialogs = (props: DialogsPropsType) => {
     const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
     const messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}/>)
 
-   /* const newMessageBody = props.dialogsPage.newMessageBody
-    const sendMessage =()=> {
-        props.sendMessage()
-    }
-
-    const changeNewMessageHandler =(e: ChangeEvent<HTMLTextAreaElement>)=> {
-        props.changeNewMessageHandler(e.currentTarget.value)
-    }*/
-
     return (
         <div className={s.dialogs}>
             <Routes>
@@ -30,7 +21,7 @@ export const Dialogs = (props: DialogsPropsType) => {
                         <NavLink to={'/dialogs'}>Back</NavLink>
                     </button>
                     <div>{messagesElements}</div>
-                    <DialogForm />
+                    <DialogForm sendMessage={props.sendMessage}/>
                 </div>}/>
             </Routes>
         </div>

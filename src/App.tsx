@@ -8,7 +8,7 @@ import {Settings} from './components/settings/Settings';
 import UsersContainer from './components/users/UsersContainer';
 import ProfileContainer from './components/profile/ProfileContainer';
 import HeaderContainer from './components/header/HeaderContainer';
-import {Login} from './components/login/Login';
+import Login from './components/login/Login';
 import Dialogs from './components/dialogs/DialogsContainer';
 import {Error404} from './components/error404/Error404';
 

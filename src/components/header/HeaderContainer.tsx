@@ -10,7 +10,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    setUserData: (data: DataType)=> void
+    setUserData: (data: DataType, isAuth: boolean)=> void
     authThunkCreator: ()=> void
 }
 

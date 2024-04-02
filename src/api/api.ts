@@ -2,6 +2,7 @@ import axios from 'axios';
 import {FilterType, UserType} from '../redux/users-reducer';
 import {ProfileType} from '../redux/profile-reducer';
 import {DataType} from '../redux/auth-reducer';
+import {AuthFormType} from '../components/login/LoginForm';
 
 type ResponseType<T = {}> = {
     resultCode: number
@@ -41,6 +42,18 @@ export const api = {
     },
     authMe() {
         return instance.get<ResponseType<DataType>>(`auth/me`)
+            .then(response => {
+                return response.data
+            })
+    },
+    login(loginData: AuthFormType) {
+        return instance.post<ResponseType<DataType>>(`auth/login`, loginData)
+            .then(response => {
+                return response.data
+            })
+    },
+    logout() {
+        return instance.delete<ResponseType>(`auth/login`)
             .then(response => {
                 return response.data
             })

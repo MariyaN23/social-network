@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Login.module.css';
 import {Field, Formik} from 'formik';
 
-type AuthFormType = {
+export type AuthFormType = {
     email: string
     password: string
     rememberMe: boolean
@@ -12,15 +12,18 @@ const usersLoginFormValidate = (values: any) => {
     const errors = {};
     return errors;
 }
+type LoginFormPropsType = {
+    loginFormSubmit: (loginData: AuthFormType) => void
+}
 
-export const LoginForm = () => {
+export const LoginForm = (props: LoginFormPropsType) => {
     const submit =(values: AuthFormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
-        const filter: AuthFormType = {
+        const loginData: AuthFormType = {
             email: values.email,
             password: values.password,
             rememberMe: values.rememberMe
         }
-        console.log(filter)
+        props.loginFormSubmit(loginData)
         setSubmitting(false)
     }
     return (

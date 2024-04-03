@@ -10,9 +10,14 @@ type PostFormType = {
     newPost: string
 }
 
-const postFormValidate = (values: any) => {
-    const errors = {};
-    return errors;
+const postValidate = (post: string)=> {
+    let error
+    if (!post) {
+        error = 'Text required';
+    } else if (post.length > 100) {
+        error = 'Post is too large';
+    }
+    return error
 }
 
 export const PostForm = (props: PostFormPropsType) => {
@@ -27,7 +32,6 @@ export const PostForm = (props: PostFormPropsType) => {
     return (
         <Formik
             initialValues={{newPost: ''}}
-            validate={postFormValidate}
             onSubmit={submit}
         >
             {({
@@ -35,7 +39,8 @@ export const PostForm = (props: PostFormPropsType) => {
                   handleChange,
                   handleBlur,
                   handleSubmit,
-                  isSubmitting
+                  isSubmitting,
+                  errors
               }) => (
                 <form onSubmit={handleSubmit}>
                     <Field
@@ -46,7 +51,9 @@ export const PostForm = (props: PostFormPropsType) => {
                         onBlur={handleBlur}
                         value={values.newPost}
                         className={s.field}
+                        validate={postValidate}
                     />
+                    {errors.newPost === "Post is too large" && <div>{errors.newPost}</div>}
                     <div className={s.buttonPost}>
                         <button type="submit" disabled={isSubmitting}>
                             Add Post

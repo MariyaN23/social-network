@@ -12,6 +12,25 @@ const usersLoginFormValidate = (values: any) => {
     const errors = {};
     return errors;
 }
+
+const emailValidate = (email: string)=> {
+    let error
+    if (!email) {
+        error = 'Email required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        error = 'Invalid email address';
+    }
+    return error
+}
+
+const passwordValidate = (password: string)=> {
+    let error
+    if (!password) {
+        error = 'Password required';
+    }
+    return error
+}
+
 type LoginFormPropsType = {
     loginFormSubmit: (loginData: AuthFormType) => void
 }
@@ -29,7 +48,6 @@ export const LoginForm = (props: LoginFormPropsType) => {
     return (
         <Formik
             initialValues={{email: '', password: '', rememberMe: false}}
-            validate={usersLoginFormValidate}
             onSubmit={submit}
         >
             {({
@@ -38,24 +56,30 @@ export const LoginForm = (props: LoginFormPropsType) => {
                   handleBlur,
                   handleSubmit,
                   isSubmitting,
+                  errors,
+                  touched
               }) => (
                 <form onSubmit={handleSubmit} className={s.loginForm}>
                     <Field
                         type="text"
                         name="email"
-                        placeholder={"email"}
+                        placeholder={"Email"}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}
+                        validate={emailValidate}
                     />
+                    {errors.email && touched.email && <div>{errors.email}</div>}
                     <Field
                         type="password"
                         name="password"
-                        placeholder={"password"}
+                        placeholder={"Password"}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}
+                        validate={passwordValidate}
                     />
+                    {errors.password && touched.password && <div>{errors.password}</div>}
                     <label>
                     <Field
                         type="checkbox"

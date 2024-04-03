@@ -29,3 +29,13 @@
     margin-top: 60px;
     padding: 10px;
 }
+
+.field {
+    resize: none;
+    width: 810px;
+    height: 60px;
+    padding: 10px;
+    margin-left: 50px;
+    border-radius: 10px;
+    background: #FFF;
+}

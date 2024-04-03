@@ -15,6 +15,16 @@ const dialogFormValidate = (values: any) => {
     return errors;
 }
 
+const messageValidate = (message: string)=> {
+    let error
+    if (!message) {
+        error = 'Message required';
+    } else if (message.length > 100) {
+        error = 'Message is too large';
+    }
+    return error
+}
+
 export const DialogForm = (props: DialogFormPropsType) => {
     const submit =(values: DialogFormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
         const message: DialogFormType = {
@@ -35,6 +45,7 @@ export const DialogForm = (props: DialogFormPropsType) => {
                   handleBlur,
                   handleSubmit,
                   isSubmitting,
+                  errors
               }) => (
                 <form onSubmit={handleSubmit} className={s.sendForm}>
                     <Field
@@ -44,7 +55,10 @@ export const DialogForm = (props: DialogFormPropsType) => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.newMessageBody}
+                        className={s.field}
+                        validate={messageValidate}
                     />
+                    {errors.newMessageBody === "Message is too large" && <div>{errors.newMessageBody}</div>}
                     <button type="submit" disabled={isSubmitting}>
                         Send Message
                     </button>

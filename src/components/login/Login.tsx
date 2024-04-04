@@ -4,8 +4,11 @@ import {AuthFormType, LoginForm} from './LoginForm';
 import {connect} from 'react-redux';
 import {loginThunkCreator as login} from '../../redux/auth-reducer';
 import {AppStateType} from '../../redux/redux-store';
+import {Navigate} from 'react-router-dom';
 
-type MapStatePropsType = {}
+type MapStatePropsType = {
+    isAuth: boolean
+}
 
 type MapDispatchPropsType = {
     login: (loginData: AuthFormType)=> void
@@ -17,6 +20,9 @@ const Login = (props: LoginPropsType) => {
     const loginFormSubmit = (loginData: AuthFormType) => {
         props.login(loginData)
     }
+    if (props.isAuth) {
+        return <Navigate to={'/profile'}/>
+    }
     return (
         <div className={s.loginPage}>
             <h1>Login</h1>
@@ -27,6 +33,7 @@ const Login = (props: LoginPropsType) => {
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
+        isAuth: state.auth.isAuth
     }
 }
 

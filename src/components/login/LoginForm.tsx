@@ -8,11 +8,6 @@ export type AuthFormType = {
     rememberMe: boolean
 }
 
-const usersLoginFormValidate = (values: any) => {
-    const errors = {};
-    return errors;
-}
-
 const emailValidate = (email: string)=> {
     let error
     if (!email) {

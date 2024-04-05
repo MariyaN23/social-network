@@ -11,7 +11,6 @@ import {withRouter, WithRouterProps} from './withRouter';
 import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
 import {compose} from 'redux';
 
-
 type MapStatePropsType = {
     profile: ProfileType | null
     status: string
@@ -31,9 +30,6 @@ export type ProfileAPIPropsType = MapStatePropsType & MapDispatchPropsType & Wit
 class ProfileContainer extends React.Component<ProfileAPIPropsType> {
     componentDidMount() {
         let userId = this.props.params.userId
-        if (!userId) {
-            userId = '30289'
-        }
         this.props.getUsersProfileThunkCreator(userId)
         this.props.getUsersStatusThunkCreator(userId)
     }

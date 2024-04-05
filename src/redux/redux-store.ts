@@ -16,14 +16,14 @@ import {
     UnfollowActionType,
     usersReducer
 } from './users-reducer';
-import {authReducer, SetUserDataActionType} from './auth-reducer';
+import {authReducer, SetErrorActionType, SetUserDataActionType} from './auth-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
 
 export type ActionType = AddPostActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
-    SetUsersStatusActionType | setFilterActionType
+    SetUsersStatusActionType | setFilterActionType | SetErrorActionType
 
 
 const rootReducer = combineReducers({

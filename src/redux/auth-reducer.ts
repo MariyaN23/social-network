@@ -4,6 +4,7 @@ import {api} from '../api/api';
 import {AuthFormType} from '../components/login/LoginForm';
 
 const SET_USER_DATA = 'SET-USER-DATA'
+const SET_ERROR = 'SET-ERROR'
 
 export type DataType = {
     id: string | null
@@ -14,6 +15,7 @@ export type DataType = {
 type AuthPropsType = {
     data: DataType
     isAuth: boolean
+    error: string
 }
 
 const initialState: AuthPropsType = {
@@ -22,7 +24,8 @@ const initialState: AuthPropsType = {
         login: null,
         email: null,
     },
-    isAuth: false
+    isAuth: false,
+    error: ''
 }
 
 export const authReducer = (state: AuthPropsType = initialState, action: ActionType)=> {
@@ -36,6 +39,9 @@ export const authReducer = (state: AuthPropsType = initialState, action: ActionT
                 },
                 isAuth: action.payload.isAuth}
         }
+        case SET_ERROR: {
+            return {...state, error: action.payload.error}
+        }
         default: {
             return state
         }
@@ -46,6 +52,12 @@ export type SetUserDataActionType = ReturnType<typeof setUserDataActionCreator>
 
 export const setUserDataActionCreator = (data: DataType, isAuth: boolean) =>
     ({type: SET_USER_DATA, payload: {...data, isAuth}}) as const
+
+
+export type SetErrorActionType = ReturnType<typeof setErrorActionCreator>
+
+export const setErrorActionCreator = (error: string) =>
+    ({type: SET_ERROR, payload: {error}}) as const
 
 export const authThunkCreator =(): AppThunk =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
@@ -63,6 +75,8 @@ export const loginThunkCreator = (loginData: AuthFormType): AppThunk =>
             .then((data)=> {
                 if (data.resultCode === 0) {
                     dispatch(authThunkCreator())
+                } else {
+                    dispatch(setErrorActionCreator(data.messages[0]))
                 }
             })
     }

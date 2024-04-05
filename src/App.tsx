@@ -11,15 +11,23 @@ import HeaderContainer from './components/header/HeaderContainer';
 import Login from './components/login/Login';
 import Dialogs from './components/dialogs/DialogsContainer';
 import {Error404} from './components/error404/Error404';
+import {AppStateType} from './redux/redux-store';
+import {connect} from 'react-redux';
 
+type MapStatePropsType = {
+    userID: string | null
+}
 
-function App() {
+type AppPropsType = MapStatePropsType
+
+function App(props: AppPropsType) {
     return <div className={'app-wrapper'}>
                 <HeaderContainer/>
-                <Navbar/>
+                <Navbar />
                 <div className={'app-wrapper-content'}>
                     <Routes>
                         <Route path={'/'} element={<ProfileContainer />}/>
+                        <Route path={'/profile'} element={<Navigate to={`/profile/${props.userID}`} />}/>
                         <Route path={'/profile/:userId?'} element={<ProfileContainer />}/>
                         <Route path={'/dialogs/*'} element={<Dialogs />}/>
                         <Route path={'/users'} element={<UsersContainer />}/>
@@ -34,4 +42,10 @@ function App() {
             </div>
 }
 
-export default App;
+const MapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        userID: state.auth.data.id
+    }
+}
+
+export default connect(MapStateToProps, {})(App)

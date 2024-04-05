@@ -30,7 +30,7 @@
     justify-content: left;
 }
 
-.item a:global.active, svg:global.active {
+.item a:global.active, svg:global.active{
     color: #368AC1;
 
     background-color: rgba(207, 207, 207, 0.2);

@@ -13,39 +13,58 @@ import Dialogs from './components/dialogs/DialogsContainer';
 import {Error404} from './components/error404/Error404';
 import {AppStateType} from './redux/redux-store';
 import {connect} from 'react-redux';
+import {initializeAppThunkCreator} from './redux/app-reducer';
+import {Preloader} from './components/common/Preloader';
 
 type MapStatePropsType = {
     userID: string | null
+    initialized: boolean
 }
 
-type AppPropsType = MapStatePropsType
+type MapDispatchPropsType = {
+    initializeAppThunkCreator: ()=> void
+}
 
-function App(props: AppPropsType) {
-    return <div className={'app-wrapper'}>
-                <HeaderContainer/>
-                <Navbar />
-                <div className={'app-wrapper-content'}>
-                    <Routes>
-                        <Route path={'/'} element={<ProfileContainer />}/>
-                        <Route path={'/profile'} element={<Navigate to={`/profile/${props.userID}`} />}/>
-                        <Route path={'/profile/:userId?'} element={<ProfileContainer />}/>
-                        <Route path={'/dialogs/*'} element={<Dialogs />}/>
-                        <Route path={'/users'} element={<UsersContainer />}/>
-                        <Route path={'/news'} element={<News/>}/>
-                        <Route path={'/music'} element={<Music/>}/>
-                        <Route path={'/settings'} element={<Settings/>}/>
-                        <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/error404'} element={<Error404/>}/>
-                        <Route path={'/*'} element={<Navigate to={'/error404'} />}/>
-                    </Routes>
-                </div>
+type AppPropsType = MapStatePropsType & MapDispatchPropsType
+
+class App extends React.Component<AppPropsType> {
+    componentDidMount() {
+        this.props.initializeAppThunkCreator()
+    }
+    render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+
+        return <div className={'app-wrapper'}>
+            <HeaderContainer/>
+            <Navbar/>
+            <div className={'app-wrapper-content'}>
+                <Routes>
+                    <Route path={'/'} element={<ProfileContainer/>}/>
+                    <Route path={'/profile'} element={<Navigate to={`/profile/${this.props.userID}`}/>}/>
+                    <Route path={'/profile/:userId?'} element={<ProfileContainer/>}/>
+                    <Route path={'/dialogs/*'} element={<Dialogs/>}/>
+                    <Route path={'/users'} element={<UsersContainer/>}/>
+                    <Route path={'/news'} element={<News/>}/>
+                    <Route path={'/music'} element={<Music/>}/>
+                    <Route path={'/settings'} element={<Settings/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/error404'} element={<Error404/>}/>
+                    <Route path={'/*'} element={<Navigate to={'/error404'}/>}/>
+                </Routes>
             </div>
+        </div>
+    }
 }
 
 const MapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        userID: state.auth.data.id
+        userID: state.auth.data.id,
+        initialized: state.app.initialized,
     }
 }
 
-export default connect(MapStateToProps, {})(App)
+export default connect(MapStateToProps, {
+    initializeAppThunkCreator
+})(App)

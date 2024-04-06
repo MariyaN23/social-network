@@ -18,12 +18,14 @@ import {
 } from './users-reducer';
 import {authReducer, SetErrorActionType, SetUserDataActionType} from './auth-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
+import {appReducer, SetInitializedActionType} from './app-reducer';
 
 export type ActionType = AddPostActionType | SendMessageActionType |
     FollowActionType | UnfollowActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
-    SetUsersStatusActionType | setFilterActionType | SetErrorActionType
+    SetUsersStatusActionType | setFilterActionType | SetErrorActionType |
+    SetInitializedActionType
 
 
 const rootReducer = combineReducers({
@@ -32,6 +34,7 @@ const rootReducer = combineReducers({
     usersPage: usersReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
+    app: appReducer,
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>

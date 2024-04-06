@@ -1,5 +1,5 @@
 import {ActionType, AppStateType, AppThunk} from './redux-store';
-import {ThunkDispatch} from 'redux-thunk';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {api} from '../api/api';
 import {AuthFormType} from '../components/login/LoginForm';
 
@@ -59,9 +59,9 @@ export type SetErrorActionType = ReturnType<typeof setErrorActionCreator>
 export const setErrorActionCreator = (error: string) =>
     ({type: SET_ERROR, payload: {error}}) as const
 
-export const authThunkCreator =(): AppThunk =>
-    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
-        api.authMe()
+export const authThunkCreator =(): ThunkAction<Promise<void>, AppStateType, unknown, ActionType> =>
+    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        return api.authMe()
             .then((data)=> {
                 if (data.resultCode === 0) {
                     dispatch(setUserDataActionCreator(data.data, true))

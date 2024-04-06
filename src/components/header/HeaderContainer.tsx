@@ -12,16 +12,12 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     setUserData: (data: DataType, isAuth: boolean)=> void
-    authThunkCreator: ()=> void
     logout: ()=> void
 }
 
 export type HeaderAPIPropsType = MapStatePropsType & MapDispatchPropsType
 
 class HeaderContainer extends React.Component<HeaderAPIPropsType> {
-    componentDidMount() {
-        this.props.authThunkCreator()
-    }
     render() {
         return <Header {...this.props} />
     }
@@ -36,6 +32,5 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 export default connect(mapStateToProps,  {
     setUserData,
-    authThunkCreator,
     logout
 })(HeaderContainer)

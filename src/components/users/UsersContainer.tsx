@@ -11,6 +11,14 @@ import React from 'react';
 import {Users} from './Users';
 import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
 import {compose} from 'redux';
+import {
+    getCurrentPage, getFilter,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/users-selectors';
 
 type MapStatePropsType = {
     users: UserType[]
@@ -65,13 +73,13 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
-        filter: state.usersPage.filter
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
+        filter: getFilter(state)
     }
 }
 

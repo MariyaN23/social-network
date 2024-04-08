@@ -1,5 +1,5 @@
 import {ActionType, AppStateType, AppThunk} from './redux-store';
-import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {ThunkDispatch} from 'redux-thunk';
 import {authThunkCreator} from './auth-reducer';
 
 const SET_INITIALIZED = 'SET-INITIALIZED'

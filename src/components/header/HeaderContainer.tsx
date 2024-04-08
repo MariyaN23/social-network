@@ -1,7 +1,7 @@
 import React from 'react';
 import {Header} from './Header';
 import {connect} from 'react-redux';
-import {authThunkCreator, DataType, setUserDataActionCreator as setUserData} from '../../redux/auth-reducer';
+import {DataType, setUserDataActionCreator as setUserData} from '../../redux/auth-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {logoutThunkCreator as logout} from '../../redux/auth-reducer';
 

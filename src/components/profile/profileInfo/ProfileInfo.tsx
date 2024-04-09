@@ -4,6 +4,7 @@ import wallpaper from '../../../assets/images/wallpaper.jpg'
 import {ProfileType} from '../../../redux/profile-reducer';
 import {Preloader} from '../../common/Preloader';
 import {ProfileStatus} from '../profileStatus/ProfileStatus';
+import {ProfileStatusWithHooks} from '../profileStatus/ProfileStatusWithHooks';
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
@@ -22,7 +23,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <img src={props.profile?.photos.large} alt={'avatar'}/>
                 <div>
                     <h2>{props.profile.fullName}</h2>
-                    <ProfileStatus
+                    <ProfileStatusWithHooks
                         status={props.status}
                         updateStatus={props.updateStatus}
                         profileId={props.profile.userId}

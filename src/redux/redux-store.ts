@@ -1,32 +1,32 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {
-    AddPostActionType, DeletePostActionType,
+    AddPostActionType,
+    DeletePostActionType,
     profileReducer,
-    SetUsersProfileActionType, SetUsersStatusActionType
+    SetUsersProfileActionType,
+    SetUsersStatusActionType
 } from './profile-reducer';
-import {
-    dialogsReducer,
-    SendMessageActionType
-} from './dialogs-reducer';
+import {dialogsReducer, SendMessageActionType} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 import {
-    FollowActionType,
-    setCurrentPageActionType, setFilterActionType, setFollowingInProgressActionType, setIsFetchingActionType,
-    setUsersActionType, setUsersCountActionType,
-    UnfollowActionType,
+    FollowUnfollowActionType,
+    setCurrentPageActionType,
+    setFilterActionType,
+    setFollowingInProgressActionType,
+    setIsFetchingActionType,
+    setUsersActionType,
+    setUsersCountActionType,
     usersReducer
 } from './users-reducer';
 import {authReducer, SetErrorActionType, SetUserDataActionType} from './auth-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
 import {appReducer, SetInitializedActionType} from './app-reducer';
 
-export type ActionType = AddPostActionType | SendMessageActionType |
-    FollowActionType | UnfollowActionType | setUsersActionType |
+export type ActionType = AddPostActionType | SendMessageActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
     SetUsersStatusActionType | setFilterActionType | SetErrorActionType |
-    SetInitializedActionType | DeletePostActionType
-
+    SetInitializedActionType | DeletePostActionType | FollowUnfollowActionType
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,

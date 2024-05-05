@@ -1,7 +1,7 @@
 import {v1} from 'uuid';
 import {ActionType} from './redux-store';
 
-const SEND_MESSAGE = 'SEND-MESSAGE'
+const SEND_MESSAGE = 'social-network/dialogs/SEND-MESSAGE'
 
 type DialogPropsType = {
     id: string

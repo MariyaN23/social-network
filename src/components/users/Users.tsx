@@ -15,6 +15,7 @@ type UsersPropsType = {
     isFetching: boolean
     followingInProgress: string[]
     onFilterChanged: (filter: FilterType)=> void
+    totalUsersCount: number
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -26,7 +27,7 @@ export const Users = (props: UsersPropsType) => {
     }
     const pages = []
     const currentPage = props.currentPage
-    for (let i = currentPage < 4 ? 1 : currentPage - 2; i < (currentPage < 4 ? 6 : currentPage + 3); i++) {
+    for (let i = currentPage < 4 ? 1 : currentPage - 2; i < (currentPage < 4 ? (props.totalUsersCount<20? props.totalUsersCount/4 + 1 : 6) : currentPage + 3); i++) {
         pages.push(i)
     }
     return <div>
@@ -67,7 +68,7 @@ export const Users = (props: UsersPropsType) => {
             {(currentPage >= 4) && < button onClick={goToTheFirstBtn} className={s.goToBtn}>To the first</button>}
             {pages.map(p => <button className={p === props.currentPage ? s.selectedPage : s.paginationBtn}
                                     onClick={() => props.onPageChanged(p)}>{p} </button>)}
-            <button onClick={() => goToTheNextBtn(props.currentPage)} className={s.goToBtn}>Next</button>
+            {pages.length > 1 && currentPage<pages.length  && <button onClick={() => goToTheNextBtn(props.currentPage)} className={s.goToBtn}>Next</button>}
         </div>
     </div>
 }

@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
     FilterType,
-    followThunkCreator,
+    followUnfollowThunkCreator,
     getUsersThunkCreator,
     setCurrentPageActionCreator as setCurrentPage,
     UserType
@@ -33,7 +33,7 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
     setCurrentPage: (currentPage: number)=> void
     getUsersThunkCreator: (currentPage: number, pageSize: number, filter: FilterType)=> void
-    followThunkCreator: (userId: string, follow: boolean)=> void
+    followUnfollowThunkCreator: (userId: string, follow: boolean)=> void
 }
 
 export type UsersAPIPropsType = MapStatePropsType & MapDispatchPropsType
@@ -43,10 +43,10 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
         this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize, this.props.filter)
     }
     onFollowClick = (userId: string)=> {
-        this.props.followThunkCreator(userId, true)
+        this.props.followUnfollowThunkCreator(userId, true)
     }
     onUnfollowClick = (userId: string)=> {
-        this.props.followThunkCreator(userId, false)
+        this.props.followUnfollowThunkCreator(userId, false)
     }
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPage(currentPage)
@@ -65,7 +65,7 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
                    onUnfollowClick={this.onUnfollowClick}
                    followingInProgress={this.props.followingInProgress}
                    onFilterChanged={this.onFilterChanged}
-
+                   totalUsersCount={this.props.totalUsersCount}
             />
         </>
     }
@@ -87,7 +87,7 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps,  {
         setCurrentPage,
         getUsersThunkCreator,
-        followThunkCreator
+        followUnfollowThunkCreator
     }),
     withAuthRedirectComponent
 )(UsersContainer)

@@ -3,10 +3,10 @@ import {ActionType, AppStateType, AppThunk} from './redux-store';
 import {ThunkDispatch} from 'redux-thunk';
 import {api} from '../api/api';
 
-const ADD_POST = 'ADD-POST'
-const SET_USERS_PROFILE = 'SET-USERS-PROFILE'
-const SET_USERS_STATUS = 'SET-USERS-STATUS'
-const DELETE_POST = 'DELETE-POST'
+const ADD_POST = 'social-network/profile/ADD-POST'
+const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
+const SET_USERS_STATUS = 'social-network/profile/SET-USERS-STATUS'
+const DELETE_POST = 'social-network/profile/DELETE-POST'
 
 export type PostPropsType = {
     id: string
@@ -60,7 +60,7 @@ const initialState: profilePagePropsType = {
     status: ''
 }
 
-export const profileReducer = (state: profilePagePropsType = initialState, action: ActionType)=> {
+export const profileReducer = (state: profilePagePropsType = initialState, action: ActionType) => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostPropsType = {
@@ -85,36 +85,33 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
     }
 }
 
-export const addPostActionCreator = (post: string)=> ({type: ADD_POST, payload: {post}}) as const
-export const setUsersProfileActionCreator =(profile: ProfileType | null) => ({type: SET_USERS_PROFILE, profile}) as const
-export const setUsersStatusActionCreator =(status: string) => ({type: SET_USERS_STATUS, status}) as const
-export const deletePostActionCreator = (id: string)=> ({type: DELETE_POST, payload: {id}}) as const
+export const addPostActionCreator = (post: string) => ({type: ADD_POST, payload: {post}}) as const
+export const setUsersProfileActionCreator = (profile: ProfileType | null) => ({
+    type: SET_USERS_PROFILE,
+    profile
+}) as const
+export const setUsersStatusActionCreator = (status: string) => ({type: SET_USERS_STATUS, status}) as const
+export const deletePostActionCreator = (id: string) => ({type: DELETE_POST, payload: {id}}) as const
 
-export const getUsersProfileThunkCreator =(userId: string): AppThunk =>
-    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
-    api.getUsersProfile(userId)
-        .then(data => {
-            dispatch(setUsersProfileActionCreator(data))
-        })
+export const getUsersProfileThunkCreator = (userId: string): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+        const data = await api.getUsersProfile(userId)
+        dispatch(setUsersProfileActionCreator(data))
     }
 
-export const getUsersStatusThunkCreator =(userId: string): AppThunk =>
-    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
-        api.getStatus(userId)
-            .then(data => {
-                dispatch(setUsersStatusActionCreator(data))
-            })
+export const getUsersStatusThunkCreator = (userId: string): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+        const data = await api.getStatus(userId)
+        dispatch(setUsersStatusActionCreator(data))
     }
 
-export const updateUsersStatusThunkCreator =(status: string): AppThunk =>
-    (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType)=> {
-    const state = getState()
+export const updateUsersStatusThunkCreator = (status: string): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        const state = getState()
         if (state.profilePage.profile?.userId === state.auth.data.id) {
-            api.updateStatus(status)
-                .then(data => {
-                    if (data.data.resultCode === 0) {
-                        dispatch(setUsersStatusActionCreator(status))
-                    }
-                })
+            const data = await api.updateStatus(status)
+            if (data.data.resultCode === 0) {
+                dispatch(setUsersStatusActionCreator(status))
+            }
         }
     }

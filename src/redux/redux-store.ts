@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {
     AddPostActionType,
     DeletePostActionType,
@@ -41,7 +41,18 @@ export type AppStateType = ReturnType<typeof rootReducer>
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType>
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+//export const store = createStore(rootReducer, applyMiddleware(thunk))
+
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(rootReducer, composeEnhancers(
+    applyMiddleware(thunk)
+));
 
 //@ts-ignore
 window.store = store

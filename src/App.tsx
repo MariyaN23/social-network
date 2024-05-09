@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from './components/navbar/Navbar';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Settings} from './components/settings/Settings';
@@ -11,8 +11,8 @@ import HeaderContainer from './components/header/HeaderContainer';
 import Login from './components/login/Login';
 import Dialogs from './components/dialogs/DialogsContainer';
 import {Error404} from './components/error404/Error404';
-import {AppStateType} from './redux/redux-store';
-import {connect} from 'react-redux';
+import {AppStateType, store} from './redux/redux-store';
+import {connect, Provider} from 'react-redux';
 import {initializeAppThunkCreator} from './redux/app-reducer';
 import {Preloader} from './components/common/Preloader';
 
@@ -65,6 +65,16 @@ const MapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-export default connect(MapStateToProps, {
+const AppContainer = connect(MapStateToProps, {
     initializeAppThunkCreator
 })(App)
+
+const SamuraiJSApp =()=> {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer />
+        </Provider>
+    </BrowserRouter>
+}
+
+export default SamuraiJSApp

@@ -25,9 +25,10 @@ export const Users = (props: UsersPropsType) => {
     const goToTheNextBtn = (currentPage: number) => {
         props.onPageChanged(currentPage + 1)
     }
+    const pagesCount = Math.ceil(props.totalUsersCount / 4)
     const pages = []
     const currentPage = props.currentPage
-    for (let i = currentPage < 4 ? 1 : currentPage - 2; i < (currentPage < 4 ? (props.totalUsersCount<20? props.totalUsersCount/4 + 1 : 6) : currentPage + 3); i++) {
+    for (let i = currentPage < 4 ? 1 : currentPage - 2; i < (currentPage < 4 ? (props.totalUsersCount<20? props.totalUsersCount/4 + 1 : 6) : currentPage + 3<= pagesCount ? currentPage + 3 : pagesCount + 1); i++) {
         pages.push(i)
     }
     return <div>
@@ -68,7 +69,7 @@ export const Users = (props: UsersPropsType) => {
             {(currentPage >= 4) && < button onClick={goToTheFirstBtn} className={s.goToBtn}>To the first</button>}
             {pages.map(p => <button className={p === props.currentPage ? s.selectedPage : s.paginationBtn}
                                     onClick={() => props.onPageChanged(p)}>{p} </button>)}
-            {pages.length > 1 && currentPage<pages.length  && <button onClick={() => goToTheNextBtn(props.currentPage)} className={s.goToBtn}>Next</button>}
+            {pages.length > 1 && pagesCount > 4 && currentPage<pagesCount && <button onClick={() => goToTheNextBtn(props.currentPage)} className={s.goToBtn}>Next</button>}
         </div>
     </div>
 }

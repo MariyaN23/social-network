@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import {Field, Formik} from 'formik';
+import {Field, Formik, FormikHelpers} from 'formik';
 
 type DialogFormPropsType = {
     sendMessage: (message: string)=> void
@@ -26,12 +26,13 @@ const messageValidate = (message: string)=> {
 }
 
 export const DialogForm = (props: DialogFormPropsType) => {
-    const submit =(values: DialogFormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+    const submit =(values: DialogFormType, actions: FormikHelpers<DialogFormType>) => {
         const message: DialogFormType = {
             newMessageBody: values.newMessageBody
         }
         props.sendMessage(message.newMessageBody)
-        setSubmitting(false)
+        actions.resetForm();
+        actions.setSubmitting(false)
     }
     return (
         <Formik

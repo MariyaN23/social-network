@@ -1,6 +1,7 @@
 import React from 'react';
-import {Field, Formik} from 'formik';
+import {Field, Formik, FormikHelpers, FormikState} from 'formik';
 import s from './MyPosts.module.css'
+import {ResetAction} from 'redux-form';
 
 type PostFormPropsType = {
     sendPost: (message: string) => void
@@ -21,13 +22,13 @@ const postValidate = (post: string)=> {
 }
 
 export const PostForm = (props: PostFormPropsType) => {
-    const submit = (values: PostFormType,
-                    {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    const submit = (values: PostFormType, actions: FormikHelpers<PostFormType>) => {
         const post: PostFormType = {
             newPost: values.newPost
         }
         props.sendPost(post.newPost)
-        setSubmitting(false)
+        actions.resetForm();
+        actions.setSubmitting(false)
     }
     return (
         <Formik

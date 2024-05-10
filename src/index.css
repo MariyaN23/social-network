@@ -9,3 +9,7 @@ body {
 code {
     font-family: "Montserrat", sans-serif;
 }
+
+input, textarea, button {
+    font-family: "Montserrat", sans-serif;
+}

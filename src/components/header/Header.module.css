@@ -13,3 +13,20 @@
 .login {
     float: right;
 }
+
+.selectDiv {
+    height: 60px;
+}
+
+.logoutBar {
+    margin: 20px 60px;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    background-color: rgba(54, 138, 193, 0.14);
+    cursor: pointer;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid #368AC1;
+}

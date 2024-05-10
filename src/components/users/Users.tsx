@@ -5,6 +5,7 @@ import {FilterType, UserType} from '../../redux/users-reducer';
 import {Preloader} from '../common/Preloader';
 import {NavLink} from 'react-router-dom';
 import {UsersSearchForm} from './UsersSearchForm';
+import noResultsImg from '../../assets/images/noResults.jpg'
 
 type UsersPropsType = {
     currentPage: number
@@ -38,8 +39,8 @@ export const Users = (props: UsersPropsType) => {
         </div>
         {props.isFetching && <Preloader/>}
         {!props.isFetching && <div className={s.usersMap}>
-            {
-                props.users.map(u => <div key={u.id} className={s.user}>
+            {props.users.length ?
+                (props.users.map(u => <div key={u.id} className={s.user}>
                     <div>
                         <NavLink to={'/profile/'+u.id}>
                             <img src={u.photos.small !== null ? u.photos.small : img} className={s.userPhoto} alt={"avatar"}/>
@@ -58,11 +59,13 @@ export const Users = (props: UsersPropsType) => {
                         <div className={s.name}>{u.name}</div>
                         <div className={s.status}>{u.status}</div>
                     </div>
-                    <div className={s.location}>
-                        <div>{'u.location.city'},</div>
-                        <div>{'u.location.country'}</div>
+                </div>))
+                : <div className={s.noResults}>
+                    <div>
+                        <img src={noResultsImg} alt={'No results found'}/>
                     </div>
-                </div>)
+                    <div>No Results Found</div>
+                </div>
             }
         </div>}
         <div className={s.paginationWrap}>

@@ -21,7 +21,7 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
     const submit =(values: FormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
         const filter: FilterType = {
             term: values.term,
-            friend: values.friend === "null" ? null : values.friend === "true" ? true : false
+            friend: values.friend === "null" ? null : values.friend === "true"
         }
         props.onFilterChanged(filter)
         setSubmitting(false)
@@ -41,7 +41,7 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
               }) => (
                 <form onSubmit={handleSubmit}>
                     <Field name="friend" as="select" className={s.FilterField}>
-                        <option value="null">All</option>
+                        <option value="null">All users</option>
                         <option value="true">Only followed</option>
                         <option value="false">Only unfollowed</option>
                     </Field>
@@ -54,11 +54,6 @@ export const UsersSearchForm = (props: UsersSearchFormType) => {
                         className={s.SearchField}
                         placeholder={'Search...'}
                     />
-                   {/* <Field name="friend" as="select">
-                        <option value="null">All</option>
-                        <option value="true">Only followed</option>
-                        <option value="false">Only unfollowed</option>
-                    </Field>*/}
                     <button type="submit" disabled={isSubmitting} className={s.SearchBtn}>
                         Find
                     </button>

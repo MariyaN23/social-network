@@ -4,6 +4,7 @@
     font-style: normal;
     font-weight: 600;
     text-align: center;
+    margin: 20px;
 }
 
 .usersMap {
@@ -16,9 +17,9 @@
 
 .user {
     border: 1px solid #C5C5C5;
-    width: 200px;
+    width: 210px;
     height: 260px;
-    border-radius: 16px;
+    border-radius: 8px;
     background: #FFF;
     display: flex;
     flex-direction: column;
@@ -28,8 +29,8 @@
 }
 
 .userPhoto {
-    width: 110px;
-    height: 110px;
+    width: 140px;
+    height: 140px;
     border-radius: 4px;
     object-fit: cover;
 }
@@ -47,18 +48,13 @@
     color: #171515;
     font-size: 16px;
     font-weight: 500;
+    text-align: center;
 }
 
 .status {
     color: #828282;
     font-size: 10px;
     font-weight: 400;
-}
-
-.location {
-    color: #171515;
-    font-size: 12px;
-    font-weight: 500;
     text-align: center;
 }
 
@@ -99,4 +95,15 @@
 .UsersSearchForm {
     display: flex;
     justify-content: center;
+}
+
+.noResults img{
+    width: 250px;
+    height: 250px;
+}
+
+.noResults div {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }

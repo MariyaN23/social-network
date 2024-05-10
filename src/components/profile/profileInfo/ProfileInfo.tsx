@@ -1,10 +1,9 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
-import wallpaper from '../../../assets/images/wallpaper.jpg'
 import {ProfileType} from '../../../redux/profile-reducer';
 import {Preloader} from '../../common/Preloader';
-import {ProfileStatus} from '../profileStatus/ProfileStatus';
 import {ProfileStatusWithHooks} from '../profileStatus/ProfileStatusWithHooks';
+import img from '../../../assets/images/noavatar.jpg'
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
@@ -16,11 +15,11 @@ type ProfileInfoPropsType = {
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
     return (!props.profile) ? <Preloader/> :
         (<div className={s.info}>
-            <div>
+            {/*<div>
                 <img src={wallpaper} alt={'Dubai'}/>
-            </div>
+            </div>*/}
             <div className={s.descriptionBlock}>
-                <img src={props.profile?.photos.large} alt={'avatar'}/>
+                <img src={props.profile?.photos.large ? props.profile?.photos.large : img} alt={'avatar'}/>
                 <div>
                     <h2>{props.profile.fullName}</h2>
                     <ProfileStatusWithHooks

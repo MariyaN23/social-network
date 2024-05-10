@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Header.module.css';
 import {Icon} from '../../assets/images/Icon';
-import {NavLink} from 'react-router-dom';
 
 type HeaderPropsType = {
     isAuth: boolean
@@ -10,16 +9,25 @@ type HeaderPropsType = {
 }
 
 export const Header = (props: HeaderPropsType) => {
+    const logoutHandler =(e: ChangeEvent<HTMLSelectElement>)=> {
+        if (e.currentTarget.value === 'logout') {
+            props.logout()
+        }
+    }
     return (
             <header className={s.header}>
                 <Icon className={s.svg} iconId={"logo"} width={'50'} height={'50'}/>
                 <div className={s.login}>
                     {props.isAuth
-                        ? <div>
-                            {props.login}
-                            <button onClick={props.logout}>Logout</button>
+                        ? <div className={s.selectDiv}>
+                            <select name={"options"} onChange={logoutHandler} className={s.logoutBar}>
+                                <option value={'login'} disabled selected hidden>{props.login}</option>
+                                <option value={'logout'}>
+                                    ↪ Log Out
+                                </option>
+                            </select>
                         </div>
-                        : <NavLink to={"/login"}>Login</NavLink>}
+                        : ""}
                 </div>
             </header>
     );};

@@ -63,8 +63,9 @@ export const LoginForm = (props: LoginFormPropsType) => {
                         onBlur={handleBlur}
                         value={values.email}
                         validate={emailValidate}
+                        className={s.loginField}
                     />
-                    {errors.email && touched.email && <div>{errors.email}</div>}
+                    {errors.email && touched.email && <div className={s.error}>{errors.email}</div>}
                     <Field
                         type="password"
                         name="password"
@@ -73,18 +74,25 @@ export const LoginForm = (props: LoginFormPropsType) => {
                         onBlur={handleBlur}
                         value={values.password}
                         validate={passwordValidate}
+                        className={s.loginField}
                     />
-                    {errors.password && touched.password && <div>{errors.password}</div>}
+                    {errors.password && touched.password && <div className={s.error}>{errors.password}</div>}
                     <label>
                     <Field
                         type="checkbox"
                         name="rememberMe"
                         checked={values.rememberMe}
+                        className={s.loginCheckbox}
                     /> Remember me
                     </label>
-                    <button type="submit" disabled={isSubmitting}>
-                        Login
-                    </button>
+                    <div className={s.submitBtn}>
+                        <button type="submit" disabled={isSubmitting}>
+                            Sign In
+                        </button>
+                    </div>
+                    <div className={s.registrationText}>
+                        <p>To log in get registered or logged in {<a target={'_blank'} rel="noreferrer" href={'https://social-network.samuraijs.com/'}>here</a>}</p>
+                    </div>
                 </form>
             )}
         </Formik>

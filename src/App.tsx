@@ -6,15 +6,16 @@ import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Settings} from './components/settings/Settings';
 import UsersContainer from './components/users/UsersContainer';
-import ProfileContainer from './components/profile/ProfileContainer';
 import HeaderContainer from './components/header/HeaderContainer';
 import Login from './components/login/Login';
-import Dialogs from './components/dialogs/DialogsContainer';
 import {Error404} from './components/error404/Error404';
 import {AppStateType, store} from './redux/redux-store';
 import {connect, Provider} from 'react-redux';
 import {initializeAppThunkCreator} from './redux/app-reducer';
 import {Preloader} from './components/common/Preloader';
+
+const Dialogs = React.lazy(()=> import('./components/dialogs/DialogsContainer'))
+const ProfileContainer = React.lazy(()=> import('./components/profile/ProfileContainer'))
 
 type MapStatePropsType = {
     userID: string | null
@@ -40,6 +41,7 @@ class App extends React.Component<AppPropsType> {
             <HeaderContainer/>
             <Navbar/>
             <div className={'app-wrapper-content'}>
+                <React.Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path={'/'} element={<Navigate to={`/profile/${this.props.userID}`}/>}/>
                     <Route path={'/profile'} element={<Navigate to={`/profile/${this.props.userID}`}/>}/>
@@ -53,6 +55,7 @@ class App extends React.Component<AppPropsType> {
                     <Route path={'/error404'} element={<Error404/>}/>
                     <Route path={'/*'} element={<Navigate to={'/error404'}/>}/>
                 </Routes>
+                </React.Suspense>
             </div>
         </div>
     }

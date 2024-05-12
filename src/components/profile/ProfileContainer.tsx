@@ -5,7 +5,7 @@ import {AppStateType} from '../../redux/redux-store';
 import {
     addPostActionCreator as addPost,
     getUsersProfileThunkCreator, getUsersStatusThunkCreator,
-    ProfileType, updateUsersStatusThunkCreator
+    ProfileType, savePhotoThunkCreator, updateUsersStatusThunkCreator
 } from '../../redux/profile-reducer';
 import {withRouter, WithRouterProps} from './withRouter';
 import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
@@ -23,6 +23,7 @@ type MapDispatchPropsType = {
     getUsersProfileThunkCreator: (userId: string)=> void
     getUsersStatusThunkCreator: (userId: string)=> void
     updateUsersStatusThunkCreator: (status: string)=> void
+    savePhotoThunkCreator: (image: any)=> void
 }
 
 export type ProfileAPIPropsType = MapStatePropsType & MapDispatchPropsType & WithRouterProps
@@ -54,7 +55,8 @@ export default compose<React.ComponentType>(
         addPost,
         getUsersProfileThunkCreator,
         getUsersStatusThunkCreator,
-        updateUsersStatusThunkCreator
+        updateUsersStatusThunkCreator,
+        savePhotoThunkCreator,
     }),
     withRouter,
     withAuthRedirectComponent

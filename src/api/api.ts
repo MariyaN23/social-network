@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {FilterType, UserType} from '../redux/users-reducer';
-import {ProfileType} from '../redux/profile-reducer';
+import {PhotosType, ProfileType} from '../redux/profile-reducer';
 import {DataType} from '../redux/auth-reducer';
 import {AuthFormType} from '../components/login/LoginForm';
 
@@ -75,5 +75,14 @@ export const api = {
     },
     updateStatus(status: string) {
         return instance.put<ResponseType>(`/profile/status`, {status})
+    },
+    updatePhoto(imageFile: any) {
+        const formData = new FormData()
+        formData.append('image', imageFile)
+        return instance.put<ResponseType<{photos: PhotosType}>>(`/profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }

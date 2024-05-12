@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {
     AddPostActionType,
     DeletePostActionType,
-    profileReducer,
+    profileReducer, SavePhotoSuccessActionType,
     SetUsersProfileActionType,
     SetUsersStatusActionType
 } from './profile-reducer';
@@ -26,7 +26,8 @@ export type ActionType = AddPostActionType | SendMessageActionType | setUsersAct
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
     SetUsersStatusActionType | setFilterActionType | SetErrorActionType |
-    SetInitializedActionType | DeletePostActionType | FollowUnfollowActionType
+    SetInitializedActionType | DeletePostActionType | FollowUnfollowActionType |
+    SavePhotoSuccessActionType
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,

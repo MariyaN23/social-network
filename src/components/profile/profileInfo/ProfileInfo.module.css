@@ -15,3 +15,7 @@
     height: 160px;
     border-radius: 82px;
 }
+.changeAvatar {
+    display: flex;
+    flex-direction: column;
+}

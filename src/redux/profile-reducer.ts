@@ -7,6 +7,7 @@ const ADD_POST = 'social-network/profile/ADD-POST'
 const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
 const SET_USERS_STATUS = 'social-network/profile/SET-USERS-STATUS'
 const DELETE_POST = 'social-network/profile/DELETE-POST'
+const SAVE_PHOTO_SUCCESS = 'social-network/profile/SAVE-PHOTO-SUCCESS'
 
 export type PostPropsType = {
     id: string
@@ -24,8 +25,9 @@ export type AddPostActionType = ReturnType<typeof addPostActionCreator>
 export type SetUsersProfileActionType = ReturnType<typeof setUsersProfileActionCreator>
 export type SetUsersStatusActionType = ReturnType<typeof setUsersStatusActionCreator>
 export type DeletePostActionType = ReturnType<typeof deletePostActionCreator>
+export type SavePhotoSuccessActionType = ReturnType<typeof savePhotoSuccessActionCreator>
 
-type PhotosType = {
+export type PhotosType = {
     small: string
     large: string
 }
@@ -79,6 +81,12 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
         case DELETE_POST: {
             return {...state, posts: state.posts.filter(post => post.id !== action.payload.id)}
         }
+        case SAVE_PHOTO_SUCCESS: {
+            debugger
+            return state.profile ?
+            {...state, profile: {...state.profile, photos: action.payload.photos}}
+            : state
+        }
         default: {
             return state
         }
@@ -92,6 +100,7 @@ export const setUsersProfileActionCreator = (profile: ProfileType | null) => ({
 }) as const
 export const setUsersStatusActionCreator = (status: string) => ({type: SET_USERS_STATUS, status}) as const
 export const deletePostActionCreator = (id: string) => ({type: DELETE_POST, payload: {id}}) as const
+export const savePhotoSuccessActionCreator = (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, payload: {photos}}) as const
 
 export const getUsersProfileThunkCreator = (userId: string): AppThunk =>
     async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
@@ -113,5 +122,13 @@ export const updateUsersStatusThunkCreator = (status: string): AppThunk =>
             if (data.data.resultCode === 0) {
                 dispatch(setUsersStatusActionCreator(status))
             }
+        }
+    }
+
+export const savePhotoThunkCreator = (image: any): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+    const response = await api.updatePhoto(image)
+        if (response.data.resultCode === 0) {
+            dispatch(savePhotoSuccessActionCreator(response.data.data.photos))
         }
     }

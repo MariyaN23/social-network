@@ -1,10 +1,11 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import s from '../profileInfo/ProfileInfo.module.css';
+
 
 type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string)=> void
-    profileId: string
-    authId: string | null
+    owner: boolean
 }
 
 export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> =(props)=> {
@@ -14,7 +15,7 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> =(props)=>
         setStatus(props.status)
     },[props.status])
     const onDoubleClick =()=> {
-        if (props.profileId === props.authId) {
+        if (props.owner) {
             setEditMode(true)
         }
     }
@@ -27,10 +28,10 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> =(props)=>
     }
         return <>
             <div>
-                {!editMode && <span onDoubleClick={onDoubleClick}>{props.status || "-------"}</span>}
+                {!editMode && <span className={s.status} onDoubleClick={onDoubleClick}>{props.status || "-------"}</span>}
             </div>
             <div>
-                {editMode && <input onChange={onStatusChange} autoFocus={true} onBlur={onBlur} value={status}/>}
+                {editMode && <input className={s.status} onChange={onStatusChange} autoFocus={true} onBlur={onBlur} value={status}/>}
             </div>
         </>
 }

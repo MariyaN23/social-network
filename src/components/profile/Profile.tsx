@@ -13,6 +13,7 @@ export const Profile = (props: ProfileAPIPropsType) => {
                 updateStatus={props.updateUsersStatusThunkCreator}
                 authId={props.authId}
                 savePhoto={props.savePhotoThunkCreator}
+                saveProfile={props.saveProfileThunkCreator}
             />
             <MyPostsContainer />
         </div>

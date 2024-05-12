@@ -1,0 +1,16 @@
+.fieldError {
+    border: 1px solid red;
+}
+.fieldError:focus {
+    outline: 1px solid red;
+}
+
+.error {
+    color: red;
+}
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

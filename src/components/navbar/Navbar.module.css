@@ -15,6 +15,10 @@
     width: 230px;
 }
 
+.item:hover {
+    background-color: #7fbde7;
+}
+
 .item svg {
     margin: -5px 10px -5px 30px;
 }
@@ -37,5 +41,6 @@
     box-shadow: inset rgba(249, 249, 249, 0.56);
     border: 1px solid rgba(54, 138, 193, 0.14);
 }
+
 
 

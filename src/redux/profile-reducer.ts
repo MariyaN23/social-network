@@ -2,6 +2,7 @@ import {v1} from 'uuid';
 import {ActionType, AppStateType, AppThunk} from './redux-store';
 import {ThunkDispatch} from 'redux-thunk';
 import {api} from '../api/api';
+import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
 
 const ADD_POST = 'social-network/profile/ADD-POST'
 const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
@@ -32,7 +33,7 @@ export type PhotosType = {
     large: string
 }
 
-type ContactsType = {
+export type ContactsType = {
     github: string
     vk: string
     facebook: string
@@ -130,5 +131,14 @@ export const savePhotoThunkCreator = (image: any): AppThunk =>
     const response = await api.updatePhoto(image)
         if (response.data.resultCode === 0) {
             dispatch(savePhotoSuccessActionCreator(response.data.data.photos))
+        }
+    }
+
+export const saveProfileThunkCreator = (profileData: ProfileFormType): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        const response = await api.updateProfile(profileData)
+        const userId = getState().auth.data.id
+        if (response.data.resultCode === 0) {
+            dispatch(getUsersProfileThunkCreator(userId ? userId : ''))
         }
     }

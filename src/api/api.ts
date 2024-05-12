@@ -3,6 +3,7 @@ import {FilterType, UserType} from '../redux/users-reducer';
 import {PhotosType, ProfileType} from '../redux/profile-reducer';
 import {DataType} from '../redux/auth-reducer';
 import {AuthFormType} from '../components/login/LoginForm';
+import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
 
 type ResponseType<T = {}> = {
     resultCode: number
@@ -79,10 +80,10 @@ export const api = {
     updatePhoto(imageFile: any) {
         const formData = new FormData()
         formData.append('image', imageFile)
-        return instance.put<ResponseType<{photos: PhotosType}>>(`/profile/photo`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        return instance.put<ResponseType<{photos: PhotosType}>>(`/profile/photo`, formData)
+    },
+    updateProfile(profileData: ProfileFormType) {
+        debugger
+        return instance.put<ResponseType>(`/profile`, profileData)
     }
 }

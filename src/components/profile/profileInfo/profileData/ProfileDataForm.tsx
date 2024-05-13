@@ -100,6 +100,7 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
                         />
                         {Object.keys(props.profile.contacts).map(key => {
                             return <Field
+                                    key={key}
                                     type="text"
                                     name={`contacts.${key}`}
                                     placeholder={key}

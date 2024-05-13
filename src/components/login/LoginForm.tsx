@@ -6,9 +6,10 @@ export type AuthFormType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha: string
 }
 
-const emailValidate = (email: string)=> {
+const emailValidate = (email: string) => {
     let error
     if (!email) {
         error = 'Email required';
@@ -18,7 +19,7 @@ const emailValidate = (email: string)=> {
     return error
 }
 
-const passwordValidate = (password: string)=> {
+const passwordValidate = (password: string) => {
     let error
     if (!password) {
         error = 'Password required';
@@ -26,23 +27,33 @@ const passwordValidate = (password: string)=> {
     return error
 }
 
+const captchaValidate = (captcha: string) => {
+    let error
+    if (!captcha) {
+        error = 'Captcha required';
+    }
+    return error
+}
+
 type LoginFormPropsType = {
     loginFormSubmit: (loginData: AuthFormType) => void
+    captcha: string
 }
 
 export const LoginForm = (props: LoginFormPropsType) => {
-    const submit =(values: AuthFormType, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+    const submit = (values: AuthFormType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         const loginData: AuthFormType = {
             email: values.email,
             password: values.password,
-            rememberMe: values.rememberMe
+            rememberMe: values.rememberMe,
+            captcha: values.captcha
         }
         props.loginFormSubmit(loginData)
         setSubmitting(false)
     }
     return (
         <Formik
-            initialValues={{email: '', password: '', rememberMe: false}}
+            initialValues={{email: '', password: '', rememberMe: false, captcha: ''}}
             onSubmit={submit}
         >
             {({
@@ -58,7 +69,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
                     <Field
                         type="text"
                         name="email"
-                        placeholder={"Email"}
+                        placeholder={'Email'}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}
@@ -69,7 +80,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
                     <Field
                         type="password"
                         name="password"
-                        placeholder={"Password"}
+                        placeholder={'Password'}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}
@@ -78,20 +89,37 @@ export const LoginForm = (props: LoginFormPropsType) => {
                     />
                     {errors.password && touched.password && <div className={s.error}>{errors.password}</div>}
                     <label>
-                    <Field
-                        type="checkbox"
-                        name="rememberMe"
-                        checked={values.rememberMe}
-                        className={s.loginCheckbox}
-                    /> Remember me
+                        <Field
+                            type="checkbox"
+                            name="rememberMe"
+                            checked={values.rememberMe}
+                            className={s.loginCheckbox}
+                        /> Remember me
                     </label>
+                    {props.captcha && <div>
+                        <div>
+                            <img src={props.captcha} alt={'captcha'}/>
+                        </div>
+                        <Field
+                            type="text"
+                            name="captcha"
+                            placeholder={'Captcha'}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.captcha}
+                            validate={captchaValidate}
+                            className={s.loginField}
+                        />
+                        {errors.captcha && touched.captcha && <div className={s.error}>{errors.captcha}</div>}
+                    </div>}
                     <div className={s.submitBtn}>
                         <button type="submit" disabled={isSubmitting}>
                             Sign In
                         </button>
                     </div>
                     <div className={s.registrationText}>
-                        <p>To log in get registered or logged in {<a target={'_blank'} rel="noreferrer" href={'https://social-network.samuraijs.com/'}>here</a>}</p>
+                        <p>To log in get registered or logged in {<a target={'_blank'} rel="noreferrer"
+                                                                     href={'https://social-network.samuraijs.com/'}>here</a>}</p>
                     </div>
                 </form>
             )}

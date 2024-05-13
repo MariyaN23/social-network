@@ -5,6 +5,7 @@ import {AuthFormType} from '../components/login/LoginForm';
 
 const SET_USER_DATA = 'social-network/auth/SET-USER-DATA'
 const SET_ERROR = 'social-network/auth/SET-ERROR'
+const SET_CAPTCHA = 'social-network/auth/SET-CAPTCHA'
 
 export type DataType = {
     id: string | null
@@ -16,6 +17,7 @@ type AuthPropsType = {
     data: DataType
     isAuth: boolean
     error: string
+    captcha: string
 }
 
 const initialState: AuthPropsType = {
@@ -25,7 +27,8 @@ const initialState: AuthPropsType = {
         email: null,
     },
     isAuth: false,
-    error: ''
+    error: '',
+    captcha: ''
 }
 
 export const authReducer = (state: AuthPropsType = initialState, action: ActionType) => {
@@ -45,6 +48,9 @@ export const authReducer = (state: AuthPropsType = initialState, action: ActionT
         case SET_ERROR: {
             return {...state, error: action.payload.error}
         }
+        case SET_CAPTCHA: {
+            return {...state, captcha: action.payload.captcha}
+        }
         default: {
             return state
         }
@@ -62,6 +68,11 @@ export type SetErrorActionType = ReturnType<typeof setErrorActionCreator>
 export const setErrorActionCreator = (error: string) =>
     ({type: SET_ERROR, payload: {error}}) as const
 
+export type SetCaptchaActionType = ReturnType<typeof setCaptchaActionCreator>
+
+export const setCaptchaActionCreator = (captcha: string) =>
+    ({type: SET_CAPTCHA, payload: {captcha}}) as const
+
 export const authThunkCreator = (): ThunkAction<Promise<void>, AppStateType, unknown, ActionType> =>
     async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
         const data = await api.authMe()
@@ -75,7 +86,12 @@ export const loginThunkCreator = (loginData: AuthFormType): AppThunk =>
         const data = await api.login(loginData)
         if (data.resultCode === 0) {
             dispatch(authThunkCreator())
+            dispatch(setCaptchaActionCreator(''))
+            dispatch(setErrorActionCreator(''))
         } else {
+            if (data.resultCode === 10) {
+                dispatch(getCaptchaThunkCreator())
+            }
             dispatch(setErrorActionCreator(data.messages[0]))
         }
     }
@@ -92,4 +108,11 @@ export const logoutThunkCreator = (): AppThunk =>
                 },
                 false))
         }
+    }
+
+export const getCaptchaThunkCreator = (): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+        const response = await api.getCaptcha()
+        const captchaUrl = response.data.url
+        dispatch(setCaptchaActionCreator(captchaUrl))
     }

@@ -83,7 +83,9 @@ export const api = {
         return instance.put<ResponseType<{photos: PhotosType}>>(`/profile/photo`, formData)
     },
     updateProfile(profileData: ProfileFormType) {
-        debugger
         return instance.put<ResponseType>(`/profile`, profileData)
+    },
+    getCaptcha() {
+        return instance.get<{ url: string }>(`/security/get-captcha-url`)
     }
 }

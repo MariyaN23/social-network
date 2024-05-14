@@ -3,6 +3,7 @@ import {ActionType, AppStateType, AppThunk} from './redux-store';
 import {ThunkDispatch} from 'redux-thunk';
 import {api} from '../api/api';
 import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
+import {setGlobalErrorThunkCreator} from './app-reducer';
 
 const ADD_POST = 'social-network/profile/ADD-POST'
 const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
@@ -122,6 +123,8 @@ export const updateUsersStatusThunkCreator = (status: string): AppThunk =>
             const data = await api.updateStatus(status)
             if (data.data.resultCode === 0) {
                 dispatch(setUsersStatusActionCreator(status))
+            } else {
+                dispatch(setGlobalErrorThunkCreator(data.data.messages[0]))
             }
         }
     }

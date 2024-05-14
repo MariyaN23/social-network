@@ -33,3 +33,18 @@ button {
 button:disabled {
     background: #89bedc;
 }
+
+.globalError {
+    position: absolute;
+    height: 25px;
+    color: black;
+    background-color: red;
+    left: 300px;
+    top: 20px;
+}
+
+.globalError button {
+    width: 30px;
+    height: 25px;
+    background-color: #faa1a1;
+}

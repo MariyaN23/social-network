@@ -20,14 +20,14 @@ import {
 } from './users-reducer';
 import {authReducer, SetCaptchaActionType, SetErrorActionType, SetUserDataActionType} from './auth-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
-import {appReducer, SetInitializedActionType} from './app-reducer';
+import {appReducer, SetGlobalErrorActionType, SetInitializedActionType} from './app-reducer';
 
 export type ActionType = AddPostActionType | SendMessageActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
     SetUsersStatusActionType | setFilterActionType | SetErrorActionType |
     SetInitializedActionType | DeletePostActionType | FollowUnfollowActionType |
-    SavePhotoSuccessActionType | SetCaptchaActionType
+    SavePhotoSuccessActionType | SetCaptchaActionType | SetGlobalErrorActionType
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,

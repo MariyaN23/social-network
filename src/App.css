@@ -1,3 +1,7 @@
+body {
+    background-color: #EDF3F8;
+}
+
 .app-wrapper {
     margin: 0 auto;
     display: grid;

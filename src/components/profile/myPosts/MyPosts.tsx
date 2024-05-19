@@ -4,16 +4,22 @@ import {Post} from './post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
 import {PostForm} from './PostForm';
 
-export const MyPosts = React.memo((props: MyPostsPropsType)=> {
+export const MyPosts = React.memo((props: MyPostsPropsType) => {
     const postsElements =
-        props.posts.map(p => <Post key={p.id} message={p.message} likeCounts={p.likeCounts}/>)
+        props.posts.map(p => <Post key={p.id}
+                                   message={p.message}
+                                   photo={props.photo}
+                                   owner={props.owner}
+                                   userName={props.userName}/>)
     return (
-        <div className={s.postsBlock}>
-            <h3>My Posts</h3>
-            <PostForm sendPost={props.addPost}/>
-            <div>
-                {postsElements}
-            </div>
-        </div>
+        props.owner ?
+            <div className={s.postsBlock}>
+                <h3>My Posts</h3>
+                <PostForm sendPost={props.addPost}/>
+                <div>
+                    {postsElements}
+                </div>
+            </div> :
+            null
     );
 })

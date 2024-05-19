@@ -6,6 +6,7 @@ import {ProfileStatusWithHooks} from '../profileStatus/ProfileStatusWithHooks';
 import img from '../../../assets/images/noavatar.jpg'
 import {ProfileData} from './profileData/ProfileData';
 import {ProfileDataForm, ProfileFormType} from './profileData/ProfileDataForm';
+import {UserType} from '../../../redux/users-reducer';
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
@@ -44,13 +45,13 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
         (<div className={s.info}>
             <div className={s.descriptionBlock}>
                 <div className={s.changeAvatar}>
-                    <img src={props.profile?.photos.large ? props.profile?.photos.large : img} alt={'avatar'}/>
-                    <button onClick={showModal}>Change photo</button>
+                    <img src={props.profile?.photos.large ? props.profile?.photos.large : img} alt={'Profile'}/>
+                    {props.profile.userId === props.authId && <button onClick={showModal}>Change photo</button>}
                     {props.profile.userId === props.authId &&
                         <div>
                             {showingModal && <div className={s.modal}>
                                 <div className={s.modalContent}>
-                                    <button onClick={hideModal} className={s.closeModalBtn}>X</button>
+                                    <button onClick={hideModal} className={s.closeModalBtn}><b>X</b></button>
                                     <p>You can load photo from your computer:</p>
                                     <input type={'file'} accept=".jpg, .png" onChange={onMainPhotoSelected}/>
                                 </div>
@@ -65,7 +66,6 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                         owner={props.profile.userId === props.authId}
                     />
                     <hr/>
-                    <p><b>About me: </b>{props.profile.aboutMe}</p>
                     {editMode ? <ProfileDataForm
                             exitFromEditMode={exitFromEditMode}
                             profile={props.profile}

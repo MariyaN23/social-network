@@ -28,7 +28,9 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> =(props)=>
     }
         return <>
             <div>
-                {!editMode && <span className={props.status ? s.status : s.noStatus} onDoubleClick={onDoubleClick}>{props.status || "How you doing?"}</span>}
+                {!editMode && <span className={props.status ? s.status : s.noStatus} onDoubleClick={onDoubleClick}>
+                    {(props.status && props.owner) ? props.status : (!props.status && props.owner) ? "How you doing?" : ""}
+                </span>}
             </div>
             <div>
                 {editMode && <input className={s.status} onChange={onStatusChange} autoFocus={true} onBlur={onBlur} value={status}/>}

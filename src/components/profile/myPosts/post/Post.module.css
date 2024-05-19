@@ -1,9 +1,12 @@
 .item {
     margin: 50px 50px 5px 50px;
-    padding: 30px;
+    padding: 20px;
     border-radius: 9px;
     border: 1px solid #C5C5C5;
     background: #FFF;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .item textarea {
@@ -14,13 +17,10 @@
 }
 
 .item img {
-    width: 70px;
-    height: 70px;
-    border-radius: 70px;
-}
-
-.btn {
-    padding-top: 20px;
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    margin-right: 10px;
 }
 
 .item button {
@@ -29,4 +29,19 @@
     width: 60px;
     height: 30px;
     color: #FFF;
+}
+
+.optionsBtn {
+    position: absolute;
+    right: 230px;
+}
+
+.optionsBtn button {
+    color: #368AC1;
+    background-color: transparent;
+    border: none;
+}
+
+.postText {
+    margin-left: 60px;
 }

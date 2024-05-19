@@ -4,8 +4,12 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
     addPostActionCreator as addPost,
-    getUsersProfileThunkCreator, getUsersStatusThunkCreator,
-    ProfileType, savePhotoThunkCreator, saveProfileThunkCreator, updateUsersStatusThunkCreator
+    getUsersProfileThunkCreator,
+    getUsersStatusThunkCreator,
+    ProfileType,
+    savePhotoThunkCreator,
+    saveProfileThunkCreator,
+    updateUsersStatusThunkCreator
 } from '../../redux/profile-reducer';
 import {withRouter, WithRouterProps} from './withRouter';
 import {withAuthRedirectComponent} from '../../hoc/withAuthRedirectComponent';
@@ -36,7 +40,6 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
         this.props.getUsersProfileThunkCreator(userId)
         this.props.getUsersStatusThunkCreator(userId)
     }
-
     render() {
         return <>
             <Profile {...this.props} />
@@ -48,7 +51,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        authId: state.auth.data.id
+        authId: state.auth.data.id,
     }
 }
 
@@ -59,7 +62,7 @@ export default compose<React.ComponentType>(
         getUsersStatusThunkCreator,
         updateUsersStatusThunkCreator,
         savePhotoThunkCreator,
-        saveProfileThunkCreator
+        saveProfileThunkCreator,
     }),
     withRouter,
     withAuthRedirectComponent

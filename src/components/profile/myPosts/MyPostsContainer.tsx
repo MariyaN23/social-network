@@ -6,6 +6,9 @@ import {Dispatch} from 'redux';
 
 type MapStatePropsType = {
     posts: PostPropsType[]
+    photo: string | undefined
+    owner: boolean
+    userName: string | undefined
 }
 
 type MapDispatchPropsType = {
@@ -16,7 +19,10 @@ export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        posts: state.profilePage.posts
+        posts: state.profilePage.posts,
+        photo: state.profilePage.profile?.photos.small,
+        owner: state.profilePage.profile?.userId === state.auth.data.id,
+        userName: state.profilePage.profile?.fullName,
     }
 }
 

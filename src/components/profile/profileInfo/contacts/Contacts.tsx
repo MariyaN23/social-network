@@ -7,6 +7,11 @@ export type ContactsPropsType = {
 
 export const Contacts = (props: ContactsPropsType) => {
     return (
-        <div><b>{props.contactTitle}: </b>{props.contactValue ? props.contactValue : '-----'}</div>
+        (props.contactValue ?
+                <div>
+                    <b>{props.contactTitle}: </b>
+                    {props.contactValue}
+                </div>
+            : null)
     );
 };

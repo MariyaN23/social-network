@@ -1,7 +1,6 @@
 import React from 'react';
-import {Field, Formik, FormikHelpers, FormikState} from 'formik';
+import {Field, Formik, FormikHelpers} from 'formik';
 import s from './MyPosts.module.css'
-import {ResetAction} from 'redux-form';
 
 type PostFormPropsType = {
     sendPost: (message: string) => void

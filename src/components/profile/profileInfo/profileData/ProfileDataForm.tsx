@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './ProfileDataForm.module.css';
-import {Field, Formik} from 'formik';
+import {Field, Form, Formik} from 'formik';
 import {ContactsType, ProfileType} from '../../../../redux/profile-reducer';
 
 type ProfileDataFormPropsType = {
@@ -8,15 +8,20 @@ type ProfileDataFormPropsType = {
     exitFromEditMode: (profileData: ProfileFormType) => void
 }
 
-const fieldValidate = (value: string) => {
+const requiredFieldValidate = (value: string) => {
+    if (!value) {
+        return 'This field is required'
+    }
 }
 
 const contactsValidate = (value: string) => {
-    let error
-    if (!/^(?!-)[A-Za-z0-9-]+([\-\.]{1}[a-z0-9]+)*\.[A-Za-z]{2,6}$/.test(value) && value) {
-        error = 'Enter correct URL';
+    if (!value) {
+        return
     }
-    return error
+    const regex = /\./
+    if (!regex.test(value)) {
+       return 'Enter correct URL';
+    }
 }
 
 
@@ -63,61 +68,64 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
                       isSubmitting,
                       errors
                   }) => (
-                    <form onSubmit={handleSubmit} className={s.profileForm}>
-                        <Field
+                    <Form onSubmit={handleSubmit} className={s.profileForm}>
+                        <label>
+                        Full name <Field
                             type="text"
                             name="fullName"
-                            placeholder={'Full Name'}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.fullName}
-                            validate={fieldValidate}
-                        />
-                        <Field
+                            className={errors.fullName ? errors.fullName && s.fieldError : ''}
+                            validate={requiredFieldValidate}
+                        /></label>
+                        <label>
+                        About me <Field
                             type="text"
                             name="aboutMe"
-                            placeholder={'About Me'}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.aboutMe}
-                            validate={fieldValidate}
-                        />
+                            className={errors.aboutMe ? errors.aboutMe && s.fieldError : ''}
+                            validate={requiredFieldValidate}
+                        /></label>
                         <label>
-                            Looking for a job: <Field
+                            Looking for a job <Field
                             type="checkbox"
                             name="lookingForAJob"
                             checked={values.lookingForAJob}
                         />
                         </label>
-                        <Field
+                        <label>My professional skills <Field
                             type="text"
                             name="lookingForAJobDescription"
-                            placeholder={'My professional skills'}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.lookingForAJobDescription}
-                            validate={fieldValidate}
-                        />
+                            validate={requiredFieldValidate}
+                            className={errors.lookingForAJobDescription ? errors.lookingForAJobDescription && s.fieldError : ''}
+                        /></label>
                         {Object.keys(props.profile.contacts).map(key => {
-                            return <Field
+                            return <label>{`${key}`} <Field
                                     key={key}
                                     type="text"
                                     name={`contacts.${key}`}
-                                    placeholder={key}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.contacts[key as keyof typeof props.profile.contacts]}
                                     validate={contactsValidate}
                                     className={errors.contacts ? errors.contacts[key as keyof typeof props.profile.contacts] && s.fieldError : ''}
-                                />
+                                /></label>
                         })}
                        {errors.contacts && <div className={s.error}>Enter correct URL</div>}
+                        {(errors.lookingForAJobDescription || errors.aboutMe || errors.fullName)
+                            && <div className={s.error}>This field is required</div>}
                         <div>
                             <button type="submit" disabled={isSubmitting}>
                                 Save
                             </button>
                         </div>
-                    </form>
+                    </Form>
                 )}
             </Formik>
         </div>

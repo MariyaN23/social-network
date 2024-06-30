@@ -2,26 +2,44 @@ import {addPostActionCreator, deletePostActionCreator, profilePagePropsType, pro
 
 let startState: profilePagePropsType
 
-beforeEach(()=>{
+beforeEach(() => {
     startState = {
         profile: null,
-        posts: [
-            {id: "1", message: 'Hi, how are you?', likeCounts: 15},
-            {id: "2", message: 'It\'s my first post', likeCounts: 20}
-        ],
-        status: ''
+        allIds: ["1","2"],
+        byId: {
+            '1': {
+                id: '1',
+                message: 'I like React',
+                likeCounts: 10,
+                author: {
+                    id: '1',
+                    name: 'MariyaN23'
+                }
+                },
+                '2': {
+                    id: '2',
+                    message: 'Hello world',
+                    likeCounts: 100,
+                    author: {
+                        id: '1',
+                        name: 'MariyaN23'
+                    }
+                }
+            },
+            status: ''
+        }
     }
-})
+)
 
-test ('correct post should be added', ()=> {
-    const endState = profileReducer(startState, addPostActionCreator('hello world'))
+    test('correct post should be added', () => {
+        const endState = profileReducer(startState, addPostActionCreator('hello world', {id: '1', name: 'MariyaN23'}))
 
-    expect(endState.posts.length).toBe(3)
-    expect(endState.posts[0].message).toBe('hello world')
-})
+        expect(endState.allIds.length).toBe(3)
+        expect(endState.byId[endState.allIds[0]].message).toBe('hello world')
+    })
 
-test ('correct post should be deleted', ()=> {
-    const endState = profileReducer(startState, deletePostActionCreator("1"))
+    test('correct post should be deleted', () => {
+        const endState = profileReducer(startState, deletePostActionCreator('1'))
 
-    expect(endState.posts.length).toBe(1)
-})
+        expect(endState.allIds.length).toBe(1)
+    })

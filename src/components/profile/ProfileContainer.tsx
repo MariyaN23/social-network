@@ -3,7 +3,7 @@ import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
-    addPostActionCreator as addPost,
+    addPostActionCreator as addPost, fetchPostsThunkCreator,
     getUsersProfileThunkCreator,
     getUsersStatusThunkCreator,
     ProfileType,
@@ -30,6 +30,7 @@ type MapDispatchPropsType = {
     updateUsersStatusThunkCreator: (status: string)=> void
     savePhotoThunkCreator: (image: any)=> void
     saveProfileThunkCreator: (profileData: ProfileFormType)=> void
+    fetchPostsThunkCreator: ()=> void
 }
 
 export type ProfileAPIPropsType = MapStatePropsType & MapDispatchPropsType & WithRouterProps
@@ -39,6 +40,7 @@ class ProfileContainer extends React.Component<ProfileAPIPropsType> {
         let userId = this.props.params.userId
         this.props.getUsersProfileThunkCreator(userId)
         this.props.getUsersStatusThunkCreator(userId)
+        this.props.fetchPostsThunkCreator()
     }
     render() {
         return <>
@@ -63,6 +65,7 @@ export default compose<React.ComponentType>(
         updateUsersStatusThunkCreator,
         savePhotoThunkCreator,
         saveProfileThunkCreator,
+        fetchPostsThunkCreator
     }),
     withRouter,
     withAuthRedirectComponent

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {FilterType, UserType} from '../redux/users-reducer';
-import {PhotosType, ProfileType} from '../redux/profile-reducer';
+import {PhotosType, PostType, ProfileType} from '../redux/profile-reducer';
 import {DataType} from '../redux/auth-reducer';
 import {AuthFormType} from '../components/login/LoginForm';
 import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
@@ -87,5 +87,28 @@ export const api = {
     },
     getCaptcha() {
         return instance.get<{ url: string }>(`/security/get-captcha-url`)
+    },
+    getPosts(): Promise<PostType[]>{
+        return new Promise((res)=> {
+            setTimeout(()=> {
+                res([{id: "1",
+                    message: 'I like React',
+                    likeCounts: 10,
+                    author: {
+                        id: "1",
+                        name: "MariyaN23"
+                    }
+                },
+                    {id: "2",
+                        message: 'Hello world',
+                        likeCounts: 100,
+                        author: {
+                            id: "1",
+                            name: "MariyaN23"
+                        }
+                    }
+                ])
+            }, 1000)
+        })
     }
 }

@@ -10,17 +10,27 @@ const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
 const SET_USERS_STATUS = 'social-network/profile/SET-USERS-STATUS'
 const DELETE_POST = 'social-network/profile/DELETE-POST'
 const SAVE_PHOTO_SUCCESS = 'social-network/profile/SAVE-PHOTO-SUCCESS'
+const SET_POSTS = 'social-network/profile/SET-POSTS'
+const LIKE_POST = 'social-network/profile/LIKE-POST'
 
-export type PostPropsType = {
+export type AuthorType = {
+    id: string
+    name: string
+}
+
+export type PostType = {
     id: string
     message: string
     likeCounts: number
+    author: AuthorType
 }
 
 export type profilePagePropsType = {
     profile: ProfileType | null
-    posts: PostPropsType[]
+    //posts: PostType[]
     status: string
+    allIds: string[],
+    byId: {[key: string]: PostType}
 }
 
 export type AddPostActionType = ReturnType<typeof addPostActionCreator>
@@ -28,6 +38,8 @@ export type SetUsersProfileActionType = ReturnType<typeof setUsersProfileActionC
 export type SetUsersStatusActionType = ReturnType<typeof setUsersStatusActionCreator>
 export type DeletePostActionType = ReturnType<typeof deletePostActionCreator>
 export type SavePhotoSuccessActionType = ReturnType<typeof savePhotoSuccessActionCreator>
+export type setPostsActionType = ReturnType<typeof setPostsActionCreator>
+export type likeActionType = ReturnType<typeof likeActionCreator>
 
 export type PhotosType = {
     small: string
@@ -57,22 +69,54 @@ export type ProfileType = {
 
 const initialState: profilePagePropsType = {
     profile: null,
-    posts: [
-        {id: v1(), message: 'Hi, how are you?', likeCounts: 15},
-        {id: v1(), message: 'It\'s my first post', likeCounts: 20}
-    ],
-    status: ''
+    status: '',
+    //posts: [],
+    allIds: [],
+    byId: {}
+}
+
+const mapToLookupTable =(items: any[]) => {
+    return items.reduce((acc, item)=> {
+        acc[item.id] = item
+        return acc
+    }, {})
 }
 
 export const profileReducer = (state: profilePagePropsType = initialState, action: ActionType) => {
     switch (action.type) {
+        case SET_POSTS : {
+            return {
+                ...state,
+                posts: action.payload.posts,
+                allIds: action.payload.posts.map(p => p.id),
+                byId: mapToLookupTable(action.payload.posts)
+            }
+        }
         case ADD_POST: {
-            const newPost: PostPropsType = {
+            const newPost: PostType = {
                 id: v1(),
                 message: action.payload.post,
-                likeCounts: 0
+                likeCounts: 0,
+                author: {
+                    id: action.payload.author.id,
+                    name: action.payload.author.name
+                }
             }
-            return {...state, posts: [newPost, ...state.posts]}
+            return {...state,
+                allIds: [newPost.id, ...state.allIds],
+                byId: {
+                    [newPost.id]: newPost,
+                    ...state.byId,
+            }
+            }
+        }
+        case LIKE_POST: {
+            return {...state,
+            byId: {
+                ...state.byId,
+                [action.payload.id]: {...state.byId[action.payload.id], likeCounts: state.byId[action.payload.id].likeCounts+1}
+            }}
+            //return {...state, posts: state.posts.map(post => post.id === action.payload.id ? {...post, likeCounts: post.likeCounts+1} : post)}
         }
         case SET_USERS_PROFILE: {
             return {...state, profile: action.profile}
@@ -81,7 +125,12 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
             return {...state, status: action.status}
         }
         case DELETE_POST: {
-            return {...state, posts: state.posts.filter(post => post.id !== action.payload.id)}
+            const stateCopy = {...state,
+                allIds: state.allIds.filter(id => id !== action.payload.id),
+            }
+            delete stateCopy.byId[action.payload.id]
+            return stateCopy
+            //return {...state, posts: state.posts.filter(post => post.id !== action.payload.id)}
         }
         case SAVE_PHOTO_SUCCESS: {
             debugger
@@ -95,7 +144,7 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
     }
 }
 
-export const addPostActionCreator = (post: string) => ({type: ADD_POST, payload: {post}}) as const
+export const addPostActionCreator = (post: string, author: AuthorType) => ({type: ADD_POST, payload: {post, author}}) as const
 export const setUsersProfileActionCreator = (profile: ProfileType | null) => ({
     type: SET_USERS_PROFILE,
     profile
@@ -103,6 +152,8 @@ export const setUsersProfileActionCreator = (profile: ProfileType | null) => ({
 export const setUsersStatusActionCreator = (status: string) => ({type: SET_USERS_STATUS, status}) as const
 export const deletePostActionCreator = (id: string) => ({type: DELETE_POST, payload: {id}}) as const
 export const savePhotoSuccessActionCreator = (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, payload: {photos}}) as const
+export const setPostsActionCreator = (posts: PostType[]) => ({type: SET_POSTS, payload: {posts}}) as const
+export const likeActionCreator = (id: string) => ({type: LIKE_POST, payload: {id}}) as const
 
 export const getUsersProfileThunkCreator = (userId: string): AppThunk =>
     async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
@@ -144,4 +195,11 @@ export const saveProfileThunkCreator = (profileData: ProfileFormType): AppThunk 
         if (response.data.resultCode === 0) {
             dispatch(getUsersProfileThunkCreator(userId ? userId : ''))
         }
+    }
+
+export const fetchPostsThunkCreator = (): AppThunk =>
+    async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
+    debugger
+        const posts = await api.getPosts()
+            dispatch(setPostsActionCreator(posts))
     }

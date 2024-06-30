@@ -6,7 +6,6 @@ import {ProfileStatusWithHooks} from '../profileStatus/ProfileStatusWithHooks';
 import img from '../../../assets/images/noavatar.jpg'
 import {ProfileData} from './profileData/ProfileData';
 import {ProfileDataForm, ProfileFormType} from './profileData/ProfileDataForm';
-import {UserType} from '../../../redux/users-reducer';
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null

@@ -1,7 +1,7 @@
 import {v1} from 'uuid';
 import {ActionType, AppStateType, AppThunk} from './redux-store';
 import {ThunkDispatch} from 'redux-thunk';
-import {api} from '../api/api';
+import {api, AuthorApiType, PostApiType} from '../api/api';
 import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
 import {setGlobalErrorThunkCreator} from './app-reducer';
 
@@ -10,26 +10,14 @@ const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
 const SET_USERS_STATUS = 'social-network/profile/SET-USERS-STATUS'
 const DELETE_POST = 'social-network/profile/DELETE-POST'
 const SAVE_PHOTO_SUCCESS = 'social-network/profile/SAVE-PHOTO-SUCCESS'
-const SET_POSTS = 'social-network/profile/SET-POSTS'
+export const SET_POSTS = 'social-network/profile/SET-POSTS'
 const LIKE_POST = 'social-network/profile/LIKE-POST'
 
-export type AuthorType = {
-    id: string
-    name: string
-}
-
-export type PostType = {
-    id: string
-    message: string
-    likeCounts: number
-    author: AuthorType
-}
 
 export type profilePagePropsType = {
     profile: ProfileType | null
-    //posts: PostType[]
     status: string
-    allIds: string[],
+    allIds: string[]
     byId: {[key: string]: PostType}
 }
 
@@ -40,6 +28,13 @@ export type DeletePostActionType = ReturnType<typeof deletePostActionCreator>
 export type SavePhotoSuccessActionType = ReturnType<typeof savePhotoSuccessActionCreator>
 export type setPostsActionType = ReturnType<typeof setPostsActionCreator>
 export type likeActionType = ReturnType<typeof likeActionCreator>
+
+export type PostType = {
+    id: string
+    message: string
+    likeCounts: number
+    authorId: string
+}
 
 export type PhotosType = {
     small: string
@@ -70,26 +65,41 @@ export type ProfileType = {
 const initialState: profilePagePropsType = {
     profile: null,
     status: '',
-    //posts: [],
     allIds: [],
     byId: {}
 }
 
-const mapToLookupTable =(items: any[]) => {
+/*type LookupTableType<T> = {[key: string]: T}
+
+export const mapToLookupTable = <T extends {id: string}>(items: T[]): LookupTableType<T> => {
+    const acc: LookupTableType<T> = {};
+    return items.reduce((acc, item)=> {
+        acc[item.id] = item;
+        return acc
+    }, acc)
+}*/
+
+export const mapToLookupTable = (items: any[]) => {
     return items.reduce((acc, item)=> {
         acc[item.id] = item
         return acc
-    }, {})
-}
+    }, {})}
 
 export const profileReducer = (state: profilePagePropsType = initialState, action: ActionType) => {
     switch (action.type) {
         case SET_POSTS : {
             return {
                 ...state,
-                posts: action.payload.posts,
                 allIds: action.payload.posts.map(p => p.id),
-                byId: mapToLookupTable(action.payload.posts)
+                byId: mapToLookupTable(action.payload.posts.map(p => {
+                    const postCopy: PostType = {
+                        id: p.id,
+                        message: p.message,
+                        likeCounts: p.likeCounts,
+                        authorId: p.author.id
+                    }
+                    return postCopy
+                }))
             }
         }
         case ADD_POST: {
@@ -97,10 +107,7 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
                 id: v1(),
                 message: action.payload.post,
                 likeCounts: 0,
-                author: {
-                    id: action.payload.author.id,
-                    name: action.payload.author.name
-                }
+                authorId: "1"
             }
             return {...state,
                 allIds: [newPost.id, ...state.allIds],
@@ -116,7 +123,6 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
                 ...state.byId,
                 [action.payload.id]: {...state.byId[action.payload.id], likeCounts: state.byId[action.payload.id].likeCounts+1}
             }}
-            //return {...state, posts: state.posts.map(post => post.id === action.payload.id ? {...post, likeCounts: post.likeCounts+1} : post)}
         }
         case SET_USERS_PROFILE: {
             return {...state, profile: action.profile}
@@ -130,7 +136,6 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
             }
             delete stateCopy.byId[action.payload.id]
             return stateCopy
-            //return {...state, posts: state.posts.filter(post => post.id !== action.payload.id)}
         }
         case SAVE_PHOTO_SUCCESS: {
             debugger
@@ -144,7 +149,7 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
     }
 }
 
-export const addPostActionCreator = (post: string, author: AuthorType) => ({type: ADD_POST, payload: {post, author}}) as const
+export const addPostActionCreator = (post: string, author: AuthorApiType) => ({type: ADD_POST, payload: {post, author}}) as const
 export const setUsersProfileActionCreator = (profile: ProfileType | null) => ({
     type: SET_USERS_PROFILE,
     profile
@@ -152,7 +157,7 @@ export const setUsersProfileActionCreator = (profile: ProfileType | null) => ({
 export const setUsersStatusActionCreator = (status: string) => ({type: SET_USERS_STATUS, status}) as const
 export const deletePostActionCreator = (id: string) => ({type: DELETE_POST, payload: {id}}) as const
 export const savePhotoSuccessActionCreator = (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, payload: {photos}}) as const
-export const setPostsActionCreator = (posts: PostType[]) => ({type: SET_POSTS, payload: {posts}}) as const
+export const setPostsActionCreator = (posts: PostApiType[]) => ({type: SET_POSTS, payload: {posts}}) as const
 export const likeActionCreator = (id: string) => ({type: LIKE_POST, payload: {id}}) as const
 
 export const getUsersProfileThunkCreator = (userId: string): AppThunk =>
@@ -199,7 +204,6 @@ export const saveProfileThunkCreator = (profileData: ProfileFormType): AppThunk 
 
 export const fetchPostsThunkCreator = (): AppThunk =>
     async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>) => {
-    debugger
         const posts = await api.getPosts()
             dispatch(setPostsActionCreator(posts))
     }

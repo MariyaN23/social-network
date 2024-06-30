@@ -21,6 +21,7 @@ import {
 import {authReducer, SetCaptchaActionType, SetErrorActionType, SetUserDataActionType} from './auth-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
 import {appReducer, SetGlobalErrorActionType, SetInitializedActionType} from './app-reducer';
+import {authorsReducer} from './authors-reducer';
 
 export type ActionType = AddPostActionType | SendMessageActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
     sidebar: sidebarReducer,
     auth: authReducer,
     app: appReducer,
+    authors: authorsReducer,
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>

@@ -11,19 +11,13 @@ beforeEach(() => {
                 id: '1',
                 message: 'I like React',
                 likeCounts: 10,
-                author: {
-                    id: '1',
-                    name: 'MariyaN23'
-                }
+                authorId: '1'
                 },
                 '2': {
                     id: '2',
                     message: 'Hello world',
                     likeCounts: 100,
-                    author: {
-                        id: '1',
-                        name: 'MariyaN23'
-                    }
+                    authorId: '1'
                 }
             },
             status: ''

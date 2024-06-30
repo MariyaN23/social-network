@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {FilterType, UserType} from '../redux/users-reducer';
-import {PhotosType, PostType, ProfileType} from '../redux/profile-reducer';
+import {PhotosType, ProfileType} from '../redux/profile-reducer';
 import {DataType} from '../redux/auth-reducer';
 import {AuthFormType} from '../components/login/LoginForm';
 import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
@@ -24,6 +24,18 @@ export const instance = axios.create({
         'API-KEY': 'fcbd2d1d-5aab-433e-b249-8b4e322d91d2'
     }
 })
+
+export type AuthorApiType = {
+    id: string
+    name: string
+}
+
+export type PostApiType = {
+    id: string
+    message: string
+    likeCounts: number
+    author: AuthorApiType
+}
 
 export const api = {
     getUsers (currentPage: number, pageSize: number, filter: FilterType) {
@@ -88,7 +100,7 @@ export const api = {
     getCaptcha() {
         return instance.get<{ url: string }>(`/security/get-captcha-url`)
     },
-    getPosts(): Promise<PostType[]>{
+    getPosts(): Promise<PostApiType[]>{
         return new Promise((res)=> {
             setTimeout(()=> {
                 res([{id: "1",
@@ -105,6 +117,14 @@ export const api = {
                         author: {
                             id: "1",
                             name: "MariyaN23"
+                        }
+                    },
+                    {id: "3",
+                        message: 'I like Pizza',
+                        likeCounts: 228,
+                        author: {
+                            id: "2",
+                            name: "YuraN24"
                         }
                     }
                 ])

@@ -8,7 +8,8 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
     const postsElements =
         props.allIds.map(p => <Post key={p}
                                    photo={props.photo}
-                                   post={props.byId[p]}
+                                   post={props.postById[p]}
+                                   author={props.authorById[props.postById[p].authorId]}
                                    deletePost={props.deletePost}
                                    likePost={props.likePost}
         />)

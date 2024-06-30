@@ -1,21 +1,21 @@
 import {
     addPostActionCreator,
     deletePostActionCreator,
-    likeActionCreator,
-    PostType
+    likeActionCreator, PostType
 } from '../../../redux/profile-reducer';
 import {AppStateType} from '../../../redux/redux-store';
 import {connect} from 'react-redux';
 import {MyPosts} from './MyPosts';
 import {Dispatch} from 'redux';
+import {AuthorApiType} from '../../../api/api';
 
 type MapStatePropsType = {
-    //posts: PostType[]
     photo: string | undefined
     owner: boolean
     userName: string | undefined
     allIds: string[]
-    byId: {[key: string]: PostType}
+    postById: {[key: string]: PostType}
+    authorById: {[key: string]: AuthorApiType}
 }
 
 type MapDispatchPropsType = {
@@ -28,9 +28,9 @@ export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        //posts: state.profilePage.profile,
         allIds: state.profilePage.allIds,
-        byId: state.profilePage.byId,
+        postById: state.profilePage.byId,
+        authorById: state.authors.byId,
         photo: state.profilePage.profile?.photos.small,
         owner: state.profilePage.profile?.userId === state.auth.data.id,
         userName: state.profilePage.profile?.fullName,

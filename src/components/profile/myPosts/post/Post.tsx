@@ -3,10 +3,12 @@ import s from './Post.module.css';
 import photo from '../../../../assets/images/noavatar.jpg'
 import {Icon} from '../../../../assets/images/Icon';
 import {PostType} from '../../../../redux/profile-reducer';
+import {AuthorApiType} from '../../../../api/api';
 
 type PostPropsType = {
     photo: string | undefined
     post: PostType
+    author: AuthorApiType
     deletePost: (id: string)=>void
     likePost: (id: string)=>void
 }
@@ -19,7 +21,7 @@ export const Post = React.memo((props: PostPropsType)=> {
             </div>
             <div>
                 <img src={props.photo ? props.photo : photo} alt={'avatar'}/>
-                <span><b>{props.post.author.name}</b></span>
+                <span><b>{props.author.name}</b></span>
             </div>
             <div className={s.postText}>{props.post.message}</div>
             <div className={s.btn}>

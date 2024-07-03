@@ -4,6 +4,7 @@ import {ThunkDispatch} from 'redux-thunk';
 import {api, AuthorApiType, PostApiType} from '../api/api';
 import {ProfileFormType} from '../components/profile/profileInfo/profileData/ProfileDataForm';
 import {setGlobalErrorThunkCreator} from './app-reducer';
+import {DELETE_COMMENT, SET_ALL_COMMENTS} from './comments-reducer';
 
 const ADD_POST = 'social-network/profile/ADD-POST'
 const SET_USERS_PROFILE = 'social-network/profile/SET-USERS-PROFILE'
@@ -29,11 +30,9 @@ export type SavePhotoSuccessActionType = ReturnType<typeof savePhotoSuccessActio
 export type setPostsActionType = ReturnType<typeof setPostsActionCreator>
 export type likeActionType = ReturnType<typeof likeActionCreator>
 
-export type PostType = {
-    id: string
-    message: string
-    likeCounts: number
+export type PostType = Omit<PostApiType, 'author' | 'lastComments'> & {
     authorId: string
+    commentIds: string[]
 }
 
 export type PhotosType = {
@@ -96,18 +95,27 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
                         id: p.id,
                         message: p.message,
                         likeCounts: p.likeCounts,
-                        authorId: p.author.id
+                        authorId: p.author.id,
+                        commentIds: p.lastComments.map(c => c.id)
                     }
                     return postCopy
                 }))
             }
+        }
+        case SET_ALL_COMMENTS: {
+            return {...state, byId: {
+                ...state.byId,
+                    [action.payload.postId]: {...state.byId[action.payload.postId],
+                        commentIds: action.payload.comments.map(c => c.id)}
+                }}
         }
         case ADD_POST: {
             const newPost: PostType = {
                 id: v1(),
                 message: action.payload.post,
                 likeCounts: 0,
-                authorId: "1"
+                authorId: "1",
+                commentIds: []
             }
             return {...state,
                 allIds: [newPost.id, ...state.allIds],
@@ -142,6 +150,16 @@ export const profileReducer = (state: profilePagePropsType = initialState, actio
             return state.profile ?
             {...state, profile: {...state.profile, photos: action.payload.photos}}
             : state
+        }
+        case DELETE_COMMENT: {
+            const post = state.byId[action.payload.postId]
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.payload.postId]: {...post, commentIds: post.commentIds.filter(id => id !== action.payload.commentId)}
+                         }
+            }
         }
         default: {
             return state

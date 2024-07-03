@@ -7,11 +7,15 @@ import {PostForm} from './PostForm';
 export const MyPosts = React.memo((props: MyPostsPropsType) => {
     const postsElements =
         props.allIds.map(p => <Post key={p}
-                                   photo={props.photo}
-                                   post={props.postById[p]}
-                                   author={props.authorById[props.postById[p].authorId]}
-                                   deletePost={props.deletePost}
-                                   likePost={props.likePost}
+                                    photo={props.photo}
+                                    post={props.postById[p]}
+                                    author={props.authorById[props.postById[p].authorId]}
+                                    commentsById={props.commentsById}
+                                    authorById={props.authorById}
+                                    deletePost={props.deletePost}
+                                    likePost={props.likePost}
+                                    fetchComments={props.fetchCommentsThunkCreator}
+                                    deleteComment={props.deleteCommentThunkCreator}
         />)
     return (
         props.owner ?

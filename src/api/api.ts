@@ -30,11 +30,18 @@ export type AuthorApiType = {
     name: string
 }
 
+export type CommentApiType = {
+    id: string
+    message: string
+    author: AuthorApiType
+}
+
 export type PostApiType = {
     id: string
     message: string
     likeCounts: number
     author: AuthorApiType
+    lastComments: CommentApiType[]
 }
 
 export const api = {
@@ -109,7 +116,9 @@ export const api = {
                     author: {
                         id: "1",
                         name: "MariyaN23"
-                    }
+                    },
+                    lastComments: [{id: "998", message: 'I like Angular', author: {id: "3", name: "Valera"}},
+                        {id: "997", message: 'I like C#', author: {id: "4", name: "Oleg"}}]
                 },
                     {id: "2",
                         message: 'Hello world',
@@ -117,7 +126,8 @@ export const api = {
                         author: {
                             id: "1",
                             name: "MariyaN23"
-                        }
+                        },
+                        lastComments: []
                     },
                     {id: "3",
                         message: 'I like Pizza',
@@ -125,10 +135,22 @@ export const api = {
                         author: {
                             id: "2",
                             name: "YuraN24"
-                        }
+                        },
+                        lastComments: [{id: "829", message: 'I like Oreshek', author: {id: "1", name: "MariyaN23"}},
+                            {id: "828", message: 'Really?', author: {id: "4", name: "Oleg"}}]
                     }
                 ])
             }, 1000)
         })
+    },
+    getComments(postId: string){
+        return Promise.resolve([{id: "998", message: 'I like Angular', author: {id: "3", name: "Valera"}},
+            {id: "997", message: 'I like C#', author: {id: "4", name: "Oleg"}},
+            {id: "996", message: 'I like Oleg LSP', author: {id: "4", name: "Oleg"}},
+            {id: "995", message: 'I like CSS and HTML!!!!', author: {id: "5", name: "Svetlana"}}
+        ])
+    },
+    deleteComment(postId: string, commentId: string) {
+        return Promise.resolve({})
     }
 }

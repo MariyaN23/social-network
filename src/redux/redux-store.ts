@@ -22,13 +22,15 @@ import {authReducer, SetCaptchaActionType, SetErrorActionType, SetUserDataAction
 import thunk, {ThunkAction} from 'redux-thunk';
 import {appReducer, SetGlobalErrorActionType, SetInitializedActionType} from './app-reducer';
 import {authorsReducer} from './authors-reducer';
+import {commentsReducer, DeleteCommentActionType, SetAllCommentsActionType} from './comments-reducer';
 
 export type ActionType = AddPostActionType | SendMessageActionType | setUsersActionType |
     setCurrentPageActionType | setUsersCountActionType | setIsFetchingActionType |
     SetUsersProfileActionType | SetUserDataActionType | setFollowingInProgressActionType |
     SetUsersStatusActionType | setFilterActionType | SetErrorActionType |
     SetInitializedActionType | DeletePostActionType | FollowUnfollowActionType |
-    SavePhotoSuccessActionType | SetCaptchaActionType | SetGlobalErrorActionType | setPostsActionType | likeActionType
+    SavePhotoSuccessActionType | SetCaptchaActionType | SetGlobalErrorActionType |
+    setPostsActionType | likeActionType | SetAllCommentsActionType | DeleteCommentActionType
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -38,6 +40,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     app: appReducer,
     authors: authorsReducer,
+    comments: commentsReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>

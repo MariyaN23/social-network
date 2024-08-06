@@ -45,3 +45,21 @@
 .postText {
     margin-left: 60px;
 }
+
+.item .deleteCommentBtn {
+    width: 25px;
+    height: 25px;
+    color: #4d4d4d;
+    background-color: transparent;
+    border: 1px solid #C5C5C5;
+}
+
+.item .allCommentsBtn {
+    width: 120px;
+    border: 1px solid #4d4d4d;
+    background-color: #C5C5C5;
+}
+
+.item .allCommentsBtn:hover {
+    background-color: #368AC1;
+}

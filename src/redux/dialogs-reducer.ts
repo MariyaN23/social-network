@@ -31,11 +31,8 @@ const initialState: dialogPropsType = {
     ],
     messages: [
         {id: v1(), message: 'Hi'},
-        {id: v1(), message: 'Yo'},
         {id: v1(), message: 'This is IT-kamasutra'},
         {id: v1(), message: 'Bye'},
-        {id: v1(), message: 'Hi'},
-        {id: v1(), message: 'Hi'},
     ]
 }
 

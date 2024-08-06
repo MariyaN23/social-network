@@ -119,7 +119,11 @@ export const LoginForm = (props: LoginFormPropsType) => {
                     </div>
                     <div className={s.registrationText}>
                         <p>To log in get registered or logged in {<a target={'_blank'} rel="noreferrer"
-                                                                     href={'https://social-network.samuraijs.com/'}>here</a>}</p>
+                                                                     href={'https://social-network.samuraijs.com/'}>here</a>}
+                            <p>Or use my test account: </p>
+                            <p>email: usslefinod@gmail.com</p>
+                            <p>password: !XdzBdKymM6YUmn</p>
+                        </p>
                     </div>
                 </form>
             )}

@@ -21,7 +21,7 @@ export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        'API-KEY': 'fcbd2d1d-5aab-433e-b249-8b4e322d91d2'
+        'API-KEY': 'ae14d9c7-c89e-4139-9d63-7288a888e97b'
     }
 })
 
@@ -131,7 +131,7 @@ export const api = {
                     },
                     {id: "3",
                         message: 'I like Pizza',
-                        likeCounts: 228,
+                        likeCounts: 56,
                         author: {
                             id: "2",
                             name: "YuraN24"

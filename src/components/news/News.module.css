@@ -1,0 +1,37 @@
+.pageName {
+    color: #171515;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    text-align: center;
+    margin: 20px;
+}
+
+.newsWrapper, .news {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.newsWrapper {
+    margin: 0 50px 0 50px;
+    width: 800px;
+    flex-wrap: wrap;
+}
+
+.news {
+    width: 350px;
+    height: 400px;
+    background-color: #FFFFFF;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.news img {
+    width: 300px;
+    height: 200px;
+}

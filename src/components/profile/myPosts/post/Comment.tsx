@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './Post.module.css';
 
 type CommentPropsType = {
     commentMessage: string
@@ -11,9 +12,16 @@ type CommentPropsType = {
 export const Comment = (props: CommentPropsType) => {
     return (
         <div>
-            <div>{props.commentAuthor}</div>
+            <div>
+                <b>
+                    {props.commentAuthor}
+                </b>
+            </div>
             {props.commentMessage}
-            <button onClick={()=>props.deleteComment(props.postId, props.commentId)}>Delete</button>
+            <button className={s.deleteCommentBtn}
+                    onClick={() => props.deleteComment(props.postId, props.commentId)}>
+                ✖
+            </button>
         </div>
     );
 };

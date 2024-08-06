@@ -45,7 +45,10 @@ export const Post = React.memo((props: PostPropsType) => {
                     />)}
                 </ul>
             </div>
-            <button onClick={()=>props.fetchComments(props.post.id)}>All comments</button>
+            {props.post.id === "1" || props.post.id === "3" ?
+                <button onClick={() => props.fetchComments(props.post.id)} className={s.allCommentsBtn}>All
+                    comments</button> : null}
+
         </div>
     );
 });

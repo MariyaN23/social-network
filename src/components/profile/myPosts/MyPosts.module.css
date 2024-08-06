@@ -1,6 +1,7 @@
 .postsBlock {
     padding: 10px;
     word-break: break-all;
+    position: relative;
 }
 
 .postsBlock h3 {

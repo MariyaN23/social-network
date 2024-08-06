@@ -1,0 +1,15 @@
+.pageName {
+    color: #171515;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    text-align: center;
+    margin: 20px;
+}
+
+.musicWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
